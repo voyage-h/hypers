@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{env('APP_NAME')}}</title>
+    <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/chat_detail.css">
     <script src="/chat/doubleclick_scroll.js"></script>
 </head>
@@ -49,7 +49,7 @@
                         @include('chat.detail.time')
                     @endif
                     <div class="avatar">
-                        <a href="/location/list?target=b7oaXl"><img src="{{$chat->avatar}}"/></a>
+                        <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
                     </div>
                     @include('chat.detail.content')
                 </div>

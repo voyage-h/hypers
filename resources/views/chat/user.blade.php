@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{env('APP_NAME')}}</title>
+    <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/chat_user.css">
 </head>
 <body>
@@ -13,12 +13,12 @@
     @foreach($users as $user)
         <div class="chat">
             <div class="avatar">
-                <a href="{{url('/chat/detail/'.$me->hashid.'/with/'.$user->hashid)}}"><img src="{{$user->avatar}}"/></a>
+                <a href="{{url('/chat/detail/'.$me->uid.'/with/'.$user->uid)}}"><img src="{{$user->avatar}}"/></a>
+                <a href="{{url('/chat/detail/'.$me->uid.'/with/'.$user->uid)}}"><img src="{{$me->avatar}}"/></a>
             </div>
             <div class="chat-title" data-name={{$user->name}}>
                 <a href='b7oaXl.html'>{{$user->name}}</a>
-                <div class="title-basic">179/67</div>
-                <div class="title-more" data-target=b7oaXl><a href="{{url('/chat/detail/'.$me->hashid.'/with/'.$user->hashid)}}"></a>></div>
+                <div class="title-basic">{{$user->height}}/{{$user->weight}}</div>
             </div>
         </div>
     @endforeach

@@ -13,25 +13,22 @@ class ChatController extends Controller
      *
      * @return mixed
      */
-    public function user()
+    public function user(int $uid)
     {
-        $uid = $_REQUEST['me'];
         $users = ChatUser::whereIn('uid', function($query) use ($uid) {
             $query->select('from_uid')
                 ->from('chats')
                 ->where('from_uid', $uid)
                 ->orWhere('target_uid', $uid)
-                ->orderBy('id', 'desc')
                 ->distinct();
         })
-            ->simplePaginate(20);
-        $users = $users->keyBy('uid');
-        $hash = new Hashids('1766', 6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123567890');
-        foreach ($users as $u => &$user) {
-            $user->hashid = $hash->encode($u);
+            ->simplePaginate(100);
+        foreach ($users as $i => $user) {
+			if ($user->uid == $uid) {
+			    unset($users[$i]);
+			}
         }
-        $me    = $users[$uid] ?? [];
-        unset($users[$uid]);
+		$me = ChatUser::where('uid', $uid)->first();
         return view('chat.user', compact('users', 'me'));
     }
 
@@ -40,13 +37,8 @@ class ChatController extends Controller
      *
      * @return mixed
      */
-    public function detail()
+    public function detail(int $uid, int $target)
     {
-        $uid     = $_REQUEST['me'];
-        $target = $_REQUEST['target'] ?? 0;
-        if (empty($target)) {
-            return view('error');
-        }
         $chats = Chat::where(function($query) use ($uid, $target) {
             $query->where('from_uid', $uid)
                 ->where('target_uid', $target);
@@ -55,8 +47,8 @@ class ChatController extends Controller
                 $query->where('from_uid', $target)
                     ->where('target_uid', $uid);
             })
-            ->orderBy('id', 'desc')
-            ->paginate(20);
+            ->orderBy('created_at', 'desc')
+            ->get();
         $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate')
             ->whereIn('uid', [$uid, $target])
             ->get();
