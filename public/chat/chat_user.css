@@ -1,0 +1,377 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #202020; /* Dark background color for dark mode */
+    color: #ffffff; /* Font color for dark mode */
+}
+
+/* Chat container styles */
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    /*padding: 10px;*/
+}
+
+/* Chat bubble styles */
+.chat {
+    /*display: flex;*/
+    flex-direction: column; /* Stack chat bubbles vertically */
+    margin-bottom: 10px;
+    background-color: #111; /* Darker bubble background for dark mode */
+    /*border-radius: 8px;*/
+    padding: 0 0 4px 0;
+    /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
+}
+
+.chat-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 15px 0 12px 0;
+    /*border-bottom: 2px solid #222;*/
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #111;
+}
+
+.title-basic {
+    font-size:12px;
+    font-weight: lighter;
+    margin-top: 2px;
+}
+
+.title-more {
+    float: right;
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    font-weight: 700;
+    top: 20px;
+    font-family: system-ui;
+    padding: 0 10px 10px 10px;
+    cursor: pointer;
+}
+
+.chat-title a {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+/* Chat bubble contents styles */
+.chat-left, .chat-right {
+    /*display: flex;*/
+    flex-direction: column;
+    padding: 10px;
+    position: relative; /* Required for positioning the pseudo-element */
+    /*min-height: 5em;*/
+    overflow: auto;
+}
+
+/* Avatar styles */
+.chat-left .avatar {
+    float: left;
+}
+
+.chat-right .avatar {
+    float: right;
+}
+
+.avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Time and name styles */
+.name {
+    font-size: 12px;
+    color: #999;
+    /*margin-top: 30px;*/
+    font-weight: bold;
+}
+.name a {
+    text-decoration: none;
+    color: #999;
+}
+.name label {
+    color: hotpink;
+}
+
+.basic {
+    margin-top: 47px;
+    font-size: 12px;
+    position: absolute;
+    color: #999;
+    width: 40px;
+    text-align: center;
+}
+
+.chat-left .basic {
+}
+
+.chat-right .basic {
+    right: 10px;
+}
+
+.time {
+    font-size: 12px;
+    color: #999;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: -10px;
+    margin-top: 10px;
+    height: 20px;
+}
+
+/* Chat content styles */
+.contents {
+    font-size: 15px;
+    /*position: relative; !* Required for positioning the pseudo-element *!*/
+    padding: 10px 10px 8px 10px;
+    border-radius: 8px;
+    /*position: absolute;*/
+    /*top: 60px;*/
+    max-width: 80%;
+    overflow: auto;
+    height: 40px;
+}
+
+.contents-img {
+    padding: 0 10px;
+    max-width: 80%;
+    overflow: auto;
+}
+
+.contents-img img {
+    max-width: 40px;
+}
+.contents-video img {
+    max-width: 80%;
+}
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    cursor: pointer;
+}
+.chat-right .play-button {
+    left: 60%;
+}
+.chat-right .contents-img {
+    text-align: right;
+}
+
+/* Chat direction styles */
+.chat-left {
+    align-items: flex-start;
+    /* Left bubble background color */
+}
+
+.chat-right {
+    align-items: flex-end;
+    /* Right bubble background color */
+}
+
+/* Left bubble background color */
+.chat-left .contents {
+    background-color: #292929; /* Darker beige for dark mode */
+    left: 60px;
+    float: left;
+    margin-left: 10px;
+    height: auto;
+}
+
+/* Right bubble background color */
+.chat-right .contents {
+    background-color: #1a78cf; /* Darker blue for dark mode */
+    right: 60px;
+    float: right;
+    margin-right: 10px;
+    height: auto;
+}
+.chat-right .contents-img {
+    float:right;
+    right: 60px;
+}
+
+.info {
+    position: absolute;
+    /*top: 10px;*/
+}
+
+.chat-left .info {
+    left: 60px;
+}
+
+.chat-right .info {
+    right: 60px;
+}
+
+.chat-refresh {
+    position: fixed;
+    z-index: 100;
+    top: 200px;
+    right: 0;
+}
+
+.chat-refresh img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 0 0 10px;
+}
+
+.icon {
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+
+.chat-left .icon {
+    left: 45px;
+}
+
+.icon img {
+    width: 10px;
+    height: 10px;
+}
+
+.alert {
+    display:none;
+    position: fixed;
+    top: 26px;
+    width: 600px;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    padding: 15px 0;
+    background-color: #ffcc00;
+    border: 1px solid #ffcc00;
+    /*    background-color: #ffc107;
+        border: 1px solid #ff9800;
+    */
+    border-radius: 1px;
+    animation: fadeInOut 3s ease-in-out; /* 鍔ㄧ敾鎸佺画鏃堕棿 */
+    z-index: 1000;
+}
+
+/* 寮圭獥鏍峰紡 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #111;
+    margin: 30% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 琛ㄥ崟鏍峰紡 */
+form {
+    font-size: 14px;
+}
+
+label {
+    display: inline;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+    width: -webkit-fill-available;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.submit-container {
+    width: 100%;
+    text-align: right;
+}
+
+#remove_real_avatar_no {
+    margin-left: 20px;
+}
+
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    10%, 90% {
+        opacity: 1;
+    }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .chat-container {
+        max-width: 100%;
+    }
+
+    .chat {
+        flex-direction: column;
+    }
+
+    .chat-left, .chat-right {
+        max-width: 100%;
+    }
+}
