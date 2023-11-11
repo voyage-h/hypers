@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/chat/chat_index.css">
 </head>
 <body>
-<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.jpeg"></a></div>
+<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.png"></a></div>
 <div class="container">
     @foreach($users as $user)
         <div class="user-container">
@@ -16,7 +16,8 @@
             <div class="avatar">
                 <img src="{{$user->avatar}}" alt="">
             </div>
-            <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}</div>
+            <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
+            </div>
             <div class="basic">{{$user->height}}/{{$user->weight}}/{{$user->role}}</div>
             <div class="private">{{date('m-d H:i', $user->last_operate)}}{{$user->location ? ' · ' . $user->location->address : ''}}</div>
             </a>
