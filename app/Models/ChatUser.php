@@ -14,4 +14,9 @@ class ChatUser extends Model
     {
         return $this->hasOne(Note::class, 'target_uid', 'uid');
     }
+
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'uid', 'uid');
+    }
 }

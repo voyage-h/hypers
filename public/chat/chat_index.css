@@ -56,10 +56,11 @@ body {
 
 /* Time and name styles */
 .name {
-    font-size: 12px;
-    color: #999;
+    font-size: 14px;
+    color: aliceblue;
     /*margin-top: 30px;*/
     font-weight: bold;
+    padding-top: 6px;
 }
 .user a {
     text-decoration: none;
@@ -71,4 +72,41 @@ body {
 
 .container {
     column-count: 2;
+}
+.chat-refresh, .chat-home {
+    position: fixed;
+    z-index: 100;
+    top: 200px;
+    right: 0;
+}
+
+.chat-home {
+    top: 300px;
+}
+
+.chat-refresh img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 0 0 10px;
+}
+
+.chat-home img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px 0 0 10px;
+}
+
+.basic {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+.private {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    position: relative;
+    margin-top: 10px;
+    height: 20px;
+    padding: 0 14px;
 }

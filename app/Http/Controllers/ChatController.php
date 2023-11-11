@@ -14,7 +14,7 @@ class ChatController extends Controller
     public function index()
     {
         $users = ChatUser::where('is_suspect', 1)
-            ->with('note')
+            ->with('note', 'location')
             ->orderBy('id', 'desc')
             ->get();
         return view('chat.index', compact('users'));
@@ -277,5 +277,48 @@ class ChatController extends Controller
         $show = $user->is_suspect == 1 ? 'follow' : 'unfollow';
         $user->save();
         return redirect("/chat/$me/{$target}?show=$show");
+    }
+
+    public function indexRefresh()
+    {
+        $users = ChatUser::where('is_suspect', 1)->get();
+        $uids = array_column($users->toArray(), 'uid');
+        $new_users = $this->retrieveUsers($uids);
+        foreach ($new_users as $k => $new_user) {
+            $this->updateLocation($new_user);
+        }
+        foreach ($users as $user) {
+            $last_operate = $new_users[$user->uid]['last_operate'] ?? 0;
+            $name = $new_users[$user->uid]['name'] ?? '';
+            $avatar = $new_users[$user->uid]['avatar'] ?? '';
+            $description = $new_users[$user->uid]['description'] ?? '';
+            $role = $new_users[$user->uid]['role'] ?? '';
+            $weight = $new_users[$user->uid]['weight'] ?? '';
+            $height = $new_users[$user->uid]['height'] ?? '';
+
+            if ($last_operate > $user->last_operate) {
+                $user->last_operate = $last_operate;
+            }
+            if ($name && $name != $user->name) {
+                $user->name = $name;
+            }
+            if ($avatar && $avatar != $user->avatar) {
+                $user->avatar = $avatar;
+            }
+            if ($description && $description != $user->description) {
+                $user->description = $description;
+            }
+            if ($role && $role != $user->role) {
+                $user->role = $role;
+            }
+            if ($weight && $weight != $user->weight) {
+                $user->weight = $weight;
+            }
+            if ($height && $height != $user->height) {
+                $user->height = $height;
+            }
+            $user->save();
+        }
+        return redirect('/');
     }
 }
