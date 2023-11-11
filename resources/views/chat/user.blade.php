@@ -9,7 +9,7 @@
 <body>
 <div class="chat-container">
     <div class="alert alert-warning" id="alertWarning"></div>
-    <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.jpeg" data-target={{$me->uid}}></a></div>
+    <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     @foreach($users as $user)
         <div class="chat">

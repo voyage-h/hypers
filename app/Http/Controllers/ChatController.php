@@ -15,7 +15,7 @@ class ChatController extends Controller
     {
         $users = ChatUser::where('is_suspect', 1)
             ->with('note', 'location')
-            ->orderBy('id', 'desc')
+            ->orderBy('last_operate', 'desc')
             ->get();
         return view('chat.index', compact('users'));
     }
@@ -34,7 +34,7 @@ class ChatController extends Controller
             $users = ChatUser::whereIn('uid', array_keys($uids))
                 ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
-                ->simplePaginate(50);
+                ->paginate(50);
             foreach ($users as $i => $user) {
                 if ($user->uid == $uid) {
                     unset($users[$i]);
@@ -140,7 +140,7 @@ class ChatController extends Controller
     {
         // 最近20天
         $end = date('Y-m-d', strtotime('+1 day'));
-        $start = date('Y-m-d', strtotime('-20 day'));
+        $start = date('Y-m-d', strtotime('-5 day'));
         $raw_data = $this->retrieveChats($uid, $start, $end);
         if (! empty($raw_data)) {
             // 插入数据库
