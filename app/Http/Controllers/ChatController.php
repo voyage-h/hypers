@@ -148,7 +148,7 @@ class ChatController extends Controller
     {
         // 最近20天
         $end = date('Y-m-d', strtotime('+1 day'));
-        $start = date('Y-m-d', strtotime('-5 day'));
+        $start = date('Y-m-d', strtotime('-10 day'));
         $raw_data = $this->retrieveChats($uid, $start, $end);
         if (! empty($raw_data)) {
             // 插入数据库
@@ -167,6 +167,9 @@ class ChatController extends Controller
                     DB::table('chats')->insertOrIgnore($insert_datas);
                     $insert_datas = [];
                 }
+            }
+            if (! empty($insert_datas)) {
+                DB::table('chats')->insertOrIgnore($insert_datas);
             }
             $new_uids = array_keys($new_uids);
             $new_users = $this->retrieveUsers($new_uids);
@@ -206,15 +209,16 @@ class ChatController extends Controller
     {
         try {
             $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
-                ->timeout(1)
+                ->timeout(5)
                 ->get('10.120.208.16:8004/api-chatlog/recent/query', [
                     'uid'       => $me,
                     'direction' => 'both',
                     'beginDate' => "$start 00:00:00",
-                    'endDate'   => "$end 00:00:00",
+                    'endDate'   => date('Y-m-d H:i:s'),
                     'limit'     => $limit,
                 ]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return [];
         }
         try {
@@ -288,6 +292,9 @@ class ChatController extends Controller
         $user->is_suspect = $user->is_suspect == 1 ? 0 : 1;
         $show = $user->is_suspect == 1 ? 'follow' : 'unfollow';
         $user->save();
+        if (empty($me)) {
+            return redirect("/chat/user/{$target}");
+        }
         return redirect("/chat/$me/{$target}?show=$show");
     }
 

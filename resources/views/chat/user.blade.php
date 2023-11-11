@@ -11,7 +11,6 @@
     <div class="alert alert-warning" id="alertWarning"></div>
     <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
-
     <div class="user" data-id="{{$me->id}}">
         <div class="user-avatar">
             <a href="https://app.blued.cn/user?id={{$me->hashid}}$&uid={{$me->hashid}}&action=profile&app=1&enc=1">
@@ -24,6 +23,11 @@
         <div class="user-private">
             @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
             {{$me->location ? ' · ' . $me->location->address : ''}}
+        </div>
+        <div class="follow">
+            <a href="/chat/user/0/follow/{{$me->uid}}">
+            {{$me->is_suspect ? '取消关注' : '关注'}}
+            </a>
         </div>
     </div>
 

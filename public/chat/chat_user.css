@@ -425,8 +425,8 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
 }
 .user img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 }
 .user-name {
@@ -452,4 +452,14 @@ button[type="submit"]:hover {
     margin-top: 10px;
     height: 20px;
     padding: 0 14px;
+}
+.follow {
+    position: absolute;
+    top: 50px;
+    margin-left: 380px;
+}
+.follow a {
+    text-decoration: none;
+    color: darkorange;
+    margin: 0 10px;
 }
