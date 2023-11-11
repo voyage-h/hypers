@@ -27,11 +27,10 @@ Route::middleware('auth')->group(function () {
 //    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-		
-//    Route::middleware('hash_uid')->group(function () {
-        Route::get('/chat/user/{me}', [ChatController::class, 'user']);
-        Route::get('/chat/detail/{me}/with/{target}', [ChatController::class, 'detail']);
-//    });
+
+    Route::get('/chat/user/{me}', [ChatController::class, 'user']);
+    Route::get('/chat/user/{me}/refresh', [ChatController::class, 'refresh']);
+    Route::get('/chat/{me}/{target}', [ChatController::class, 'detail']);
 });
 
 require __DIR__.'/auth.php';

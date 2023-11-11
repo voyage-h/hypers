@@ -51,7 +51,7 @@
                     <div class="avatar">
                         <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
                     </div>
-                    @include('chat.detail.content')
+                    @include('chat.detail.content', ['contents' => $chat->contents])
                 </div>
             </div>
         @endforeach

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatUser;
 use App\Models\Chat;
-use Hashids\Hashids;
+use Illuminate\Support\Facades\Redis;
 
 class ChatController extends Controller
 {
@@ -15,19 +15,21 @@ class ChatController extends Controller
      */
     public function user(int $uid)
     {
-        $users = ChatUser::whereIn('uid', function($query) use ($uid) {
-            $query->select('from_uid')
-                ->from('chats')
-                ->where('from_uid', $uid)
-                ->orWhere('target_uid', $uid)
-                ->distinct();
-        })
-            ->simplePaginate(100);
-        foreach ($users as $i => $user) {
-			if ($user->uid == $uid) {
-			    unset($users[$i]);
-			}
+        // 使用redis分页
+        $uids = Redis::zrevrange("chat:{$uid}", 0, -1, 'WITHSCORES');
+        $users = [];
+        if (! empty($uids)) {
+            $users = ChatUser::whereIn('uid', array_keys($uids))
+                ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
+                ->simplePaginate(20);
+            foreach ($users as $i => $user) {
+                if ($user->uid == $uid) {
+                    unset($users[$i]);
+                }
+                $user->last_chat_time = date('m-d H:i', $uids[$user->uid]);
+            }
         }
+
 		$me = ChatUser::where('uid', $uid)->first();
         return view('chat.user', compact('users', 'me'));
     }
@@ -62,7 +64,6 @@ class ChatController extends Controller
         $me = $users[$uid] ?? [];
 
         return view('chat.detail', compact('chats', 'me'));
-
     }
 
     /**
@@ -103,5 +104,25 @@ class ChatController extends Controller
         $me = $users[$uid] ?? [];
 
         return view('chat.detail', compact('chats', 'me'));
+    }
+
+    /**
+     * 刷新聊天列表
+     *
+     * @return mixed
+     */
+    public function refresh(int $uid)
+    {
+        $chats = Chat::where('from_uid', $uid)
+            ->orWhere('target_uid', $uid)
+            ->select('from_uid', 'target_uid', 'created_at')
+            ->get();
+        // 插入到redis
+        foreach ($chats as $chat) {
+            $target_uid = $chat->from_uid == $uid ? $chat->target_uid : $chat->from_uid;
+            Redis::zadd("chat:{$uid}", $chat->created_at->timestamp, $target_uid);
+        }
+
+        return redirect("/chat/user/{$uid}");
     }
 }
