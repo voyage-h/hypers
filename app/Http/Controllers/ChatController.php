@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatUser;
 use App\Models\Chat;
+use Hashids\Hashids;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ class ChatController extends Controller
             $users = ChatUser::whereIn('uid', array_keys($uids))
                 ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
-                ->paginate(50);
+                ->simplePaginate(50);
             foreach ($users as $i => $user) {
                 if ($user->uid == $uid) {
                     unset($users[$i]);
@@ -54,7 +55,14 @@ class ChatController extends Controller
         }
 
 		$me = ChatUser::where('uid', $uid)->first();
+        $me->hashid = $this->hashid($uid);
         return view('chat.user', compact('users', 'me'));
+    }
+
+    private function hashid(int $uid)
+    {
+        $hashids = new Hashids('1766', 6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123567890');
+        return $hashids->encode($uid);
     }
 
     /**

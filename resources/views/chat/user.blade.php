@@ -11,6 +11,22 @@
     <div class="alert alert-warning" id="alertWarning"></div>
     <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
+
+    <div class="user" data-id="{{$me->id}}">
+        <div class="user-avatar">
+            <a href="https://app.blued.cn/user?id={{$me->hashid}}$&uid={{$me->hashid}}&action=profile&app=1&enc=1">
+            <img src="{{$me->avatar}}" alt="">
+            </a>
+        </div>
+        <div class="user-name">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}
+        </div>
+        <div class="user-basic">{{$me->height}}/{{$me->weight}}/{{$me->role}}</div>
+        <div class="user-private">
+            @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
+            {{$me->location ? ' · ' . $me->location->address : ''}}
+        </div>
+    </div>
+
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>

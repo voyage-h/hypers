@@ -1,14 +1,14 @@
-@if($chat->created_at->isToday())
+@if($time->isToday())
     <!-- 如果是今天，只展示小时 -->
-    <div class="time">{{$chat->created_at->format('H:i')}}</div>
-@elseif ($chat->created_at->isYesterday())
+    {{$time->format('H:i')}}
+@elseif ($time->isYesterday())
     <!-- 如果是昨天，展示昨天和小时 -->
-    <div class="time">昨天 {{$chat->created_at->format('H:i')}}</div>
-@elseif ($chat->created_at->isCurrentYear())
+    昨天 {{$time->format('H:i')}}
+@elseif ($time->isCurrentYear())
     <!-- 如果是今年，展示月日和小时 -->
-    <div class="time">{{$chat->created_at->format('m-d H:i')}}</div>
+    {{$time->format('m-d H:i')}}
 @else
     <!-- 如果是去年，展示年月日和小时 -->
-    <div class="time">{{$chat->created_at}}</div>
+    {{$time}}
 @endif
 

@@ -413,3 +413,43 @@ button[type="submit"]:hover {
     color: #999;
     margin: 0 10px;
 }
+
+.user {
+    /*display: flex;*/
+    background-color: #111; /* Darker bubble background for dark mode */
+    /*border-radius: 8px;*/
+    padding: 10px 0;
+    /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
+    text-align: center;
+    min-height: 220px;
+    margin-bottom: 10px;
+}
+.user img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.user-name {
+    font-size: 16px;
+    color: aliceblue;
+    margin-top: 10px;
+}
+.user-name a {
+    text-decoration: none;
+    color: aliceblue;
+}
+.user-basic {
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+    padding-top: 4px;
+}
+.user-private {
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+    position: relative;
+    margin-top: 10px;
+    height: 20px;
+    padding: 0 14px;
+}

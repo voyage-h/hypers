@@ -52,9 +52,13 @@
             <div class="chat-content">
                 <div class="chat-{{$chat->from_uid != $me->uid ? 'left': 'right'}}">
                     @if($key == 0)
-                        @include('chat.detail.time')
+                        <div class="time">
+                        @include('chat.detail.time', ['time' => $chat->created_at])
+                        </div>
                     @elseif($chat->created_at->diffInMinutes($chats[$key - 1]->created_at) > 5)
-                        @include('chat.detail.time')
+                        <div class="time">
+                        @include('chat.detail.time', ['time' => $chat->created_at])
+                        </div>
                     @endif
                     <div class="avatar">
                         <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
