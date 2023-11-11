@@ -196,15 +196,19 @@ class ChatController extends Controller
      */
     private function retrieveChats(int $me, string $start, string $end, int $limit = 10000)
     {
-        $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
-        ->timeout(1)
-        ->get('10.120.208.16:8004/api-chatlog/recent/query', [
-            'uid'       => $me,
-            'direction' => 'both',
-            'beginDate' => "$start 00:00:00",
-            'endDate'   => "$end 00:00:00",
-            'limit'     => $limit,
-        ]);
+        try {
+            $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
+                ->timeout(1)
+                ->get('10.120.208.16:8004/api-chatlog/recent/query', [
+                    'uid'       => $me,
+                    'direction' => 'both',
+                    'beginDate' => "$start 00:00:00",
+                    'endDate'   => "$end 00:00:00",
+                    'limit'     => $limit,
+                ]);
+        } catch (\Exception $e) {
+            return [];
+        }
         try {
             $data = Items::fromString($res->body(), ['pointer' => ['/data']]);
         } catch (\JsonMachine\Exception\JsonMachineException $e) {

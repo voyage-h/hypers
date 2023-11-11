@@ -18,7 +18,7 @@
             </div>
             <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}</div>
             <div class="basic">{{$user->height}}/{{$user->weight}}/{{$user->role}}</div>
-            <div class="private">{{date('m-d H:i', $user->last_operate)}}{{$user->location ? ' @ ' . $user->location->address : ''}}</div>
+            <div class="private">{{date('m-d H:i', $user->last_operate)}}{{$user->location ? ' · ' . $user->location->address : ''}}</div>
             </a>
         </div>
         </div>
