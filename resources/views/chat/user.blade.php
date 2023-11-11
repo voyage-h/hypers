@@ -13,7 +13,7 @@
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
-                <a href='b7oaXl.html'>{{$user->name}}</a>
+                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}</a>
                 <div class="title-basic">{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/' . $user->role : ''}}</div>
             </div>
             <div class="chat-content">
@@ -22,12 +22,15 @@
                         <a href="{{url('/chat/user/'.$user->uid)}}"><img src="{{$user->avatar}}"/></a>
                         <a href=""><img src="{{$me->avatar}}"/></a>
                     </div>
-                    <div class="time">{{$user->last_chat_time}}</div>
+                    <div class="time">{{$user->last_chat_time}}  🕛  互动{{$user->chat_count}}次</div>
                     <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}">>>> more</a></div>
                 </div>
              </div>
         </div>
     @endforeach
 </div>
+@if($users)
+<div class="page">{{$users->links()}}</div>
+@endif
 </body>
 </html>

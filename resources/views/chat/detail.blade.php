@@ -33,7 +33,7 @@
 
 <div class="chat-container">
     <div class="alert alert-warning" id="alertWarning"></div>
-    <div class="chat-refresh"><img id="refreshButton" src="/chat/refresh.jpeg" data-target=KmBGa2></div>
+    <div class="chat-refresh"><a href="/chat/detail/{{$me->uid}}/refresh"><img src="/chat/refresh.jpeg"></a></div>
     <div class="chat">
         <div class="chat-title" data-name={{$chats[0]->name}}>
             <a href='b7oaXl.html'>{{$chats[0]->name}}</a>
