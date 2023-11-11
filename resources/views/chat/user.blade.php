@@ -10,10 +10,11 @@
 <div class="chat-container">
     <div class="alert alert-warning" id="alertWarning"></div>
     <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.jpeg" data-target={{$me->uid}}></a></div>
+    <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
-                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}</a>
+                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}</a>
                 <div class="title-basic">{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/' . $user->role : ''}}</div>
             </div>
             <div class="chat-content">
@@ -22,8 +23,8 @@
                         <a href="{{url('/chat/user/'.$user->uid)}}"><img src="{{$user->avatar}}"/></a>
                         <a href=""><img src="{{$me->avatar}}"/></a>
                     </div>
-                    <div class="time">{{$user->last_chat_time}}  🕛  互动{{$user->chat_count}}次</div>
-                    <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}">>>> more</a></div>
+                    <div class="time">{{$user->last_chat_time}} ~ 互动 <b>{{$user->chat_count}}</b> 次</div>
+                    <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}"><b>>>> more</b></a></div>
                 </div>
              </div>
         </div>

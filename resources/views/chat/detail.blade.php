@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/chat_detail.css">
-    <script src="/chat/doubleclick_scroll.js"></script>
+{{--    <script src="/chat/doubleclick_scroll.js"></script>--}}
 </head>
 <body>
 <!-- 弹窗容器 -->
@@ -32,13 +32,21 @@
 </div>
 
 <div class="chat-container">
-    <div class="alert alert-warning" id="alertWarning"></div>
-    <div class="chat-refresh"><a href="/chat/detail/{{$me->uid}}/refresh"><img src="/chat/refresh.jpeg"></a></div>
+    @switch(request()->input('show'))
+        @case('follow')
+        <div class="alert alert-warning">关注成功</div>
+        @break
+        @case('unfollow')
+        <div class="alert alert-warning">取消关注成功</div>
+        @break
+    @endswitch
+    <div class="chat-refresh"><a href="/chat/detail/{{$me->uid}}/refresh" id="refreshButton" data-target="{{$target->uid}}}"><img src="/chat/refresh.jpeg"></a></div>
+    <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     <div class="chat">
-        <div class="chat-title" data-name={{$chats[0]->name}}>
-            <a href='b7oaXl.html'>{{$chats[0]->name}}</a>
-            <div class="title-basic">179/67</div>
-            <div class="title-more" data-target=b7oaXl>•••</div>
+        <div class="chat-title" data-name={{$target->name}}>
+            <a href="#">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>
+            <div class="title-basic">{{$target->height}}/{{$target->weight}}/{{$target->role}}</div>
+            <div class="title-more" data-target={{$target->uid}}><a href="/chat/user/{{$me->uid}}/follow/{{$target->uid}}">•••</a></div>
         </div>
         @foreach($chats as $key => $chat)
             <div class="chat-content">

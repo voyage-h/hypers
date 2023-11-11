@@ -15,6 +15,7 @@ class ChatController extends Controller
     {
         $users = ChatUser::where('is_suspect', 1)
             ->with('note')
+            ->orderBy('id', 'desc')
             ->get();
         return view('chat.index', compact('users'));
     }
@@ -31,6 +32,7 @@ class ChatController extends Controller
         $users = [];
         if (! empty($uids)) {
             $users = ChatUser::whereIn('uid', array_keys($uids))
+                ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
                 ->simplePaginate(50);
             foreach ($users as $i => $user) {
@@ -72,7 +74,8 @@ class ChatController extends Controller
             })
             ->orderBy('created_at', 'asc')
             ->get();
-        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate')
+        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
+            ->with('note')
             ->whereIn('uid', [$uid, $target])
             ->get();
         $users = $users->keyBy('uid');
@@ -83,8 +86,9 @@ class ChatController extends Controller
             $chat->last_operate = $user->last_operate ?? 0;
         }
         $me = $users[$uid] ?? [];
+        $target = $users[$target] ?? [];
 
-        return view('chat.detail', compact('chats', 'me'));
+        return view('chat.detail', compact('chats', 'me', 'target'));
     }
 
     /**
@@ -188,17 +192,19 @@ class ChatController extends Controller
      * @param string $end
      * @param int    $limit
      *
+     * @return Items|void
      */
     private function retrieveChats(int $me, string $start, string $end, int $limit = 10000)
     {
         $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
-            ->get('10.120.208.16:8004/api-chatlog/recent/query', [
-                'uid'       => $me,
-                'direction' => 'both',
-                'beginDate' => "$start 00:00:00",
-                'endDate'   => "$end 00:00:00",
-                'limit'     => $limit,
-            ]);
+        ->timeout(1)
+        ->get('10.120.208.16:8004/api-chatlog/recent/query', [
+            'uid'       => $me,
+            'direction' => 'both',
+            'beginDate' => "$start 00:00:00",
+            'endDate'   => "$end 00:00:00",
+            'limit'     => $limit,
+        ]);
         try {
             $data = Items::fromString($res->body(), ['pointer' => ['/data']]);
         } catch (\JsonMachine\Exception\JsonMachineException $e) {
@@ -208,6 +214,11 @@ class ChatController extends Controller
         return $data;
     }
 
+    /**
+     * @param array $uids
+     *
+     * @return array
+     */
     private function retrieveUsers(array $uids)
     {
         if (empty($uids)) {
@@ -216,15 +227,25 @@ class ChatController extends Controller
         $uids_arr = array_chunk($uids, 200);
         $users    = [];
         foreach ($uids_arr as $uids) {
-            $_users = Http::get("http://10.160.80.133:9999/users/batch", [
-                'uids'         => implode(',', $uids),
-                'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude',
-            ]);
+            try {
+                $_users = Http::timeout(2)
+                    ->get("http://10.160.80.133:9999/users/batch", [
+                        'uids'         => implode(',', $uids),
+                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude',
+                    ]);
+            } catch (\Exception $e) {
+                break;
+            }
             $users = array_merge($users, $_users->json()['data'] ?? []);
         }
         return array_column($users, null,'uid');
     }
 
+    /**
+     * @param array $me_info
+     *
+     * @return array|void
+     */
     private function updateLocation(array $me_info)
     {
         if (empty($me_info)) {
@@ -247,5 +268,14 @@ class ChatController extends Controller
             'created_at' => time()
         ];
         DB::table('locations')->insertOrIgnore($locations);
+    }
+
+    public function follow(int $me, int $target)
+    {
+        $user = ChatUser::where('uid', $target)->first();
+        $user->is_suspect = $user->is_suspect == 1 ? 0 : 1;
+        $show = $user->is_suspect == 1 ? 'follow' : 'unfollow';
+        $user->save();
+        return redirect("/chat/$me/{$target}?show=$show");
     }
 }

@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/user/{me}', [ChatController::class, 'user']);
     Route::get('/chat/user/{me}/refresh', [ChatController::class, 'refresh']);
     Route::get('/chat/{me}/{target}', [ChatController::class, 'detail']);
+    Route::get('/chat/user/{me}/follow/{target}', [ChatController::class, 'follow']);
 });
 
 require __DIR__.'/auth.php';
