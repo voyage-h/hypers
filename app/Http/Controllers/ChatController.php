@@ -7,9 +7,18 @@ use App\Models\Chat;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
+use JsonMachine\Items;
 
 class ChatController extends Controller
 {
+    public function index()
+    {
+        $users = ChatUser::where('is_suspect', 1)
+            ->with('note')
+            ->get();
+        return view('chat.index', compact('users'));
+    }
+
     /**
      * 用户列表
      *
@@ -131,23 +140,21 @@ class ChatController extends Controller
         $raw_data = $this->retrieveChats($uid, $start, $end);
         if (! empty($raw_data)) {
             // 插入数据库
-            $datas = $raw_data->json()['data'] ?? [];
-            $datas_arr = array_chunk($datas, 1000);
             $new_uids = [];
-            foreach ($datas_arr as $datas) {
-                $insert_datas = [];
-                foreach ($datas as $data) {
-                    $new_uids[$data['from_uid']] = 1;
-                    $new_uids[$data['target']]   = 1;
-                    $insert_datas[] = [
-                        'from_uid' => $data['from_uid'],
-                        'target_uid' => $data['target'],
-                        'contents' => $data['contents'],
-                        'S' => $data['S'],
-                        'created_at' => $data['time'],
-                    ];
+            foreach ($raw_data as $value) {
+                $new_uids[$value->from_uid] = 1;
+                $new_uids[$value->target]   = 1;
+                $insert_datas[] = [
+                    'from_uid' => $value->from_uid,
+                    'target_uid'   => $value->target,
+                    'contents' => $value->contents,
+                    'S'        => $value->S,
+                    'created_at'     => $value->time,
+                ];
+                if (count($insert_datas) >= 1000) {
+                    DB::table('chats')->insertOrIgnore($insert_datas);
+                    $insert_datas = [];
                 }
-                //DB::table('chats')->insertOrIgnore($insert_datas);
             }
             $new_uids = array_keys($new_uids);
             $new_users = $this->retrieveUsers($new_uids);
@@ -184,7 +191,7 @@ class ChatController extends Controller
      */
     private function retrieveChats(int $me, string $start, string $end, int $limit = 10000)
     {
-        return Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
+        $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
             ->get('10.120.208.16:8004/api-chatlog/recent/query', [
                 'uid'       => $me,
                 'direction' => 'both',
@@ -192,6 +199,13 @@ class ChatController extends Controller
                 'endDate'   => "$end 00:00:00",
                 'limit'     => $limit,
             ]);
+        try {
+            $data = Items::fromString($res->body(), ['pointer' => ['/data']]);
+        } catch (\JsonMachine\Exception\JsonMachineException $e) {
+            echo $e->getMessage() . PHP_EOL;
+            exit;
+        }
+        return $data;
     }
 
     private function retrieveUsers(array $uids)

@@ -15,10 +15,6 @@ use App\Http\Controllers\ChatController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -28,6 +24,7 @@ Route::middleware('auth')->group(function () {
 //    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/', [ChatController::class, 'index']);
     Route::get('/chat/user/{me}', [ChatController::class, 'user']);
     Route::get('/chat/user/{me}/refresh', [ChatController::class, 'refresh']);
     Route::get('/chat/{me}/{target}', [ChatController::class, 'detail']);
