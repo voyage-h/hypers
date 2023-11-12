@@ -133,7 +133,6 @@ body {
 }
 .time label {
     font-size: 18px;
-    color: white;
 }
 .more {
     width: 100%;
@@ -475,4 +474,8 @@ button[type="submit"]:hover {
     text-decoration: none;
     color: darkorange;
     /*margin: 0 10px;*/
+}
+
+.hot {
+    color: darkorange;
 }
