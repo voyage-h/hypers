@@ -1,6 +1,7 @@
 // 记录上一次滚动位置
 var lastScrollTop = 0;
 var page = 1;
+var meUid;
 
 // 监听滚动事件
 window.addEventListener('scroll', function() {
@@ -17,32 +18,34 @@ window.addEventListener('scroll', function() {
 
         // 如果页面滚动到底部
         if (distanceToBottom < threshold) {
+            meUid = document.querySelector('.chat-list').getAttribute('data-uid');
             // 执行你想要的动作，这里是在控制台输出一条消息
             // alert('ttt');
             // 请求数据
             // 调用 getChatUsers 函数，并传递一个回调函数
-            getChatUsers(function(error, data) {
+            getChatUsers(function(error, res) {
                 if (error) {
                     console.error('Error:', error);
-                } else if (data.users.data) {
+                } else if (res.users.data) {
+                    var me = res.me;
                     // 遍历数组
                     var html = '';
-                    for (k in data.users.data) {
-                        let user = data.users.data[k];
+                    for (k in res.users.data) {
+                        let user = res.users.data[k];
                         html += `
                         <div class="chat">
                         <div class="chat-title">
-                            <a href='/chat/22418941/'` + user.uid + `>` + user.name + `</a>
+                            <a href='/chat/` + me.uid + `/'` + user.uid + `>` + user.name + `</a>
                             <div class="title-basic">` + user.height + '/' + user.weight + `</div>
                         </div>
                         <div class="chat-content">
                             <div class="chat-left">
                                 <div class="avatar">
                                     <a href="/chat/user/"` + user.uid + ` ><img src="` + user.avatar + `"/></a>
-                                    <a href=""><img src="https://www.bldimg.com/userfiles/022/418/941/52002!Head.jpg"/></a>
+                                    <a href=""><img src="` + me.avatar + `"/></a>
                                 </div>
                                 <div class="time">` + user.last_operate + ` · 互动 <label class="">` + user.chat_count + `</label> 次</div>
-                                <div class="more"><a href="/chat/22418941/"` + user.uid + `><b>>>> more</b></a></div>
+                                <div class="more"><a href="/chat/` + me.uid + `/"` + user.uid + `><b>>>> more</b></a></div>
                             </div>
                          </div>
                          </div>`
@@ -62,7 +65,7 @@ window.addEventListener('scroll', function() {
 // 请求数据
 function getChatUsers(callback) {
     page += 1;
-    var url = '/api/chat/user/22418941?page=' + page;
+    var url = '/api/chat/user/' + meUid +'?page=' + page;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
     xhr.send();
@@ -71,7 +74,7 @@ function getChatUsers(callback) {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var data = JSON.parse(xhr.responseText);
-                console.log(url, data.users.data);
+                console.log(url, data);
                 callback(null, data); // 将数据传递给回调函数
             } else {
                 callback(xhr.status); // 将错误状态传递给回调函数

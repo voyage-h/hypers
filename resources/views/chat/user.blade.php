@@ -35,7 +35,7 @@
 
     </div>
 
-    <div class="chat-list">
+    <div class="chat-list" data-uid="{{$me->uid}}">
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
