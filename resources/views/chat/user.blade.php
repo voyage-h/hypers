@@ -26,10 +26,10 @@
             </div>
             <div class="user-basic">{{$me->height}} / {{$me->weight}} / {{$me->role}}</div>
             <div class="user-desc">{{$me->description}}</div>
-        </div>
-        <div class="user-private">
-            @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
-            {{$me->location ? ' · ' . $me->location->address : ''}}
+            <div class="user-private">
+                @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
+                {{$me->location ? ' · ' . $me->location->address : ''}}
+            </div>
         </div>
     </div>
 
