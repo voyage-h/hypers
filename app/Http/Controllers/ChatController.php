@@ -30,7 +30,7 @@ class ChatController extends Controller
      *
      * @return mixed
      */
-    public function user(int $uid)
+    public function user(int $uid, int $page = 1)
     {
         // 使用redis分页
         $uids = Redis::zrevrange("chat:{$uid}", 0, -1, 'WITHSCORES');
@@ -39,7 +39,7 @@ class ChatController extends Controller
             $users = ChatUser::whereIn('uid', array_keys($uids))
                 ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
-                ->simplePaginate(50);
+                ->simplePaginate(10);
 
             foreach ($users as $i => $user) {
                 if ($user->uid == $uid) {
@@ -70,6 +70,13 @@ class ChatController extends Controller
         $d->setTimestamp($me->birthday);
         $interval = $d->diff(new \DateTime('now'), true);
         $me->age = $interval->y;
+        // 如果是post请求，返回json
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            return response()->json([
+                'users' => $users,
+                'me'    => $me,
+            ]);
+        }
         return view('chat.user', compact('users', 'me'));
     }
 

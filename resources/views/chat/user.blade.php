@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/chat_user.css">
+    <script src="/chat/chat.js"></script>
 </head>
 <body>
 <div class="chat-container">
@@ -34,6 +35,7 @@
 
     </div>
 
+    <div class="chat-list">
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
@@ -52,9 +54,11 @@
              </div>
         </div>
     @endforeach
+    </div>
+
 </div>
-@if($users)
-<div class="page">{{$users->links()}}</div>
-@endif
+{{--@if($users)--}}
+{{--<div class="page">{{$users->links()}}</div>--}}
+{{--@endif--}}
 </body>
 </html>
