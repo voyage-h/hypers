@@ -12,6 +12,10 @@ use JsonMachine\Items;
 
 class ChatController extends Controller
 {
+    /**
+     * 首页
+     *
+     */
     public function index()
     {
         $users = ChatUser::where('is_suspect', 1)
@@ -22,7 +26,7 @@ class ChatController extends Controller
     }
 
     /**
-     * 用户列表
+     * 用户聊天列表
      *
      * @return mixed
      */
@@ -294,6 +298,11 @@ class ChatController extends Controller
             'created_at' => time()
         ];
         DB::table('locations')->insertOrIgnore($locations);
+        DB::table('chat_users')->where('uid', $me_info['uid'])->update([
+            'description' => $me_info['description'],
+            'last_operate' => $me_info['last_operate'],
+            'birthday' => $me_info['birthday'],
+        ]);
     }
 
     public function follow(int $me, int $target)
