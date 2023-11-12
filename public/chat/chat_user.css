@@ -132,8 +132,7 @@ body {
     height: 20px;
 }
 .time label {
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     color: white;
 }
 .more {
@@ -456,7 +455,7 @@ button[type="submit"]:hover {
 .follow {
     position: absolute;
     top: 50px;
-    margin-left: 380px;
+    margin-left: 280px;
 }
 .follow a {
     text-decoration: none;

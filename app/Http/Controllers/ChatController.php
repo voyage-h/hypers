@@ -40,7 +40,12 @@ class ChatController extends Controller
                 if ($user->uid == $uid) {
                     unset($users[$i]);
                 }
-                $user->last_chat_time = date('m-d H:i', $uids[$user->uid]);
+				$time = $uids[$user->uid];
+				if (date('Y-m-d') == date('Y-m-d', $time)) {
+                    $user->last_chat_time = date('H:i', $time);
+				} else {
+                    $user->last_chat_time = date('m-d H:i', $time);
+				}
                 $chat_count = Chat::where(function($query) use ($uid, $user) {
                     $query->where('from_uid', $uid)
                         ->where('target_uid', $user->uid);
