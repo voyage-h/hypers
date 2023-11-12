@@ -399,12 +399,13 @@ button[type="submit"]:hover {
 }
 
 .page {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 50px;
     margin-bottom: 50px;
+    color: #999;
 }
 .page a {
     text-decoration: none;

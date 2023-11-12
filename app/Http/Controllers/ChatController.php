@@ -40,7 +40,7 @@ class ChatController extends Controller
             $users = ChatUser::whereIn('uid', array_keys($uids))
                 ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
-                ->simplePaginate(10);
+                ->simplePaginate(40);
 
             foreach ($users as $i => $user) {
                 if ($user->uid == $uid) {

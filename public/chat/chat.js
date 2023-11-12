@@ -2,6 +2,7 @@
 var lastScrollTop = 0;
 var page = 1;
 var meUid;
+var hasData = true;
 
 // 监听滚动事件
 window.addEventListener('scroll', function() {
@@ -17,20 +18,18 @@ window.addEventListener('scroll', function() {
         var threshold = 20;
 
         // 如果页面滚动到底部
-        if (distanceToBottom < threshold) {
+        if (hasData && distanceToBottom < threshold) {
             meUid = document.querySelector('.chat-list').getAttribute('data-uid');
             // 执行你想要的动作，这里是在控制台输出一条消息
             // alert('ttt');
             // 请求数据
             // 调用 getChatUsers 函数，并传递一个回调函数
             getChatUsers(function(error, res) {
-                if (error) {
-                    console.error('Error:', error);
-                } else if (res.users.data) {
+                if (res.users.data && res.users.data.length > 0) {
                     var me = res.me;
                     // 遍历数组
                     var html = '';
-                    for (k in res.users.data) {
+                    for (let k in res.users.data) {
                         let user = res.users.data[k];
                         let labelClass = user.chat_count >= 100 ? 'hot' : 'label-default';
                         html += `
@@ -54,6 +53,10 @@ window.addEventListener('scroll', function() {
                     if (html) {
                         document.querySelector('.chat-list').innerHTML += html;
                     }
+                } else {
+                    hasData = false;
+                    console.log('没有更多数据了');
+                    document.querySelector('.page').style.display = 'flex';
                 }
             });
         }
