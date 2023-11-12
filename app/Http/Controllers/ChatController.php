@@ -268,7 +268,7 @@ class ChatController extends Controller
                 $_users = Http::timeout(2)
                     ->get("http://10.160.80.133:9999/users/batch", [
                         'uids'         => implode(',', $uids),
-                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude,birthday',
+                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude,birthday,dev_id',
                     ]);
             } catch (\Exception $e) {
                 break;
@@ -309,6 +309,7 @@ class ChatController extends Controller
             'description' => $me_info['description'],
             'last_operate' => $me_info['last_operate'],
             'birthday' => $me_info['birthday'],
+            'dev_id' => $me_info['dev_id'],
         ]);
     }
 
