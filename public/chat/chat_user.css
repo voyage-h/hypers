@@ -424,8 +424,8 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
 }
 .user img {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     border-radius: 10%;
 }
 .user-avatar {
@@ -436,9 +436,8 @@ button[type="submit"]:hover {
 .user-info {
     position: absolute;
     top: 0;
-    margin-left: 240px;
+    margin-left: 220px;
     text-align: left;
-    width: 340px;
 }
 .user-name {
     font-size: 20px;
@@ -458,20 +457,22 @@ button[type="submit"]:hover {
 .user-desc {
     font-size: 15px;
     color: #999;
-    padding: 10px 0;
+    padding: 10px 10px 10px 0;
 }
 .user-private {
     font-size: 14px;
     color: #999;
-    margin-top: 40px;
+    text-align: left;
+    padding: 10px 20px;
 }
 .follow {
-    position: absolute;
-    top: 20px;
-    right: 0;
+    /*position: absolute;*/
+    /*top: 20px;*/
+    /*right: 0;*/
+    margin-bottom: 5px;
 }
 .follow a {
     text-decoration: none;
     color: darkorange;
-    margin: 0 10px;
+    /*margin: 0 10px;*/
 }
