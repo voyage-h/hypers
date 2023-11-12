@@ -257,7 +257,7 @@ class ChatController extends Controller
                 $_users = Http::timeout(2)
                     ->get("http://10.160.80.133:9999/users/batch", [
                         'uids'         => implode(',', $uids),
-                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude',
+                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude,birthday',
                     ]);
             } catch (\Exception $e) {
                 break;
@@ -324,6 +324,7 @@ class ChatController extends Controller
             $role = $new_users[$user->uid]['role'] ?? '';
             $weight = $new_users[$user->uid]['weight'] ?? '';
             $height = $new_users[$user->uid]['height'] ?? '';
+			$birthday = $new_users[$user->uid]['birthday'] ?? 0;
 
             if ($last_operate > $user->last_operate) {
                 $user->last_operate = $last_operate;
@@ -346,6 +347,9 @@ class ChatController extends Controller
             if ($height && $height != $user->height) {
                 $user->height = $height;
             }
+			if ($birthday && $birthday > $user->birthday) {
+			    $user->birthday = $birthday;
+			}
             $user->save();
         }
         return redirect('/');
