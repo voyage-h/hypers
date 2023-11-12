@@ -21,7 +21,7 @@
             <div class="basic">{{$user->height}}/{{$user->weight}}/{{$user->role}}</div>
             <div class="private">
                 @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($user->last_operate)])
-                {{$user->location ? ' · ' . $user->location->address : ''}}</div>
+                {{$user->location ? ' · ' . substr($user->location->address, 0, 6) : ''}}</div>
             </a>
         </div>
         </div>
