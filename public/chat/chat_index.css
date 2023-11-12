@@ -37,6 +37,7 @@ body {
     display: flex;
     flex-direction: column; /* Stack chat bubbles vertically */
     margin-bottom: 10px;
+    break-inside: avoid;
 }
 
 .user {
@@ -72,7 +73,7 @@ body {
 }
 
 .container {
-    /*column-count: 2;*/
+    column-count: 2;
 }
 .chat-refresh, .chat-home {
     position: fixed;
