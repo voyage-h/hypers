@@ -32,20 +32,21 @@ window.addEventListener('scroll', function() {
                     var html = '';
                     for (k in res.users.data) {
                         let user = res.users.data[k];
+                        let labelClass = user.chat_count >= 100 ? 'hot' : 'label-default';
                         html += `
                         <div class="chat">
                         <div class="chat-title">
-                            <a href='/chat/` + me.uid + `/'` + user.uid + `>` + user.name + `</a>
-                            <div class="title-basic">` + user.height + '/' + user.weight + `</div>
+                            <a href='/chat/` + me.uid + `/` + user.uid + `'>` + user.name + `</a>
+                            <div class="title-basic">` + user.height + '/' + user.weight + `/` + user.role + `</div>
                         </div>
                         <div class="chat-content">
                             <div class="chat-left">
                                 <div class="avatar">
-                                    <a href="/chat/user/"` + user.uid + ` ><img src="` + user.avatar + `"/></a>
-                                    <a href=""><img src="` + me.avatar + `"/></a>
+                                    <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
+                                    <a href="#"><img src="` + me.avatar + `"/></a>
                                 </div>
-                                <div class="time">` + user.last_operate + ` · 互动 <label class="">` + user.chat_count + `</label> 次</div>
-                                <div class="more"><a href="/chat/` + me.uid + `/"` + user.uid + `><b>>>> more</b></a></div>
+                                <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次</div>
+                                <div class="more"><a href="/chat/` + me.uid + `/` + user.uid + `"><b>>>> more</b></a></div>
                             </div>
                          </div>
                          </div>`
