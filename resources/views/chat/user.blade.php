@@ -24,7 +24,7 @@
                     {{$me->is_suspect ? '取消关注' : '关注'}}
                 </a>
             </div>
-            <div class="user-basic">{{$me->height}} / {{$me->weight}} / {{$me->role}}</div>
+            <div class="user-basic">{{$me->age}} / {{$me->height}} / {{$me->weight}} / {{$me->role}}</div>
             <div class="user-desc">{{$me->description}}</div>
             <div class="user-private">
                 @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])

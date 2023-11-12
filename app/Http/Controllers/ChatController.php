@@ -36,6 +36,7 @@ class ChatController extends Controller
                 ->with('note')
                 ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
                 ->simplePaginate(50);
+
             foreach ($users as $i => $user) {
                 if ($user->uid == $uid) {
                     unset($users[$i]);
@@ -61,6 +62,10 @@ class ChatController extends Controller
 
 		$me = ChatUser::where('uid', $uid)->first();
         $me->hashid = $this->hashid($uid);
+        $d = new \DateTime();
+        $d->setTimestamp($me->birthday);
+        $interval = $d->diff(new \DateTime('now'), true);
+        $me->age = $interval->y;
         return view('chat.user', compact('users', 'me'));
     }
 
