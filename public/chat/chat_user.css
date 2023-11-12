@@ -424,38 +424,55 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
 }
 .user img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+}
+.user-avatar {
+    text-align: left;
+    margin: 10px 0 0 20px;
+    width: 150px;
+}
+.user-info {
+    position: absolute;
+    top: 0;
+    margin-left: 240px;
+    width: 400px;
+    text-align: left;
 }
 .user-name {
-    font-size: 16px;
-    color: aliceblue;
-    margin-top: 10px;
+    font-size: 20px;
+    color: currentcolor;
+    padding: 20px 0;
+    font-weight: bold;
 }
 .user-name a {
     text-decoration: none;
     color: aliceblue;
 }
 .user-basic {
-    font-size: 14px;
+    font-size: 15px;
     color: #999;
-    text-align: center;
     padding-top: 4px;
+}
+.user-desc {
+    font-size: 15px;
+    color: #999;
+    padding: 10px 0;
 }
 .user-private {
     font-size: 14px;
     color: #999;
-    text-align: center;
+    text-align: left;
     position: relative;
-    margin-top: 10px;
+    margin: 20px 10px 10px 10px;
     height: 20px;
-    padding: 0 14px;
+    padding: 0 15px;
 }
 .follow {
     position: absolute;
-    top: 50px;
-    margin-left: 280px;
+    top: 22px;
+    right: 80px;
 }
 .follow a {
     text-decoration: none;

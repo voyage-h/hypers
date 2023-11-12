@@ -14,20 +14,22 @@
     <div class="user" data-id="{{$me->id}}">
         <div class="user-avatar">
             <a href="https://app.blued.cn/user?id={{$me->hashid}}$&uid={{$me->hashid}}&action=profile&app=1&enc=1">
-            <img src="{{$me->avatar}}" alt="">
+            <img src="{{$me->avatar}}!o.png" alt="">
             </a>
         </div>
-        <div class="user-name">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}
+        <div class="user-info">
+            <div class="user-name">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</div>
+            <div class="follow">
+                <a href="/chat/user/0/follow/{{$me->uid}}">
+                    {{$me->is_suspect ? '取消关注' : '关注'}}
+                </a>
+            </div>
+            <div class="user-basic">{{$me->height}} / {{$me->weight}} / {{$me->role}}</div>
+            <div class="user-desc">{{$me->description}}</div>
         </div>
-        <div class="user-basic">{{$me->height}}/{{$me->weight}}/{{$me->role}}</div>
         <div class="user-private">
             @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
             {{$me->location ? ' · ' . $me->location->address : ''}}
-        </div>
-        <div class="follow">
-            <a href="/chat/user/0/follow/{{$me->uid}}">
-            {{$me->is_suspect ? '取消关注' : '关注'}}
-            </a>
         </div>
     </div>
 
