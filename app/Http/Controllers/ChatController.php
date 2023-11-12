@@ -66,9 +66,12 @@ class ChatController extends Controller
         }
 
         $me = ChatUser::where('uid', $uid)
-            ->with(['others' => function($q) use ($uid) {
-                $q->where('uid', '!=', $uid); // 排除当前用户的uid
-            }])->first();
+            ->with(['device' => function ($query) use ($uid) {
+                $query->with(['others' => function ($q) use ($uid) {
+                    $q->where('uid', '!=', $uid)->with('user');
+                }]);
+            }])
+            ->first();
 
         $me->hashid = $this->hashid($uid);
         $d = new \DateTime();

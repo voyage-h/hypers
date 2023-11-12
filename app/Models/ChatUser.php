@@ -20,8 +20,8 @@ class ChatUser extends Model
         return $this->hasOne(Location::class, 'uid', 'uid');
     }
 
-    public function others()
+    public function device()
     {
-        return $this->hasMany(ChatUser::class, 'dev_id', 'dev_id');
+        return $this->hasOne(UserDevice::class, 'uid', 'uid');
     }
 }
