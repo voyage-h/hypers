@@ -19,4 +19,9 @@ class ChatUser extends Model
     {
         return $this->hasOne(Location::class, 'uid', 'uid');
     }
+
+    public function others()
+    {
+        return $this->hasMany(ChatUser::class, 'dev_id', 'dev_id');
+    }
 }

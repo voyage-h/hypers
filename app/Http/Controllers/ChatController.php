@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatUser;
 use App\Models\Chat;
+use App\Models\UserDevice;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
@@ -30,7 +31,7 @@ class ChatController extends Controller
      *
      * @return mixed
      */
-    public function user(int $uid, int $page = 1)
+    public function user(int $uid)
     {
         // 使用redis分页
         $uids = Redis::zrevrange("chat:{$uid}", 0, -1, 'WITHSCORES');
@@ -64,7 +65,11 @@ class ChatController extends Controller
             }
         }
 
-		$me = ChatUser::where('uid', $uid)->first();
+        $me = ChatUser::where('uid', $uid)
+            ->with(['others' => function($q) use ($uid) {
+                $q->where('uid', '!=', $uid); // 排除当前用户的uid
+            }])->first();
+
         $me->hashid = $this->hashid($uid);
         $d = new \DateTime();
         $d->setTimestamp($me->birthday);
@@ -201,6 +206,7 @@ class ChatController extends Controller
             foreach ($new_users as $k => $new_user) {
                 unset($new_users[$k]['latitude']);
                 unset($new_users[$k]['longitude']);
+                unset($new_users[$k]['dev_id']);
             }
             DB::table('chat_users')->insertOrIgnore(array_values($new_users));
         }
@@ -309,8 +315,14 @@ class ChatController extends Controller
             'description' => $me_info['description'],
             'last_operate' => $me_info['last_operate'],
             'birthday' => $me_info['birthday'],
-            'dev_id' => $me_info['dev_id'],
         ]);
+        if ($me_info['dev_id']) {
+            Db::table('user_device')->insertOrIgnore([
+                'uid'    => $me_info['uid'],
+                'dev_id' => $me_info['dev_id'],
+                'created_at' => time(),
+            ]);
+        }
     }
 
     public function follow(int $me, int $target)
