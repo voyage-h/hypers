@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 关注，取消关注
     var btnFollow = document.getElementById('btn-follow');
-    btnFollow.addEventListener('click', function() {
+    btnFollow.addEventListener('click', function () {
         var uid = btnFollow.getAttribute('data-uid');
         var follow = btnFollow.getAttribute('data-value');
         var url = '/api/chat/user/follow/' + uid;
@@ -108,18 +108,76 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
         // 发送请求
         xhr.send();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     btnFollow.textContent = follow == 1 ? '关注' : '取消关注';
                 } else {
                     warning.style.display = 'block';
                     warning.textContent = '网络错误，请稍后再试';
-                    setTimeout(function() {
+                    setTimeout(function () {
                         warning.style.display = 'none';
                     }, 2000);
                 }
             }
         };
     });
+
+    // 修改备注
+    const pencil = document.getElementById('icon-pencil');
+    const modal = document.getElementById('myModal');
+    const closeModal = document.querySelector('.close');
+    const form = document.getElementById("userForm"); // 获取表单元素
+    const content = document.getElementById('user-name-content');
+    const originalName = content.attributes['data-value'].value;
+    pencil.addEventListener('click', function () {
+        modal.style.display = 'block';
+    });
+    // 点击关闭按钮时关闭弹窗
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // 在用户点击弹窗外部区域时关闭弹窗
+    window.addEventListener('touchstart', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    // 提交表单
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const note = document.getElementById("modal-note").value;
+        const uid  = document.getElementById("modal-uid").value;
+        const formData = new FormData();
+        formData.append("note", note);
+
+        var url = '/api/chat/user/' + uid + '/note/' + note;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        // 添加鉴权头
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        // 发送请求
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                modal.style.display = 'none';
+                if (xhr.status == 200) {
+                    if (note != "") {
+                        content.textContent = originalName + '(' + note + ')';
+                    } else {
+                        content.textContent = originalName;
+                    }
+                } else {
+                    warning.style.display = 'block';
+                    warning.textContent = '网络错误，请稍后再试';
+                    setTimeout(function () {
+                        warning.style.display = 'none';
+                    }, 2000);
+                }
+            }
+        };
+
+    });
+
 });

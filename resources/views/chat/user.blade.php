@@ -19,7 +19,9 @@
             </a>
         </div>
         <div class="user-info">
-            <div class="user-name">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</div>
+            <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
+                <img id="icon-pencil" src="/chat/pencil.png">
+            </div>
             <div class="follow">
                 <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">
                     {{$me->is_suspect ? '取消关注' : '关注'}}
@@ -58,5 +60,6 @@
 {{--@if($users)--}}
 {{--<div class="page">{{$users->links()}}</div>--}}
 {{--@endif--}}
+@include('chat.detail.modal', ['uid' => $me->uid])
 </body>
 </html>

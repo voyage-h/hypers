@@ -419,7 +419,7 @@ button[type="submit"]:hover {
     min-height: 220px;
     margin-bottom: 10px;
 }
-.user img {
+.user-avatar img {
     width: 200px;
     height: 200px;
     border-radius: 10%;
@@ -470,7 +470,12 @@ button[type="submit"]:hover {
     color: darkorange;
     /*margin: 0 10px;*/
 }
-
 .hot {
     color: darkorange;
+}
+#icon-pencil {
+    width: 18px;
+    height: 18px;
+    margin-left: 6px;
+    cursor: pointer;
 }

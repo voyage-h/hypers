@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth.simple')->group(function() {
     Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
     Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);
+    Route::POST('/chat/user/{uid}/note/{note?}', [ChatController::class, 'apiNote']);
 });

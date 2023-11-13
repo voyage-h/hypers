@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatUser;
 use App\Models\Chat;
-use App\Models\UserDevice;
+use Carbon\Carbon;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 use JsonMachine\Items;
 
 class ChatController extends Controller
@@ -22,14 +21,12 @@ class ChatController extends Controller
     {
         $users = ChatUser::where('is_suspect', 1)
             ->with('note', 'location')
-            ->orderBy('last_operate', 'desc')
-            ->get();
-        $d = new \DateTime();
-		foreach($users as $user) {
-            $d->setTimestamp($user->birthday);
-            $interval = $d->diff(new \DateTime('now'), true);
-            $user->age = $interval->y;
-		}
+            ->orderByDesc('last_operate')
+            ->get()
+            ->map(function ($user) {
+                $user->age = $user->birthday ? Carbon::parse($user->birthday)->age : 0;
+                return $user;
+            });
         return view('chat.index', compact('users'));
     }
 
@@ -402,4 +399,15 @@ class ChatController extends Controller
         }
         return redirect('/');
     }
+
+    public function apiNote(int $uid, string $note = '')
+    {
+        $user = ChatUser::where('uid', $uid)->first();
+        if ($user) {
+            $user->note = $note;
+            $user->save();
+        }
+        return response()->json(['code' => 200, 'msg' => 'ok']);
+    }
+
 }
