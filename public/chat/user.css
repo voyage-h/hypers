@@ -474,8 +474,8 @@ button[type="submit"]:hover {
     color: darkorange;
 }
 #icon-pencil {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     margin-left: 6px;
     cursor: pointer;
 }
