@@ -20,7 +20,13 @@
             </div>
             <div class="basic">{{$user->height}}/{{$user->weight}}/{{$user->role}}</div>
             <div class="private">
-                @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($user->last_operate)])
+                @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))
+                    {{date('H:i', $user->last_operate)}}
+                @elseif(date('Y-m-d', $user->last_operate) == date('Y-m-d', strtotime('-1 day')))
+                    昨天
+                @else
+                    {{date('m-d', $user->last_operate)}}
+                @endif
                 {{$user->location ? ' · ' . substr($user->location->address, 0, 6) : ''}}</div>
             </a>
         </div>
