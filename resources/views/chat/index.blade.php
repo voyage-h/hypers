@@ -18,7 +18,7 @@
             </div>
             <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
             </div>
-            <div class="basic">{{$user->height}}/{{$user->weight}}/{{$user->role}}</div>
+            <div class="basic">{{$user->age ? $user->age . '/' : ''}}{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/'.$user->role : ''}}</div>
             <div class="private">
                 @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))
                     {{date('H:i', $user->last_operate)}}

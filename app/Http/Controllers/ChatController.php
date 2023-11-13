@@ -24,6 +24,12 @@ class ChatController extends Controller
             ->with('note', 'location')
             ->orderBy('last_operate', 'desc')
             ->get();
+        $d = new \DateTime();
+		foreach($users as $user) {
+            $d->setTimestamp($user->birthday);
+            $interval = $d->diff(new \DateTime('now'), true);
+            $user->age = $interval->y;
+		}
         return view('chat.index', compact('users'));
     }
 
