@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>{{env('APP_NAME')}}</title>
-    <link rel="stylesheet" href="/chat/chat_index.css">
+    <link rel="stylesheet" href="/chat/index.css">
 </head>
 <body>
 <div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.png"></a></div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/chat/user/{me}', [\App\Http\Controllers\ChatController::class, 'user']);
+Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
+Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);

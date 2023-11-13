@@ -89,3 +89,24 @@ function getChatUsers(callback) {
         }
     };
 }
+
+// 点击btn-follow，执行异步请求
+document.addEventListener('DOMContentLoaded', function() {
+    var btnFollow = document.getElementById('btn-follow');
+    btnFollow.addEventListener('click', function() {
+        var uid = btnFollow.getAttribute('data-uid');
+        var follow = btnFollow.getAttribute('data-value');
+        var url = '/api/chat/user/follow/' + uid;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.send();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    btnFollow.textContent = follow == 1 ? '关注' : '取消关注';
+                }
+            }
+        };
+
+    });
+});

@@ -9,6 +9,7 @@ use Hashids\Hashids;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 use JsonMachine\Items;
 
 class ChatController extends Controller
@@ -338,6 +339,15 @@ class ChatController extends Controller
             return redirect("/chat/user/{$target}");
         }
         return redirect("/chat/$me/{$target}?show=$show");
+    }
+    public function apiFollow(int $uid)
+    {
+        $user = ChatUser::where('uid', $uid)->first();
+        if ($user) {
+            $user->is_suspect = $user->is_suspect == 1 ? 0 : 1;
+            $user->save();
+        }
+        return response()->json(['code' => 200, 'msg' => 'ok']);
     }
 
     public function indexRefresh()

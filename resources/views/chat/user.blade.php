@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>{{$me->name}}</title>
-    <link rel="stylesheet" href="/chat/chat_user.css">
+    <link rel="stylesheet" href="/chat/user.css">
     <script src="/chat/chat.js"></script>
 </head>
 <body>
@@ -21,7 +21,7 @@
         <div class="user-info">
             <div class="user-name">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</div>
             <div class="follow">
-                <a href="/chat/user/0/follow/{{$me->uid}}">
+                <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">
                     {{$me->is_suspect ? '取消关注' : '关注'}}
                 </a>
             </div>
@@ -38,7 +38,7 @@
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
                 <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}</a>
-                <div class="title-basic">{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/' . $user->role : ''}}</div>
+                <div class="title-basic">{{$user->height}} / {{$user->weight}}{{$user->role >= 0 ? ' / ' . $user->role : ''}}</div>
             </div>
             <div class="chat-content">
                 <div class="chat-left">
