@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/user.css">
-    <script src="/chat/chat.js"></script>
+    <script src="/chat/user.js"></script>
 </head>
 <body>
 <div class="chat-container">
-    <div class="alert alert-warning" id="alertWarning"></div>
+    <div class="alert alert-warning" id="alertWarning">未知错误</div>
     <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     <div class="user" data-id="{{$me->id}}">

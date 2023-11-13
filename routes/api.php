@@ -18,6 +18,7 @@ use App\Http\Controllers\ChatController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
-Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);
+Route::middleware('auth.simple')->group(function() {
+    Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
+    Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);
+});

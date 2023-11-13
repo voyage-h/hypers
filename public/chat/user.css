@@ -281,11 +281,8 @@ body {
     padding: 15px 0;
     background-color: #ffcc00;
     border: 1px solid #ffcc00;
-    /*    background-color: #ffc107;
-        border: 1px solid #ff9800;
-    */
     border-radius: 1px;
-    animation: fadeInOut 3s ease-in-out; /* 鍔ㄧ敾鎸佺画鏃堕棿 */
+    animation: fadeInOut 4s ease-in-out;
     z-index: 1000;
 }
 
