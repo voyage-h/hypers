@@ -94,7 +94,37 @@ function getChatUsers(callback) {
 }
 document.addEventListener('DOMContentLoaded', function() {
     // 警告
-    var warning = document.getElementById('alertWarning');
+    const warning = document.getElementById('alertWarning');
+
+    const btnRefresh = document.getElementById('btn-refresh');
+    btnRefresh.addEventListener('click', function () {
+        btnRefresh.style.display = 'none';
+        const refresh_uid = btnRefresh.getAttribute('data-target');
+        var url = '/api/chat/user/' + refresh_uid + '/refresh';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        // 添加鉴权头
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        // 发送请求
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    let res = JSON.parse(xhr.responseText);
+                    if (res.users.data && res.users.data.length > 0) {
+                        // 刷新
+                        location.reload();
+                    }
+                } else {
+                    warning.style.display = 'block';
+                    warning.textContent = '网络错误，请稍后再试';
+                    setTimeout(function () {
+                        warning.style.display = 'none';
+                    }, 2000);
+                }
+            }
+        };
+    });
 
     // 关注，取消关注
     var btnFollow = document.getElementById('btn-follow');

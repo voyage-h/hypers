@@ -10,7 +10,8 @@
 <body>
 <div class="chat-container">
     <div class="alert alert-warning" id="alertWarning">未知错误</div>
-    <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>
+{{--    <div class="chat-refresh"><a href="/chat/user/{{$me->uid}}/refresh"><img src="/chat/refresh.png" data-target={{$me->uid}}></a></div>--}}
+    <div class="chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="/chat/refresh.png"></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     <div class="user" data-id="{{$me->id}}">
         <div class="user-avatar">

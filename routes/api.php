@@ -22,4 +22,6 @@ Route::middleware('auth.simple')->group(function() {
     Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
     Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);
     Route::POST('/chat/user/{uid}/note/{note?}', [ChatController::class, 'apiNote']);
+    Route::POST('/chat/user/{me}/refresh', [ChatController::class, 'refresh']);
+
 });

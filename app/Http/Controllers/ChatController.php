@@ -228,6 +228,10 @@ class ChatController extends Controller
             Redis::zadd("chat:{$uid}", $chat->created_at->timestamp, $target_uid);
         }
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            return $this->user($uid);
+        }
+
         return redirect("/chat/user/{$uid}");
     }
 
