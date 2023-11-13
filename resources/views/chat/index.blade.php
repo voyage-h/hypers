@@ -14,7 +14,7 @@
         <div class="user" data-id="{{$user->id}}">
             <a href="/chat/user/{{$user->uid}}">
             <div class="avatar">
-                <img src="{{$user->avatar}}" alt="">
+                <img src="{{$user->avatar}}!o.png" alt="">
             </div>
             <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
             </div>

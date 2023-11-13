@@ -3,6 +3,7 @@ var lastScrollTop = 0;
 var page = 1;
 var meUid;
 var hasData = true;
+var isLoading = false;
 
 // 监听滚动事件
 window.addEventListener('scroll', function() {
@@ -18,13 +19,15 @@ window.addEventListener('scroll', function() {
         var threshold = 20;
 
         // 如果页面滚动到底部
-        if (hasData && distanceToBottom < threshold) {
+        if (!isLoading && hasData && distanceToBottom < threshold) {
             meUid = document.querySelector('.chat-list').getAttribute('data-uid');
+			isLoading = true;
             // 执行你想要的动作，这里是在控制台输出一条消息
             // alert('ttt');
             // 请求数据
             // 调用 getChatUsers 函数，并传递一个回调函数
             getChatUsers(function(error, res) {
+					isLoading = false;
                 if (res.users.data && res.users.data.length > 0) {
                     var me = res.me;
                     // 遍历数组
