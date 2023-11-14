@@ -147,18 +147,19 @@ body {
     height: 40px;
 }
 
-.contents-img {
+.contents-img, contents-video, contents-audio {
     padding: 0 10px;
     max-width: 80%;
     overflow: auto;
 }
 
 .contents-img img {
-    /*max-width: 40px;*/
-    max-width: 140px;
+    max-width: 180px;
+    border-radius: 5%;	
 }
 .contents-video img {
-    max-width: 80%;
+    max-width: 180px;
+    border-radius: 5%;	
 }
 .play-button {
     position: absolute;
@@ -172,6 +173,12 @@ body {
     left: 60%;
 }
 .chat-right .contents-img {
+    text-align: right;
+}
+.chat-right .contents-video {
+    text-align: right;
+}
+.chat-right .contents-audio {
     text-align: right;
 }
 
@@ -207,7 +214,14 @@ body {
     float:right;
     right: 60px;
 }
-
+.chat-right .contents-video {
+    float:right;
+    margin-right: 10px;
+}
+.chat-right .contents-audio {
+    float:right;
+    right: 60px;
+}
 .info {
     position: absolute;
     /*top: 10px;*/

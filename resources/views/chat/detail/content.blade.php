@@ -1,11 +1,24 @@
-@if (strpos($contents, 'http') === 0)
-    <!-- 如果以http开头 -->
-    <div class="contents-img" data-src="{{$contents}}">
-        <img src="{{$contents}}" />
-    </div>
-@elseif (strpos($contents, 'RU') === 0)
-    <!-- 如果以RU开头 -->
-    <div class="contents">[私图]</div>
+<!-- 如果以http开头 -->
+@if (str_starts_with($contents, 'http'))
+    <!-- 如果是视频 -->
+    @if (str_contains($contents, '.mp4'))
+        <div class="contents-video" data-src="{{$contents}}">
+            <a href="{{$contents}}"><img src="{{$contents}}"></a>
+        </div>
+    <!-- 如果是音频 -->
+    @elseif (str_contains($contents, '.mp3'))
+        <div class="contents">
+		    [语音]
+        </div>
+    <!-- 如果是其他文件 -->
+    @else
+        <div class="contents-img" data-src="{{$contents}}">
+            <img src="{{$contents}}" />
+        </div>
+    @endif
 @else
-    <div class="contents">{{ $contents }}</div>
+    <div class="contents">
+        {{str_starts_with($contents, 'RU') ? '[私图]' : $contents}}
+    </div>
 @endif
+
