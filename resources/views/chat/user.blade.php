@@ -19,7 +19,7 @@
             </a>
         </div>
         <div class="user-info">
-            <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
+            <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{mb_substr($me->name, 0, 15)}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
                 <img id="icon-pencil" src="/chat/pencil.png">
             </div>
             <div class="follow">

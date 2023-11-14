@@ -16,7 +16,7 @@
             <div class="avatar">
                 <img src="{{$user->avatar}}!o.png" alt="">
             </div>
-            <div class="name">{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
+            <div class="name">{{mb_substr($user->name, 0, 10)}}{{$user->note ? '(' . $user->note . ')' : ''}}
             </div>
             <div class="basic">{{$user->age ? $user->age . '/' : ''}}{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/'.$user->role : ''}}</div>
             <div class="private">

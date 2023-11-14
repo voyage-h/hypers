@@ -107,21 +107,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // 发送请求
         xhr.send();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    let res = JSON.parse(xhr.responseText);
-                    if (res.users && res.users.length > 0) {
-                        // 刷新
-                        location.reload();
-                    }
+		    let msg = '网络错误，请稍后再试';
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                if (res.users && res.users.length > 0) {
+                    // 刷新
+                    location.reload();
                 } else {
-                    warning.style.display = 'block';
-                    warning.textContent = '网络错误，请稍后再试';
-                    setTimeout(function () {
-                        warning.style.display = 'none';
-                    }, 2000);
-                }
-            }
+			        msg = '没有数据';	    
+				}
+			}
+            warning.style.display = 'block';
+            warning.textContent = msg;
+            setTimeout(function () {
+                warning.style.display = 'none';
+            }, 2000);
         };
     });
 
