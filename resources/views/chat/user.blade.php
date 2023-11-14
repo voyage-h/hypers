@@ -36,7 +36,7 @@
             {{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
     </div>
-    <div class="chat-list" data-uid="{{$me->uid}}">
+    <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>

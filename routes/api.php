@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ApiChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth.simple')->group(function() {
-    Route::POST('/chat/user/{me}', [ChatController::class, 'user']);
-    Route::POST('/chat/user/follow/{uid}', [ChatController::class, 'apiFollow']);
-    Route::POST('/chat/user/{uid}/note/{note?}', [ChatController::class, 'apiNote']);
-    Route::POST('/chat/user/{me}/refresh', [ChatController::class, 'refresh']);
-
+    Route::POST('/chat/user/{me}', [ApiChatController::class, 'user']);
+    Route::POST('/chat/user/follow/{uid}', [ApiChatController::class, 'follow']);
+    Route::POST('/chat/user/{uid}/note/{note?}', [ApiChatController::class, 'note']);
+    Route::POST('/chat/user/{me}/refresh', [ApiChatController::class, 'refresh']);
 });
