@@ -485,12 +485,16 @@ button[type="submit"]:hover {
 
 .user-others {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 0;
+    padding: 0 20px;
+	margin-top: 15px;
 }
+.other-avatar {
 
+}
 .other-avatar img {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }

@@ -39,7 +39,9 @@ class ChatController extends Controller
         $me = ChatUser::where('uid', $uid)
             ->with(['device' => function ($query) use ($uid) {
                 $query->with(['others' => function ($q) use ($uid) {
-                    $q->where('uid', '!=', $uid)->with('user');
+                    $q->where('uid', '!=', $uid)
+					->where('dev_id', '!=', '9478ae2765432087c59c5df2154741cc31c3e33e8f302f9ac2cb7e9ed30724c6')
+					->with('user')->limit(6);
                 }]);
             }])
             ->first();
