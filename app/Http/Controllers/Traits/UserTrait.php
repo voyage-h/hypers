@@ -168,6 +168,10 @@ trait UserTrait
         $device = DB::connection('domestic')
             ->table('users_dev')
             ->where('uid', $uid)->first();
+
+		if ($device->dev_id == '9478ae2765432087c59c5df2154741cc31c3e33e8f302f9ac2cb7e9ed30724c6') {
+		    return [];
+		}
         $users  = DB::connection('domestic')
             ->table('users_dev')
             ->where('dev_id', $device->dev_id)

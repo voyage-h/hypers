@@ -115,13 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     location.reload();
                 } else {
 			        msg = '没有数据';	    
+                    warning.style.display = 'block';
+                    warning.textContent = msg;
+                    setTimeout(function () {
+                        warning.style.display = 'none';
+                    }, 2000);
 				}
-			}
-            warning.style.display = 'block';
-            warning.textContent = msg;
-            setTimeout(function () {
-                warning.style.display = 'none';
-            }, 2000);
+    		}
         };
     });
 
