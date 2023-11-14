@@ -478,15 +478,18 @@ button[type="submit"]:hover {
 .normal {
     color: #f0f0f0;
 }
-#icon-pencil, #user-refresh {
+#icon-pencil {
     width: 16px;
     height: 16px;
     margin-left: 6px;
     cursor: pointer;
 }
-#user-refresh {
-    width: 20px;
-    height: 20px;
+#user-refresh img {
+    width: 30px;
+    height: 30px;
+}
+.other-avatar-btn {
+    margin-top:10px;
 }
 
 .user-others {
