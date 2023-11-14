@@ -6,10 +6,11 @@ use App\Models\ChatUser;
 use App\Models\Chat;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use JsonMachine\Items;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
-use JsonMachine\Items;
+use Illuminate\Support\Facades\Cache;
 
 class ChatController extends Controller
 {
@@ -37,51 +38,59 @@ class ChatController extends Controller
      */
     public function user(int $uid)
     {
-        // 使用redis分页
-        $uids = Redis::zrevrange("chat:{$uid}", 0, -1, 'WITHSCORES');
-        $users = [];
-        if (! empty($uids)) {
-            $users = ChatUser::whereIn('uid', array_keys($uids))
-                ->with('note')
-                ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
-                ->simplePaginate(40);
+        $page = $_REQUEST['page'] ?? 1;
+        $data = Cache::tags("chat:user:$uid")->rememberForever("chat:user:$uid:page:$page", function() use ($uid) {
+            // 使用redis分页
+            $uids = Redis::zrevrange("chat:{$uid}", 0, -1, 'WITHSCORES');
+            $users = [];
+            if (! empty($uids)) {
+                $users = ChatUser::whereIn('uid', array_keys($uids))
+                    ->with('note')
+                    ->orderByRaw("FIELD(uid, " . implode(',', array_keys($uids)) . ")")
+                    ->simplePaginate(40);
 
-            foreach ($users as $i => $user) {
-                if ($user->uid == $uid) {
-                    unset($users[$i]);
-                }
-				$time = $uids[$user->uid];
-				if (date('Y-m-d') == date('Y-m-d', $time)) {
-                    $user->last_chat_time = date('H:i', $time);
-				} else {
-                    $user->last_chat_time = date('m-d H:i', $time);
-				}
-                $chat_count = Chat::where(function($query) use ($uid, $user) {
-                    $query->where('from_uid', $uid)
-                        ->where('target_uid', $user->uid);
-                })
-                    ->orWhere(function($query) use ($uid, $user) {
-                        $query->where('from_uid', $user->uid)
-                            ->where('target_uid', $uid);
+                foreach ($users as $i => $user) {
+                    if ($user->uid == $uid) {
+                        unset($users[$i]);
+                    }
+                    $time = $uids[$user->uid];
+                    if (date('Y-m-d') == date('Y-m-d', $time)) {
+                        $user->last_chat_time = date('H:i', $time);
+                    } else {
+                        $user->last_chat_time = date('m-d H:i', $time);
+                    }
+                    $chat_count = Chat::where(function($query) use ($uid, $user) {
+                        $query->where('from_uid', $uid)
+                            ->where('target_uid', $user->uid);
                     })
-                    ->count();
-                $user->chat_count = $chat_count;
+                        ->orWhere(function($query) use ($uid, $user) {
+                            $query->where('from_uid', $user->uid)
+                                ->where('target_uid', $uid);
+                        })
+                        ->count();
+                    $user->chat_count = $chat_count;
+                }
             }
-        }
 
-        $me = ChatUser::where('uid', $uid)
-            ->with(['device' => function ($query) use ($uid) {
-                $query->with(['others' => function ($q) use ($uid) {
-                    $q->where('uid', '!=', $uid)->with('user');
-                }]);
-            }])
-            ->first();
+            $me = ChatUser::where('uid', $uid)
+                ->with(['device' => function ($query) use ($uid) {
+                    $query->with(['others' => function ($q) use ($uid) {
+                        $q->where('uid', '!=', $uid)->with('user');
+                    }]);
+                }])
+                ->first();
 
-        $me->hashid = $this->hashid($uid);
-        $d = new \DateTime();
-        $d->setTimestamp($me->birthday);
-        $interval = $d->diff(new \DateTime('now'), true);
-        $me->age = $interval->y;
+            $hashids = new Hashids('1766', 6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123567890');
+            $me->hashid = $hashids->encode($uid);
+            $d = new \DateTime();
+            $d->setTimestamp($me->birthday);
+            $interval = $d->diff(new \DateTime('now'), true);
+            $me->age = $interval->y;
+            return compact('users', 'me');
+        });
+        $users = $data['users'];
+        $me = $data['me'];
+
         // 如果是post请求，返回json
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return response()->json([
@@ -92,12 +101,6 @@ class ChatController extends Controller
         return view('chat.user', compact('users', 'me'));
     }
 
-    private function hashid(int $uid)
-    {
-        $hashids = new Hashids('1766', 6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123567890');
-        return $hashids->encode($uid);
-    }
-
     /**
      * 聊天详情
      *
@@ -105,71 +108,38 @@ class ChatController extends Controller
      */
     public function detail(int $uid, int $target)
     {
-        $chats = Chat::where(function($query) use ($uid, $target) {
-            $query->where('from_uid', $uid)
-                ->where('target_uid', $target);
-        })
-            ->orWhere(function($query) use ($uid, $target) {
-                $query->where('from_uid', $target)
-                    ->where('target_uid', $uid);
+        $data = Cache::tags("chat:user:$uid")->rememberForever("chat:user:$uid:with:$target", function() use ($uid, $target) {
+            $chats = Chat::where(function($query) use ($uid, $target) {
+                $query->where('from_uid', $uid)
+                    ->where('target_uid', $target);
             })
-            ->orderBy('created_at', 'asc')
-            ->get();
-        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
-            ->with('note')
-            ->whereIn('uid', [$uid, $target])
-            ->get();
-        $users = $users->keyBy('uid');
-        foreach ($chats as &$chat) {
-            $user = $users[$chat->from_uid] ?? [];
-            $chat->name   = $user->name ?? '';
-            $chat->avatar = $user->avatar ?? '';
-            $chat->last_operate = $user->last_operate ?? 0;
-        }
-        $me = $users[$uid] ?? [];
-        $target = $users[$target] ?? [];
+                ->orWhere(function($query) use ($uid, $target) {
+                    $query->where('from_uid', $target)
+                        ->where('target_uid', $uid);
+                })
+                ->orderBy('created_at', 'asc')
+                ->get();
+            $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
+                ->with('note')
+                ->whereIn('uid', [$uid, $target])
+                ->get();
+            $users = $users->keyBy('uid');
+            foreach ($chats as &$chat) {
+                $user = $users[$chat->from_uid] ?? [];
+                $chat->name   = $user->name ?? '';
+                $chat->avatar = $user->avatar ?? '';
+                $chat->last_operate = $user->last_operate ?? 0;
+            }
+            $me = $users[$uid] ?? [];
+            $target = $users[$target] ?? [];
+            return compact('chats', 'me', 'target');
+        });
+
+        $chats = $data['chats'];
+        $me = $data['me'];
+        $target = $data['target'];
 
         return view('chat.detail', compact('chats', 'me', 'target'));
-    }
-
-    /**
-     * 聊天列表
-     *
-     * @return mixed
-     */
-    public function list()
-    {
-        $uid = $_REQUEST['me'];
-        $_chats = Chat::where('from_uid', $uid)
-            ->orWhere('target_uid', $uid)
-            ->paginate(20);
-        $uids = [];
-        foreach ($_chats as $chat) {
-            $uids[$chat->from_uid]   = 1;
-            $uids[$chat->target_uid] = 1;
-        }
-        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate')
-            ->whereIn('uid', array_keys($uids))
-            ->get();
-        $users = $users->keyBy('uid');
-        foreach ($_chats as &$chat) {
-            $user = $users[$chat->from_uid] ?? [];
-            $chat->name   = $user->name ?? '';
-            $chat->avatar = $user->avatar ?? '';
-            $chat->last_operate = $user->last_operate ?? 0;
-        }
-        // 聚合
-        $chats = [];
-        foreach ($_chats as $chat) {
-            if ($chat->from_uid == $uid) {
-                $chats[$chat->target_uid][] = $chat;
-            } else {
-                $chats[$chat->from_uid][] = $chat;
-            }
-        }
-        $me = $users[$uid] ?? [];
-
-        return view('chat.detail', compact('chats', 'me'));
     }
 
     /**
@@ -179,6 +149,9 @@ class ChatController extends Controller
      */
     public function refresh(int $uid)
     {
+        // 删除缓存
+        Cache::tags("chat:user:$uid")->flush();
+
         // 最近20天
         $end = date('Y-m-d', strtotime('+1 day'));
         $start = date('Y-m-d', strtotime('-10 day'));
