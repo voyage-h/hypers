@@ -176,7 +176,35 @@ trait UserTrait
             ->table('users_dev')
             ->where('dev_id', $device->dev_id)
             ->where('uid', '!=', $uid)
+            ->limit(6)
             ->get();
         return array_column($users->toArray(),'dev_id', 'uid');
+    }
+
+    /**
+     * 获取用户位置
+     *
+     * @param array $user
+     *
+     * @return array
+     */
+    public function getLocation(array $user): array
+    {
+        $lat = $user['latitude'] ?? 0;
+        $lng = $user['longitude'] ?? 0;
+        $_local = Http::get("https://restapi.amap.com/v3/geocode/regeo?parameters", [
+            'key' => '0ad23cbd2c0bd21b4b4fa5b84f2fe763',
+            'location' => "$lng,$lat",
+        ]);
+        $_local = $_local->json()['regeocode'] ?? [];
+        return [
+            'uid'          => $user['uid'],
+            'last_operate' => $user['last_operate'],
+            'latitude'     => $lat,
+            'longitude'    => $lng,
+            'address'      => $_local['formatted_address'] ?? '',
+            'extra'        => json_encode($_local['addressComponent'], JSON_UNESCAPED_UNICODE),
+            'created_at'   => time()
+        ];
     }
 }

@@ -147,4 +147,107 @@ class ApiChatController extends Controller
 
         return $this->user($uid);
     }
+
+
+    /**
+     * 更新用户信息
+     *
+     * @param int $uid
+     *
+     * @return JsonResponse
+     */
+    public function refreshUser(int $uid): JsonResponse
+    {
+        // 获取多账号信息
+        $other_uids = $this->getOtherUids($uid);
+        $all_uids   = array_merge([$uid], array_keys($other_uids));
+        $all_users  = $this->retrieveUsers($all_uids);
+
+        foreach ($other_uids as $other_uid => $dev_id) {
+            $user = $all_users[$other_uid] ?? [];
+            if (empty($user)) {
+                continue;
+            }
+            // 更新设备
+            DB::table('user_device')->insertOrIgnore([
+                'uid'        => $other_uid,
+                'dev_id'     => $dev_id,
+                'created_at' => time(),
+            ]);
+
+            // 更新位置
+            $location = $this->getLocation($user);
+            DB::table('locations')->insertOrIgnore($location);
+
+            // 更新用户
+            unset($user['latitude']);
+            unset($user['longitude']);
+            unset($user['dev_id']);
+            DB::table('chat_users')->insertOrIgnore($user);
+        }
+
+        $me = $all_users[$uid] ?? [];
+        unset($all_users[$uid]);
+        return response()->json([
+            'me'     => $me,
+            'others' => $all_users,
+        ]);
+    }
+
+    /**
+     * 更新聊天信息
+     *
+     * @param int $uid
+     *
+     * @return JsonResponse
+     */
+    public function refreshChats(int $uid): JsonResponse
+    {
+        // 最近10天
+        $end   = date('Y-m-d', strtotime('+1 day'));
+        $start = date('Y-m-d', strtotime('-10 day'));
+        $raw_data = $this->retrieveChats($uid, $start, $end);
+        if (! empty($raw_data)) {
+            // 插入数据库
+            $new_uids = [];
+            foreach ($raw_data as $value) {
+                $new_uids[$value->from_uid] = 1;
+                $new_uids[$value->target]   = 1;
+                $insert_datas[] = [
+                    'from_uid' => $value->from_uid,
+                    'target_uid'   => $value->target,
+                    'contents' => $value->contents,
+                    'S'        => $value->S,
+                    'created_at'     => $value->time,
+                ];
+                if (count($insert_datas) >= 1000) {
+                    DB::table('chats')->insertOrIgnore($insert_datas);
+                    $insert_datas = [];
+                }
+            }
+            if (! empty($insert_datas)) {
+                DB::table('chats')->insertOrIgnore($insert_datas);
+            }
+            $new_uids = array_keys($new_uids);
+            $new_users = $this->retrieveUsers($new_uids);
+            foreach ($new_users as $k => $new_user) {
+                unset($new_users[$k]['latitude']);
+                unset($new_users[$k]['longitude']);
+                unset($new_users[$k]['dev_id']);
+            }
+            DB::table('chat_users')->insertOrIgnore(array_values($new_users));
+        }
+
+        $chats = Chat::where('from_uid', $uid)
+            ->orWhere('target_uid', $uid)
+            ->select('from_uid', 'target_uid', 'created_at')
+            ->get();
+        // 插入到redis
+        foreach ($chats as $chat) {
+            $target_uid = $chat->from_uid == $uid ? $chat->target_uid : $chat->from_uid;
+            Redis::zadd("chat:{$uid}", $chat->created_at->timestamp, $target_uid);
+        }
+
+        return $this->user($uid);
+    }
 }

@@ -19,8 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth.simple')->group(function() {
-    Route::POST('/chat/user/{me}', [ApiChatController::class, 'user']);
-    Route::POST('/chat/user/follow/{uid}', [ApiChatController::class, 'follow']);
-    Route::POST('/chat/user/{uid}/note/{note?}', [ApiChatController::class, 'note']);
-    Route::POST('/chat/user/{me}/refresh', [ApiChatController::class, 'refresh']);
+    Route::prefix('chat/user')->group(function() {
+        Route::POST('/{me}', [ApiChatController::class, 'user']);
+        Route::POST('/follow/{uid}', [ApiChatController::class, 'follow']);
+        Route::POST('/{uid}/note/{note?}', [ApiChatController::class, 'note']);
+        Route::POST('/{me}/refresh', [ApiChatController::class, 'refresh']);
+        Route::POST('/{me}/refresh_user', [ApiChatController::class, 'refreshUser']);
+        Route::POST('/{me}/refresh_chat', [ApiChatController::class, 'refreshChats']);
+    });
 });
