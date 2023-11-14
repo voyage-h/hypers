@@ -473,6 +473,9 @@ button[type="submit"]:hover {
 .hot {
     color: darkorange;
 }
+.normal {
+    color: #f0f0f0;
+}
 #icon-pencil {
     width: 16px;
     height: 16px;

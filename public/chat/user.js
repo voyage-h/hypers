@@ -35,7 +35,7 @@ window.addEventListener('scroll', function() {
                     var html = '';
                     for (let k in res.users.data) {
                         let user = res.users.data[k];
-                        let labelClass = user.chat_count >= 100 ? 'hot' : 'label-default';
+                        let labelClass = user.chat_count >= 100 ? 'hot' : 'normal';
                         html += `
                         <div class="chat">
                         <div class="chat-title">
