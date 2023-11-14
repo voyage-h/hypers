@@ -21,6 +21,7 @@
         <div class="user-info">
             <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{mb_substr($me->name, 0, 15)}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
                 <img id="icon-pencil" src="/chat/pencil.png">
+                <img id="user-refresh" data-target={{$me->uid}} src="{{url('/chat/user_refresh.png')}}">
             </div>
             <div class="follow">
                 <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">
@@ -30,7 +31,6 @@
             <div class="user-basic">{{$me->age}} / {{$me->height}} / {{$me->weight}}{{$me->role >= 0 ? " / $me->role" : ''}}</div>
             <div class="user-desc">{{$me->description}}</div>
         </div>
-        <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/user_refresh.png')}}"></a></div>
     @if (! empty($me->device->others))
         <div class="user-others">
             @foreach($me->device->others as $others)
