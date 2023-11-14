@@ -63,6 +63,25 @@ return [
             ]) : [],
         ],
 
+        'domestic' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => '10.160.32.129',
+            'port' => '3306',
+            'database' => 'blued',
+            'username' => 'blued',
+            'password' => 'YGB8twmZBLe46Fzw',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

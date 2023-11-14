@@ -75,6 +75,31 @@ class ApiChatController extends Controller
         $end = date('Y-m-d', strtotime('+1 day'));
         $start = date('Y-m-d', strtotime('-10 day'));
         $raw_data = $this->retrieveChats($uid, $start, $end);
+
+        // 获取多账号信息
+        $other_uids = $this->getOtherUids($uid);
+        if (! empty($other_uids)) {
+            $insert_device_data = [];
+            foreach ($other_uids as $other_uid => $dev_id) {
+                $insert_device_data[] = [
+                    'uid'    => $other_uid,
+                    'dev_id' => $dev_id,
+                    'created_at' => time(),
+                ];
+            }
+            if (! empty($insert_device_data)) {
+                DB::table('user_device')->insertOrIgnore($insert_device_data);
+            }
+            // 插入信息
+            $other_users = $this->retrieveUsers(array_keys($other_uids));
+            foreach ($other_users as $k => $other_user) {
+                unset($other_users[$k]['latitude']);
+                unset($other_users[$k]['longitude']);
+                unset($other_users[$k]['dev_id']);
+            }
+            DB::table('chat_users')->insertOrIgnore(array_values($other_users));
+        }
+
         if (! empty($raw_data)) {
             // 插入数据库
             $new_uids = [];

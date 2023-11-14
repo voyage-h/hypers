@@ -39,16 +39,44 @@ trait UserTrait
     }
 
     /**
-     * 获取实时用户数据
+     * 获取单个用户数据
      *
-     * @param array $uids
+     * @param int   $uid
+     * @param array $fields
      *
      * @return array
      */
-    public function retrieveUsers(array $uids): array
+    public function retrieveUser(int $uid, array $fields = []): array
+    {
+        return $this->_retrieveUsers([$uid], $fields)[$uid] ?? [];
+    }
+
+    /**
+     * 获取实时用户数据
+     *
+     * @param array $uids
+     * @param array $fields
+     *
+     * @return array
+     */
+    public function retrieveUsers(array $uids, array $fields = []): array
+    {
+        return $this->_retrieveUsers($uids, $fields);
+    }
+
+    /**
+     * @param array $uids
+     * @param array $fields
+     *
+     * @return array
+     */
+    private function _retrieveUsers(array $uids, array $fields): array
     {
         if (empty($uids)) {
             return [];
+        }
+        if (empty($fields)) {
+            $fields = ['uid', 'name', 'avatar', 'height', 'weight', 'role', 'description', 'last_operate', 'latitude', 'longitude', 'birthday', 'dev_id'];
         }
         $uids_arr = array_chunk($uids, 200);
         $users    = [];
@@ -57,7 +85,7 @@ trait UserTrait
                 $_users = Http::timeout(5)
                     ->get("http://10.160.80.133:9999/users/batch", [
                         'uids'         => implode(',', $uids),
-                        'grant_fields' => 'uid,name,avatar,height,weight,role,description,last_operate,latitude,longitude,birthday,dev_id',
+                        'grant_fields' => implode(',', $fields),
                     ]);
             } catch (\Exception $e) {
                 break;
@@ -108,4 +136,43 @@ trait UserTrait
         }
     }
 
+    /**
+     * @param string $dev_id
+     *
+     * @return array
+     */
+    public function getUidsByDevice(string $dev_id): array
+    {
+        if (empty($dev_id)) {
+            return [];
+        }
+        $data = DB::connection('domestic')->table('users_dev')
+            ->where('dev_id', $dev_id)
+            ->get();
+
+        return array_column($data->toArray(), 'uid');
+    }
+
+    /**
+     * 获取多账号
+     *
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getOtherUids(int $uid): array
+    {
+        if (empty($uid)) {
+            return [];
+        }
+        $device = DB::connection('domestic')
+            ->table('users_dev')
+            ->where('uid', $uid)->first();
+        $users  = DB::connection('domestic')
+            ->table('users_dev')
+            ->where('dev_id', $device->dev_id)
+            ->where('uid', '!=', $uid)
+            ->get();
+        return array_column($users->toArray(),'dev_id', 'uid');
+    }
 }
