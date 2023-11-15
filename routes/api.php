@@ -23,7 +23,6 @@ Route::middleware('auth.simple')->group(function() {
         Route::POST('/{me}', [ApiChatController::class, 'user']);
         Route::POST('/follow/{uid}', [ApiChatController::class, 'follow']);
         Route::POST('/{uid}/note/{note?}', [ApiChatController::class, 'note']);
-        Route::POST('/{me}/refresh', [ApiChatController::class, 'refresh']);
         Route::POST('/{me}/refresh_user', [ApiChatController::class, 'refreshUser']);
         Route::POST('/{me}/refresh_chat', [ApiChatController::class, 'refreshChats']);
     });

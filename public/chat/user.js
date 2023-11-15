@@ -39,11 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         for (let k in res.users) {
                             let user = res.users[k];
                             let labelClass = user.chat_count >= 100 ? 'hot' : 'normal';
+                            let role = user.role >= 0 ? user.role : '';
                             html += `
                         <div class="chat">
                         <div class="chat-title">
                             <a href='/chat/` + meUid + `/` + user.uid + `'>` + user.name + `</a>
-                            <div class="title-basic">` + user.height + '/' + user.weight + `/` + user.role + `</div>
+                            <div class="title-basic">` + user.height + ' ' + user.weight + ' ' + role + `</div>
                         </div>
                         <div class="chat-content">
                             <div class="chat-left">

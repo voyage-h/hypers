@@ -53,8 +53,9 @@
     @foreach($users as $user)
         <div class="chat">
             <div class="chat-title" data-name={{$user->name}}>
-                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}</a>
-                <div class="title-basic">{{$user->height}} / {{$user->weight}}{{$user->role >= 0 ? ' / ' . $user->role : ''}}</div>
+                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
+                <div class="title-basic">{{$user->height}} {{$user->weight}} {{$user->role >= 0 ? $user->role : ''}}</div>
+                </a>
             </div>
             <div class="chat-content">
                 <div class="chat-left">
