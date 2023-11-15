@@ -269,17 +269,21 @@ body {
 .alert {
     display:none;
     position: fixed;
-    top: 26px;
+    top: 25px;
     width: 600px;
     left: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
-    padding: 15px 0;
+    padding: 16px 0;
     background-color: #ffcc00;
     border: 1px solid #ffcc00;
     border-radius: 1px;
     animation: fadeInOut 4s ease-in-out;
     z-index: 1000;
+}
+.alert-success {
+    background-color: #00cc00;
+    border: 1px solid #00cc00;
 }
 
 /* 寮圭獥鏍峰紡 */

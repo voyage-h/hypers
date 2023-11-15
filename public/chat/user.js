@@ -74,10 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
-     * 警告
+     * 弹框
      * @type {HTMLElement}
      */
     const warning = document.getElementById('alertWarning');
+    const alertSuccess = document.getElementById('alertSuccess');
 
     /**
      * 刷新记录
@@ -88,8 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const refresh_uid = this.getAttribute('data-target');
         http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_chat', function (res) {
             if (res.users && res.users.length > 0) {
-                // 刷新
-                location.reload();
+                alertSuccess.style.display = 'block';
+                alertSuccess.textContent   = res.start;
+                setTimeout(function () {
+                    // 刷新
+                    alertSuccess.style.display = 'none';
+                    location.reload();
+                }, 5000);
             } else {
                 warning.style.display = 'block';
                 warning.textContent   = '没有数据';

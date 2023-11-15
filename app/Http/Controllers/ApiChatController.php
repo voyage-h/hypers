@@ -189,6 +189,7 @@ class ApiChatController extends Controller
         $users = $this->getUserList($uid);
         return response()->json([
             'users' => $users,
+            'start' => $start,
         ]);
     }
 }

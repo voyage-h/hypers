@@ -8,8 +8,9 @@
     <script src="{{url('/chat/user.js')}}"></script>
 </head>
 <body>
+<div class="alert alert-warning" id="alertWarning">未知错误</div>
+<div class="alert alert-success" id="alertSuccess">成功</div>
 <div class="chat-container">
-    <div class="alert alert-warning" id="alertWarning">未知错误</div>
     <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/user_refresh.png')}}"></a></div>
     <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/refresh.png')}}"></a></div>
     <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>

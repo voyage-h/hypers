@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/chat/index.css">
 </head>
 <body>
-<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/user_refresh.png"></a></div>
+<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.jpeg"></a></div>
 <div class="container">
     @foreach($users as $user)
         <div class="user-container">
@@ -18,7 +18,7 @@
             </div>
             <div class="name">{{mb_substr($user->name, 0, 10)}}{{$user->note ? '(' . $user->note . ')' : ''}}
             </div>
-            <div class="basic">{{$user->age ? $user->age . '/' : ''}}{{$user->height}}/{{$user->weight}}{{$user->role >= 0 ? '/'.$user->role : ''}}</div>
+            <div class="basic">{{$user->age ? $user->age . ' ' : ''}}{{$user->height}} {{$user->weight}}{{$user->role >= 0 ? ' '.$user->role : ''}}</div>
             <div class="private">
                 @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))
                     {{date('H:i', $user->last_operate)}}
