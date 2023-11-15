@@ -89,13 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const refresh_uid = this.getAttribute('data-target');
         http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_chat', function (res) {
             if (res.users && res.users.length > 0) {
-                alertSuccess.style.display = 'block';
-                alertSuccess.textContent   = res.start;
-                setTimeout(function () {
+                //alertSuccess.style.display = 'block';
+                //alertSuccess.textContent   = res.start;
+                //setTimeout(function () {
                     // 刷新
-                    alertSuccess.style.display = 'none';
+                //    alertSuccess.style.display = 'none';
                     location.reload();
-                }, 4000);
+                //}, 4000);
             } else {
                 warning.style.display = 'block';
                 warning.textContent   = '没有数据';

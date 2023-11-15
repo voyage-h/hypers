@@ -504,3 +504,9 @@ button[type="submit"]:hover {
     padding: 20px;
     background-color: #111;
 }
+.last-date {
+	font-size: 14px;
+    text-align: center;
+    margin: 10px;
+    color: #555;
+}

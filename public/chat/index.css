@@ -46,7 +46,7 @@ body {
     /*display: flex;*/
     background-color: #111; /* Darker bubble background for dark mode */
     /*border-radius: 8px;*/
-    padding: 6px 6px 10px;
+    padding: 5px 6px 10px;
     /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
     text-align: center;
 }
@@ -57,6 +57,7 @@ body {
     color: #ffffff;
     text-align: left;
     padding: 0 10px;
+    background-color: rgba(0, 0, 0, 0.04);			 
 }
 
 .avatar img {

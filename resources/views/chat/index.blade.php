@@ -17,7 +17,7 @@
                 <img src="{{$user->avatar}}!o.png" alt="">
             </div>
             <div class="info">
-                <div class="name">{{mb_substr($user->name, 0, 10)}}{{$user->note ? '(' . $user->note . ')' : ''}}</div>
+                <div class="name">{{mb_substr($user->name, 0, 6)}}</div>
 {{--                <div class="basic">{{$user->age ? $user->age . ' ' : ''}}{{$user->height}} {{$user->weight}}{{$user->role >= 0 ? ' '.$user->role : ''}}</div>--}}
                 <div class="private">
                     @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))

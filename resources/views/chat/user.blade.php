@@ -33,6 +33,7 @@
         <div class="user-others">
             @if (! empty($me->device->others))
             @foreach($me->device->others as $others)
+	            @if ($others->user)
                 <div class="user-other">
                     <div class="other-avatar">
                         <a href="/chat/user/{{$others->user->uid}}">
@@ -40,6 +41,7 @@
                         </a>
                     </div>
                 </div>
+				@endif
             @endforeach
             @endif
         </div>
@@ -48,6 +50,7 @@
         @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
         {{$me->location ? ' · ' . $me->location->address : ''}}
     </div>
+	<div class="last-date">-- {{$start}} --</div>
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
         <div class="chat">
