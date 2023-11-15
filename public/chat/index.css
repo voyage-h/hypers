@@ -32,6 +32,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0;
+    padding: 10px;
 }
 
 /* Chat bubble styles */
@@ -45,9 +46,17 @@ body {
     /*display: flex;*/
     background-color: #111; /* Darker bubble background for dark mode */
     /*border-radius: 8px;*/
-    padding: 16px 6px 10px;
+    padding: 6px 6px 10px;
     /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
     text-align: center;
+}
+
+.info {
+    position: relative;
+    margin-top: -60px;
+    color: #ffffff;
+    text-align: left;
+    padding: 0 10px;
 }
 
 .avatar img {
@@ -59,14 +68,12 @@ body {
 /* Time and name styles */
 .name {
     font-size: 16px;
-    color: aliceblue;
     /*margin-top: 30px;*/
     font-weight: bold;
     padding-top: 6px;
 }
 .user a {
     text-decoration: none;
-    color: #999;
 }
 .name label {
     color: hotpink;
@@ -97,18 +104,11 @@ body {
 
 .basic {
     font-size: 14px;
-    color: #999;
-    text-align: center;
     padding-top: 4px;
 }
 .private {
     font-size: 14px;
-    color: #999;
-    text-align: center;
-    position: relative;
-    margin-top: 10px;
-    height: 20px;
-    padding: 0 14px;
+    margin-top: 5px;
 }
 .loading-container {
   display: flex;
@@ -130,5 +130,4 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 

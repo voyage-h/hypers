@@ -16,18 +16,20 @@
             <div class="avatar">
                 <img src="{{$user->avatar}}!o.png" alt="">
             </div>
-            <div class="name">{{mb_substr($user->name, 0, 10)}}{{$user->note ? '(' . $user->note . ')' : ''}}
+            <div class="info">
+                <div class="name">{{mb_substr($user->name, 0, 10)}}{{$user->note ? '(' . $user->note . ')' : ''}}</div>
+{{--                <div class="basic">{{$user->age ? $user->age . ' ' : ''}}{{$user->height}} {{$user->weight}}{{$user->role >= 0 ? ' '.$user->role : ''}}</div>--}}
+                <div class="private">
+                    @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))
+                        {{date('H:i', $user->last_operate)}}
+                    @elseif(date('Y-m-d', $user->last_operate) == date('Y-m-d', strtotime('-1 day')))
+                        昨天
+                    @else
+                        {{date('m-d', $user->last_operate)}}
+                    @endif
+                    {{$user->location ? ' · ' . substr($user->location->address, 0, 6) : ''}}
+                </div>
             </div>
-            <div class="basic">{{$user->age ? $user->age . ' ' : ''}}{{$user->height}} {{$user->weight}}{{$user->role >= 0 ? ' '.$user->role : ''}}</div>
-            <div class="private">
-                @if(date('Y-m-d', $user->last_operate) == date('Y-m-d'))
-                    {{date('H:i', $user->last_operate)}}
-                @elseif(date('Y-m-d', $user->last_operate) == date('Y-m-d', strtotime('-1 day')))
-                    昨天
-                @else
-                    {{date('m-d', $user->last_operate)}}
-                @endif
-                {{$user->location ? ' · ' . substr($user->location->address, 0, 6) : ''}}</div>
             </a>
         </div>
         </div>

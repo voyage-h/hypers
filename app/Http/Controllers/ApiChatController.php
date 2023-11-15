@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\ChatUser;
 use App\Models\Location;
 use App\Models\UserDevice;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -189,7 +190,7 @@ class ApiChatController extends Controller
         $users = $this->getUserList($uid);
         return response()->json([
             'users' => $users,
-            'start' => $start,
+            'start' => Carbon::parse($start)->diffForHumans(),
         ]);
     }
 }

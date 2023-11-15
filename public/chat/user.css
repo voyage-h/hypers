@@ -278,7 +278,7 @@ body {
     background-color: #ffcc00;
     border: 1px solid #ffcc00;
     border-radius: 1px;
-    animation: fadeInOut 4s ease-in-out;
+    animation: fadeInOut 10s ease-in-out;
     z-index: 1000;
 }
 .alert-success {

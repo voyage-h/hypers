@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 刷新
                     alertSuccess.style.display = 'none';
                     location.reload();
-                }, 5000);
+                }, 4000);
             } else {
                 warning.style.display = 'block';
                 warning.textContent   = '没有数据';
