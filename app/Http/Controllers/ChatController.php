@@ -47,8 +47,12 @@ class ChatController extends Controller
             ->first();
         $me->hashid = $this->encodeUid($uid);
         $me->age    = Carbon::parse($me->birthday)->age;
-        $start = Cache::get("refresh:{$uid}", strtotime('-15 day'));
-		$start = Carbon::parse(intval($start))->diffForHumans();
+		if (Cache::has("refresh:{$uid}")) {
+            $start = Cache::get("refresh:{$uid}");
+		    $start = Carbon::parse(intval($start))->diffForHumans();
+		} else {
+		    $start = '';
+		}
 		return view('chat.user', compact('users', 'me', 'start'));
     }
 

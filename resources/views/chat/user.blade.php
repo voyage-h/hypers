@@ -50,7 +50,9 @@
         @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
         {{$me->location ? ' · ' . $me->location->address : ''}}
     </div>
+	@if (! empty($start))
 	<div class="last-date">-- {{$start}} --</div>
+	@endif
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
         <div class="chat">
