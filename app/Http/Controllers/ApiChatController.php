@@ -73,7 +73,7 @@ class ApiChatController extends Controller
 
         // 最近20天
         $end = date('Y-m-d', strtotime('+1 day'));
-        $start = date('Y-m-d', strtotime('-10 day'));
+        $start = date('Y-m-d H:i:s', strtotime('-10 day'));
         $raw_data = $this->retrieveChats($uid, $start, $end);
 
         // 获取多账号信息
@@ -203,12 +203,10 @@ class ApiChatController extends Controller
      */
     public function refreshChats(int $uid): JsonResponse
     {
-        if (Cache::has("refresh:{$uid}")) {
-            $start = date('Y-m-d');
-        } else {
-            $start = date('Y-m-d', strtotime('-15 day'));
-            Cache::forever("refresh:{$uid}", 1);
-        }
+        $start = Cache::get("refresh:{$uid}", strtotime('-15 day'));
+        $start = max($start, strtotime('-15 day'));
+        Cache::set("refresh:{$uid}", time());
+        $start = date('Y-m-d H:i', $start) . ':00';
         $end   = date('Y-m-d', strtotime('+1 day'));
         $raw_data = $this->retrieveChats($uid, $start, $end);
         if (! empty($raw_data)) {

@@ -73,7 +73,7 @@ trait ChatTrait
                 ->get('10.120.208.16:8004/api-chatlog/recent/query', [
                     'uid'       => $me,
                     'direction' => 'both',
-                    'beginDate' => "$start 00:00:00",
+                    'beginDate' => "$start",
                     'endDate'   => date('Y-m-d H:i:s'),
                     'limit'     => $limit,
                 ]);
