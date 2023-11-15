@@ -494,3 +494,9 @@ button[type="submit"]:hover {
     height: 50px;
     border-radius: 50%;
 }
+
+.location {
+    margin: 10px 0;
+    padding: 20px;
+    background-color: #111;
+}

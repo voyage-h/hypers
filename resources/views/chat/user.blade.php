@@ -44,10 +44,10 @@
             @endforeach
             @endif
         </div>
-        <div class="user-private">
-            @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
-            {{$me->location ? ' · ' . $me->location->address : ''}}
-        </div>
+    </div>
+    <div class="location">
+        @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
+        {{$me->location ? ' · ' . $me->location->address : ''}}
     </div>
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
