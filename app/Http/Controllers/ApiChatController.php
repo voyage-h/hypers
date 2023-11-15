@@ -6,6 +6,8 @@ use App\Http\Controllers\Traits\ChatTrait;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Models\Chat;
 use App\Models\ChatUser;
+use App\Models\Location;
+use App\Models\UserDevice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -165,27 +167,37 @@ class ApiChatController extends Controller
         $all_uids  = array_merge([$uid], array_keys($other_uids));
         $all_users = $this->retrieveUsers($all_uids);
 
-        foreach ($all_users as $uid => $user) {
+        foreach ($all_users as $user_id => $user) {
 			$dev_id = $user['dev_id'];
 
             // 更新设备
 			if ($dev_id) {
-                DB::table('user_device')->insertOrIgnore([
-                    'uid'        => $uid,
+                UserDevice::insertOrIgnore([
+                    'uid'        => $user_id,
                     'dev_id'     => $dev_id,
                     'created_at' => time(),
                 ]);
 			}
 
             // 更新位置
-            $location = $this->getLocation($user);
-            DB::table('locations')->insertOrIgnore($location);
+            $location = $this->parasLocation($user);
+            if (! empty($location)) {
+                Location::insertOrIgnore($location);
+            }
 
             // 更新用户
             unset($user['latitude']);
             unset($user['longitude']);
             unset($user['dev_id']);
-			DB::table('chat_users')->insertOrIgnore($user);
+            $user = ChatUser::where('uid', $user_id)->first();
+            if ($user) {
+                $user->last_operate = $user['last_operate'];
+                $user->description  = $user['description'];
+                $user->birthday     = $user['birthday'];
+                $user->save();
+            } else {
+                ChatUser::insertOrIgnore($user);
+            }
         }
 
         $me = $all_users[$uid] ?? [];
@@ -240,6 +252,16 @@ class ApiChatController extends Controller
                 unset($new_users[$k]['dev_id']);
             }
             DB::table('chat_users')->insertOrIgnore(array_values($new_users));
+
+            // 更新我的信息
+            $me_info = $new_users[$uid] ?? [];
+            if ($me_info) {
+                ChatUser::where('uid', $uid)->update([
+                    'last_operate' => $me_info['last_operate'],
+                    'description'  => $me_info['description'],
+                    'birthday'     => $me_info['birthday'],
+                ]);
+            }
         }
 
         $chats = Chat::where('from_uid', $uid)

@@ -82,7 +82,7 @@ trait UserTrait
         $users    = [];
         foreach ($uids_arr as $uids) {
             try {
-                $_users = Http::timeout(5)
+                $_users = Http::timeout(2)
                     ->get("http://10.160.80.133:9999/users/batch", [
                         'uids'         => implode(',', $uids),
                         'grant_fields' => implode(',', $fields),
@@ -186,10 +186,13 @@ trait UserTrait
      *
      * @return array
      */
-    public function getLocation(array $user): array
+    public function parasLocation(array $user): array
     {
         $lat = $user['latitude'] ?? 0;
         $lng = $user['longitude'] ?? 0;
+        if (empty($lat) || empty($lng)) {
+            return [];
+        }
         $_local = Http::get("https://restapi.amap.com/v3/geocode/regeo?parameters", [
             'key' => '0ad23cbd2c0bd21b4b4fa5b84f2fe763',
             'location' => "$lng,$lat",
