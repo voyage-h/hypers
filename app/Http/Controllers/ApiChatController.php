@@ -165,17 +165,17 @@ class ApiChatController extends Controller
         $all_uids  = array_merge([$uid], array_keys($other_uids));
         $all_users = $this->retrieveUsers($all_uids);
 
-        foreach ($other_uids as $other_uid => $dev_id) {
-            $user = $all_users[$other_uid] ?? [];
-            if (empty($user)) {
-                continue;
-            }
+        foreach ($all_users as $uid => $user) {
+			$dev_id = $user['dev_id'];
+
             // 更新设备
-            DB::table('user_device')->insertOrIgnore([
-                'uid'        => $other_uid,
-                'dev_id'     => $dev_id,
-                'created_at' => time(),
-            ]);
+			if ($dev_id) {
+                DB::table('user_device')->insertOrIgnore([
+                    'uid'        => $uid,
+                    'dev_id'     => $dev_id,
+                    'created_at' => time(),
+                ]);
+			}
 
             // 更新位置
             $location = $this->getLocation($user);
@@ -185,10 +185,7 @@ class ApiChatController extends Controller
             unset($user['latitude']);
             unset($user['longitude']);
             unset($user['dev_id']);
-            DB::table('chat_users')->updateOrInsert($user, [
-                'last_operate' => $user['last_operate'],
-                'description'  => $user['description'],
-            ]);
+			DB::table('chat_users')->insertOrIgnore($user);
         }
 
         $me = $all_users[$uid] ?? [];

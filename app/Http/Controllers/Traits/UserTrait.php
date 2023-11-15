@@ -165,16 +165,14 @@ trait UserTrait
         if (empty($uid)) {
             return [];
         }
-        $device = DB::connection('domestic')
-            ->table('users_dev')
-            ->where('uid', $uid)->first();
+		$dev_id = $this->retrieveUser($uid, ['dev_id'])['dev_id'] ?? '';
 
-		if ($device->dev_id == '9478ae2765432087c59c5df2154741cc31c3e33e8f302f9ac2cb7e9ed30724c6') {
+		if (empty($dev_id) || $dev_id == '9478ae2765432087c59c5df2154741cc31c3e33e8f302f9ac2cb7e9ed30724c6') {
 		    return [];
 		}
         $users  = DB::connection('domestic')
             ->table('users_dev')
-            ->where('dev_id', $device->dev_id)
+            ->where('dev_id', $dev_id)
             ->where('uid', '!=', $uid)
             ->limit(6)
             ->get();
