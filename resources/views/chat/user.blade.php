@@ -24,9 +24,7 @@
                 <img id="icon-pencil" src="/chat/pencil.png">
             </div>
             <div class="follow">
-                <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">
-                    {{$me->is_suspect ? '取消关注' : '关注'}}
-                </a>
+                <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">{{$me->is_suspect ? '取消关注' : '关注'}}</a>
             </div>
             <div class="user-basic">{{$me->age}} / {{$me->height}} / {{$me->weight}}{{$me->role >= 0 ? " / $me->role" : ''}}</div>
             <div class="user-desc">{{$me->description}}</div>

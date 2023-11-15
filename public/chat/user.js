@@ -104,13 +104,16 @@ document.addEventListener('DOMContentLoaded', function() {
      * 关注，取消关注
      * @type {HTMLElement}
      */
-    document.getElementById('btn-follow').addEventListener('click', function () {
-        const uid = this.getAttribute('data-uid');
-        const follow = this.getAttribute('data-value');
-        http_request('POST', '/api/chat/user/follow/' + uid, function (res) {
-            this.textContent = follow == 1 ? '关注' : '取消关注';
+    const btnFollow = document.getElementById('btn-follow');
+    if (btnFollow) {
+        btnFollow.addEventListener('click', function () {
+            const uid    = btnFollow.getAttribute('data-uid');
+            const content= btnFollow.textContent;
+            http_request('POST', '/api/chat/user/follow/' + uid, function (res) {
+                btnFollow.textContent = content === '关注' ? '取消关注' : '关注';
+            });
         });
-    });
+    }
 
     /**
      * 修改备注

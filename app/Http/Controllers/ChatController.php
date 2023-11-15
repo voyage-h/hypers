@@ -57,36 +57,29 @@ class ChatController extends Controller
      */
     public function detail(int $uid, int $target)
     {
-        $data = Cache::tags("chat:user:$uid")->rememberForever("chat:user:$uid:with:$target", function() use ($uid, $target) {
-            $chats = Chat::where(function($query) use ($uid, $target) {
-                $query->where('from_uid', $uid)
-                    ->where('target_uid', $target);
+        $chats = Chat::where(function($query) use ($uid, $target) {
+            $query->where('from_uid', $uid)
+                ->where('target_uid', $target);
+        })
+            ->orWhere(function($query) use ($uid, $target) {
+                $query->where('from_uid', $target)
+                    ->where('target_uid', $uid);
             })
-                ->orWhere(function($query) use ($uid, $target) {
-                    $query->where('from_uid', $target)
-                        ->where('target_uid', $uid);
-                })
-                ->orderBy('created_at', 'asc')
-                ->get();
-            $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
-                ->with('note')
-                ->whereIn('uid', [$uid, $target])
-                ->get();
-            $users = $users->keyBy('uid');
-            foreach ($chats as &$chat) {
-                $user = $users[$chat->from_uid] ?? [];
-                $chat->name   = $user->name ?? '';
-                $chat->avatar = $user->avatar ?? '';
-                $chat->last_operate = $user->last_operate ?? 0;
-            }
-            $me = $users[$uid] ?? [];
-            $target = $users[$target] ?? [];
-            return compact('chats', 'me', 'target');
-        });
-
-        $chats = $data['chats'];
-        $me = $data['me'];
-        $target = $data['target'];
+            ->orderBy('created_at', 'asc')
+            ->get();
+        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
+            ->with('note')
+            ->whereIn('uid', [$uid, $target])
+            ->get();
+        $users = $users->keyBy('uid');
+        foreach ($chats as &$chat) {
+            $user = $users[$chat->from_uid] ?? [];
+            $chat->name   = $user->name ?? '';
+            $chat->avatar = $user->avatar ?? '';
+            $chat->last_operate = $user->last_operate ?? 0;
+        }
+        $me = $users[$uid] ?? [];
+        $target = $users[$target] ?? [];
 
         return view('chat.detail', compact('chats', 'me', 'target'));
     }
