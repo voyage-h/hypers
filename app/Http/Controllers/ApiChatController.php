@@ -159,9 +159,11 @@ class ApiChatController extends Controller
     public function refreshUser(int $uid): JsonResponse
     {
         // 获取多账号信息
-        $other_uids = $this->getOtherUids($uid);
-        $all_uids   = array_merge([$uid], array_keys($other_uids));
-        $all_users  = $this->retrieveUsers($all_uids);
+        $other_uids = Cache::remember("fetch:others:$uid", 3400 * 24, function() use ($uid) {
+            return $this->getOtherUids($uid);
+        });
+        $all_uids  = array_merge([$uid], array_keys($other_uids));
+        $all_users = $this->retrieveUsers($all_uids);
 
         foreach ($other_uids as $other_uid => $dev_id) {
             $user = $all_users[$other_uid] ?? [];
@@ -183,7 +185,10 @@ class ApiChatController extends Controller
             unset($user['latitude']);
             unset($user['longitude']);
             unset($user['dev_id']);
-            DB::table('chat_users')->insertOrIgnore($user);
+            DB::table('chat_users')->updateOrInsert($user, [
+                'last_operate' => $user['last_operate'],
+                'description'  => $user['description'],
+            ]);
         }
 
         $me = $all_users[$uid] ?? [];
@@ -250,6 +255,9 @@ class ApiChatController extends Controller
             Redis::zadd("chat:{$uid}", $chat->created_at->timestamp, $target_uid);
         }
 
-        return $this->user($uid);
+        $users = $this->getUserList($uid);
+        return response()->json([
+            'users' => $users,
+        ]);
     }
 }
