@@ -10,6 +10,7 @@
 <body>
 <div class="chat-container">
     <div class="alert alert-warning" id="alertWarning">未知错误</div>
+    <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/user_refresh.png')}}"></a></div>
     <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/refresh.png')}}"></a></div>
     <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
     <div class="user" data-id="{{$me->id}}">
@@ -42,13 +43,6 @@
                 </div>
             @endforeach
             @endif
-            <div class="user-other">
-                <div class="other-avatar other-avatar-btn">
-                    <a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}>
-                        <img src="/chat/user_refresh.png" alt="">
-                    </a>
-                </div>
-            </div>
         </div>
         <div class="user-private">
             @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])

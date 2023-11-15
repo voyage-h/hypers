@@ -235,7 +235,7 @@ body {
 .btn {
     position: fixed;
     z-index: 100;
-    top: 600px;
+    top: 400px;
     right: 0;
 }
 .btn img {
@@ -244,13 +244,7 @@ body {
     border-radius: 10px 0 0 10px;
 }
 .user-refresh {
-    position: absolute;
-    top: 250px;
-    right: 20px;
-}
-.user-refresh img {
-    width: 30px;
-    height: 30px;
+    top: 300px;
 }
 
 .chat-home {
@@ -483,13 +477,6 @@ button[type="submit"]:hover {
     height: 16px;
     margin-left: 6px;
     cursor: pointer;
-}
-#user-refresh img {
-    width: 30px;
-    height: 30px;
-}
-.other-avatar-btn {
-    margin-top:10px;
 }
 
 .user-others {

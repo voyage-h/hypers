@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/chat/index.css">
 </head>
 <body>
-<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.png"></a></div>
+<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/user_refresh.png"></a></div>
 <div class="container">
     @foreach($users as $user)
         <div class="user-container">
