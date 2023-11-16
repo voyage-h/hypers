@@ -500,9 +500,10 @@ button[type="submit"]:hover {
 }
 
 .location {
-    margin: 10px 0;
-    padding: 20px;
+    /*margin: 10px 0;*/
+    padding: 10px 20px;
     background-color: #111;
+    text-align: left;
 }
 .last-date {
     text-align: center;

@@ -115,8 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
         btnFollow.addEventListener('click', function () {
             const uid    = btnFollow.getAttribute('data-uid');
             const content= btnFollow.textContent;
+            btnFollow.textContent = content === '关注' ? '取消关注' : '关注';
             http_request('POST', '/api/chat/user/follow/' + uid, function (res) {
-                btnFollow.textContent = content === '关注' ? '取消关注' : '关注';
+                // btnFollow.textContent = content === '关注' ? '取消关注' : '关注';
             });
         });
     }

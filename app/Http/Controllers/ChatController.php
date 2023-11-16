@@ -81,7 +81,7 @@ class ChatController extends Controller
             ->whereIn('uid', [$uid, $target])
             ->get();
         $users = $users->keyBy('uid');
-        foreach ($chats as &$chat) {
+        foreach ($chats as $chat) {
             $user = $users[$chat->from_uid] ?? [];
             $chat->name   = $user->name ?? '';
             $chat->avatar = $user->avatar ?? '';
@@ -142,5 +142,14 @@ class ChatController extends Controller
             $user->save();
         }
         return redirect('/');
+    }
+
+    public function remove(int $uid)
+    {
+        if (! empty($uid)) {
+            ChatUser::where('uid', $uid)->delete();
+
+        }
+        return redirect()->back();
     }
 }

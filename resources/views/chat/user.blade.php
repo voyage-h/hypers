@@ -45,10 +45,10 @@
             @endforeach
             @endif
         </div>
-    </div>
-    <div class="location">
-        @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
-        {{$me->location ? ' · ' . $me->location->address : ''}}
+        <div class="location">
+            @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
+            {{$me->location ? ' · ' . $me->location->address : ''}}
+        </div>
     </div>
 	@if (! empty($start))
 	<div class="last-date">-- 上次刷新{{$start}} --</div>
