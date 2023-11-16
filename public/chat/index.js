@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('search-btn');
+    const removeBtn = document.getElementById('remove-btn');
     const searchUsers = document.querySelector('.search-users');
+    const searchInput = document.getElementById('search-input');
+	removeBtn.addEventListener('click', function(){
+		removeBtn.style.display = 'none';		
+	    searchBtn.style.display = 'block';
+		searchUsers.innerHTML = '';
+		searchInput.value = '';
+		searchInput.setAttribute('placeholder', '搜索');
+	});
     searchBtn.addEventListener('click', function() {
         searchUsers.innerHTML = '';
-        const searchInput = document.getElementById('search-input');
         const searchValue = searchInput.value.trim();
         // 去掉空格
         if (searchValue === '') {
             searchInput.innerText = '请输入搜索内容';
         } else {
+		    searchBtn.style.display = 'none';
+		    removeBtn.style.display = 'block';
             http_request('POST', '/api/chat/user/search/' + searchValue, function (res) {
                 if (res.users && res.users.length > 0) {
                     // 遍历数组

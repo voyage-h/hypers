@@ -15,6 +15,7 @@
     </div>
     <div class="search-btn">
         <img id="search-btn" src="/chat/search.png">
+        <img id="remove-btn" src="/chat/remove.png">
     </div>
     <div class="search-users"></div>
 </div>

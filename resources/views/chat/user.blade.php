@@ -28,7 +28,7 @@
                 <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">{{$me->is_suspect ? '取消关注' : '关注'}}</a>
             </div>
             <div class="user-basic">{{$me->age}} / {{$me->height}} / {{$me->weight}}{{$me->role >= 0 ? " / $me->role" : ''}}</div>
-            <div class="user-desc">{{$me->description}}</div>
+            <div class="user-desc">{{mb_substr($me->description, 0, 50)}}</div>
         </div>
         <div class="user-others">
             @if (! empty($me->device->others))

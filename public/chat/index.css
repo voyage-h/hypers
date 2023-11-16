@@ -154,6 +154,9 @@ body {
     height: 25px;
     cursor: pointer;
 }
+#remove-btn {
+    display: none;
+}
 .search-users a {
     text-decoration: none;
     color: #ffffff;
@@ -173,7 +176,7 @@ body {
 .search-user-info {
     position: relative;
     left: 70px;
-    top: -55px;
+    top: -60px;
     width: 80%;
 }
 .search-user-info-name {

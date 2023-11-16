@@ -213,7 +213,11 @@ class ApiChatController extends Controller
                 ->get();
             if (! empty($users)) {
                 $user_data = [];
-                foreach ($users as $user) {
+                foreach ($users as $k => $user) {
+//					if (empty($user['uid']) || empty($user['avatar']) || empty($user['name'])) {
+//						unset($users[$k]);
+//						continue;
+//					}
                     $user_data[] = [
                         'uid'          => $user->uid,
                         'name'         => $user->name,
