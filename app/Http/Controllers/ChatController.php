@@ -146,10 +146,13 @@ class ChatController extends Controller
 
     public function all(int $uid)
     {
-        $chats = Chat::where('target_uid', $uid)
-            ->orWhere('from_uid', $uid)
+        $chats = Chat::where('contents', 'like', 'http%')
+            ->where(function($query) use ($uid) {
+                $query->where('from_uid', $uid)
+                    ->orWhere('target_uid', $uid);
+            })
             ->orderBy('created_at', 'asc')
-            ->get();
+            ->simplePaginate(50);
 
         $uids = [];
         foreach ($chats as $chat) {

@@ -38,6 +38,7 @@
     </div>
     @endforeach
 </div>
+<div class="page">{{$chats->links()}}</div>
 </body>
 <script type="module">
     import Lightbox from '/photoswipe/photoswipe-lightbox.esm.min.js';
