@@ -12,12 +12,12 @@
 <div class="chat-container">
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     @foreach($chats as $key => $chat)
-    <div class="chat" id="chats">
-{{--        <div class="chat-title" data-name={{$target->name}}>--}}
-{{--            <a href="#">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>--}}
-{{--            <div class="title-basic">{{$target->height}}/{{$target->weight}}/{{$target->role}}</div>--}}
-{{--            <div class="title-more" data-target={{$target->uid}}><a href="/chat/user/{{$me->uid}}/follow/{{$target->uid}}">•••</a></div>--}}
-{{--        </div>--}}
+    @php $target = $users[$chat->from_uid == $me->uid ? $chat->target_uid : $chat->from_uid]; @endphp
+    <div class="chat">
+        <div class="chat-title">
+            <a href="/chat/{{$me->uid}}/{{$target->uid}}">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>
+            <div class="title-basic">{{$target->height}}/{{$target->weight}}/{{$target->role}}</div>
+        </div>
         <div class="chat-content">
             <div class="chat-{{$chat->from_uid != $me->uid ? 'left': 'right'}}">
                 @if($key == 0)
