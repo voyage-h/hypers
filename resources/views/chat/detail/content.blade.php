@@ -12,8 +12,8 @@
         </div>
     <!-- 如果是其他文件 -->
     @else
-        <div class="contents-img" data-src="{{$contents}}">
-            <a href="{{$contents}}!o.png" data-pswp-src="{{$contents}}!o.png"><img src="{{$contents}}" /></a>
+        <div class="contents-img">
+            <a class="contents-img-a" href="{{$contents}}!o.png" data-pswp-src="{{$contents}}!o.png"><img src="{{$contents}}" /></a>
         </div>
     @endif
 @else
