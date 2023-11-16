@@ -144,12 +144,31 @@ class ChatController extends Controller
         return redirect('/');
     }
 
-    public function remove(int $uid)
+    public function all(int $uid)
     {
-        if (! empty($uid)) {
-            ChatUser::where('uid', $uid)->delete();
+        $chats = Chat::where('target_uid', $uid)
+            ->orWhere('from_uid', $uid)
+            ->orderBy('created_at', 'asc')
+            ->get();
 
+        $uids = [];
+        foreach ($chats as $chat) {
+            $uids[$chat->from_uid] = $chat->from_uid;
+            $uids[$chat->target_uid] = $chat->target_uid;
         }
-        return redirect()->back();
+        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
+            ->with('note')
+            ->whereIn('uid', array_keys($uids))
+            ->get();
+
+        $users = $users->keyBy('uid');
+        foreach ($chats as $chat) {
+            $user = $users[$chat->from_uid] ?? [];
+            $chat->name   = $user->name ?? '';
+            $chat->avatar = $user->avatar ?? '';
+            $chat->last_operate = $user->last_operate ?? 0;
+        }
+        $me = $users[$uid] ?? [];
+        return view('chat.all', compact('chats', 'users', 'me'));
     }
 }

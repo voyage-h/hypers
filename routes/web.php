@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [ChatController::class, 'index']);
     Route::get('/chat/user/{me}', [ChatController::class, 'user']);
     Route::get('/chat/index/refresh', [ChatController::class, 'refresh']);
+    Route::get('/chat/{me}/all', [ChatController::class, 'all']);
     Route::get('/chat/{me}/{target}', [ChatController::class, 'detail']);
 });
 

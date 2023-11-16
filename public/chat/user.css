@@ -243,10 +243,15 @@ body {
     height: 50px;
     border-radius: 10px 0 0 10px;
 }
+.user-all {
+    top: 200px;
+}
 .user-refresh {
     top: 300px;
 }
-
+.chat-refresh {
+    top: 400px;
+}
 .chat-home {
     top: 500px;
 }
