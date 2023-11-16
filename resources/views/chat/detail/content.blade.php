@@ -3,7 +3,9 @@
     <!-- 如果是视频 -->
     @if (str_contains($contents, '.mp4'))
         <div class="contents-video" data-src="{{$contents}}">
-            <a href="{{$contents}}"><img src="{{$contents}}"></a>
+            <a class="contents-img-a" href="{{$chat->contents}}" data-pswp-src="{{$chat->contents}}">
+                <img src="{{$contents}}">
+            </a>
         </div>
     <!-- 如果是音频 -->
     @elseif (str_contains($contents, '.mp3'))

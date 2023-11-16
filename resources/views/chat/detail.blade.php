@@ -47,7 +47,8 @@
         gallery: '.chat',
         children: '.contents-img-a',
         showHideAnimationType: 'zoom',
-
+        bgOpacity: 1,
+        loop: false,
         pswpModule: () => import('/photoswipe/photoswipe.esm.min.js')
     });
     lightbox.init();
