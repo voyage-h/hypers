@@ -143,7 +143,7 @@ body {
     color: #ffffff;
     border: 1px solid #777;
     font-size: 15px;
-    outline: none;	
+    outline: none;
 }
 .search-btn {
     position: absolute;
@@ -190,9 +190,9 @@ body {
 }
 .search-user-info-time {
     position: relative;
-    text-align: right;	  
+    text-align: right;
     top: -50px;
-	font-size: 15px;	 
+	font-size: 15px;
     color: #999;
 }
 .alert {
@@ -209,4 +209,13 @@ body {
     border-radius: 10px;
     animation: fadeInOut 10s ease-in-out;
     z-index: 1000;
+}
+.online-status {
+    position: relative;
+    left: 10px;
+    bottom: 120px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #00ff00;
 }
