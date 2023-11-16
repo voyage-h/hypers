@@ -8,7 +8,7 @@
     <script src="/chat/index.js"></script>
 </head>
 <body>
-<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/refresh.jpeg"></a></div>
+<div class="chat-refresh"><a href="/chat/index/refresh"><img src="/chat/user_refresh.png"></a></div>
 <div class="alert alert-warning" id="alertWarning">未知错误</div>
 <div class="search">
     <div class="search-input">

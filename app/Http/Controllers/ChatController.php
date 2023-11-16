@@ -152,7 +152,7 @@ class ChatController extends Controller
                     ->orWhere('target_uid', $uid);
             })
             ->orderBy('created_at', 'asc')
-            ->simplePaginate(50);
+            ->simplePaginate(100);
 
         $uids = [];
         foreach ($chats as $chat) {
