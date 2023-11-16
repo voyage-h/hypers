@@ -13,7 +13,9 @@
     <!-- 如果是其他文件 -->
     @else
         <div class="contents-img">
-            <img class="contents-img-a" src="{{$contents}}" />
+            <a class="contents-img-a" href="{{$chat->contents}}!o.png" data-pswp-src="{{$chat->contents}}!o.png">
+                <img src="{{$chat->contents}}" />
+            </a>
         </div>
     @endif
 @else

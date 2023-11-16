@@ -41,37 +41,14 @@
     </div>
 </div>
 </body>
-<div id="images" style="display: none">
-@foreach($chats as $key => $chat)
-@if (str_starts_with($chat->contents, 'http') && ! str_contains($chat->contents, '.mp4') && ! str_contains($chat->contents, '.mp3'))
-    <a class="image-a" href="{{$chat->contents}}!o.png" data-pswp-src="{{$chat->contents}}!o.png">
-        <img src="{{$chat->contents}}" />
-    </a>
-@endif
-@endforeach
-</div>
 <script type="module">
     import Lightbox from '/photoswipe/photoswipe-lightbox.esm.min.js';
     const lightbox = new Lightbox({
-        gallery: '#images',
-        children: 'a',
+        gallery: '.chat',
+        children: '.contents-img-a',
         showHideAnimationType: 'zoom',
 
         pswpModule: () => import('/photoswipe/photoswipe.esm.min.js')
-    });
-    // lightbox.addFilter('itemData', (itemData, index) => {
-    //     if (itemData.element.getAttribute('data-pswp-src') !== null) {
-    //         return itemData;
-    //     }
-    // });
-    // lightbox.addFilter('numItems', (numItems, dataSource) => {
-    //     console.log(dataSource);
-    //     return numItems;
-    // });
-    lightbox.addFilter('domItemData', (itemData, element, linkEl) => {
-        if (linkEl.dataset.pswpSrc !== undefined) {
-            return itemData;
-        }
     });
     lightbox.init();
     window.pswpLightbox = lightbox;
