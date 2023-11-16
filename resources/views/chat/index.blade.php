@@ -28,9 +28,7 @@
             <div class="avatar">
                 <img src="{{$user->avatar}}" alt="">
             </div>
-            @if($user->is_online)
-            <div class="online-status"></div>
-            @endif
+            <div class="online-status{{$user->is_online ? ' status-active': ''}}"></div>
             <div class="info">
                 <div class="name">{{mb_substr($user->name, 0, 6)}}</div>
 {{--                <div class="basic">{{$user->age ? $user->age . ' ' : ''}}{{$user->height}} {{$user->weight}}{{$user->role >= 0 ? ' '.$user->role : ''}}</div>--}}

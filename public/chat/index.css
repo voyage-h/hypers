@@ -52,9 +52,9 @@ body {
 
 .info {
     position: relative;
-    margin-top: -50px;
+    /*margin-top: -60px;*/
     color: #ffffff;
-    text-align: left;
+    text-align: center;
     padding: 0 5px;
     background-color: rgba(0, 0, 0, 0.05);
 }
@@ -217,5 +217,7 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+}
+.status-active {
     background-color: #00ff00;
 }
