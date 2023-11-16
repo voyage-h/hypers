@@ -13,7 +13,7 @@
     <!-- 如果是其他文件 -->
     @else
         <div class="contents-img">
-            <a class="contents-img-a" href="{{$contents}}!o.png" data-pswp-src="{{$contents}}!o.png"><img src="{{$contents}}" /></a>
+            <img class="contents-img-a" src="{{$contents}}" />
         </div>
     @endif
 @else

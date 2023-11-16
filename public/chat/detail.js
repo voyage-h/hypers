@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const contentImgs = document.querySelectorAll(".contents-img-a");
+    const contentImgs = document.querySelectorAll(".image-a");
     contentImgs.forEach(function (contentImg) {
         const image = new Image();
         image.src = contentImg.getAttribute('data-pswp-src');
@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
             contentImg.setAttribute('data-pswp-width', this.width);
             contentImg.setAttribute('data-pswp-height', this.height);
         };
+    });
+    const contentImgsA = document.querySelectorAll(".contents-img-a");
+    contentImgsA.forEach(function (contentImgA, index) {
+        contentImgA.addEventListener('click', function (event) {
+            event.preventDefault();
+            pswpLightbox.loadAndOpen(index);
+        });
     });
     // const contentImgs = document.querySelectorAll(".contents-img");
     // let currentImg = null;
