@@ -112,16 +112,22 @@ trait UserTrait
             'location' => "$lng,$lat",
         ]);
         $_local = $_local->json()['regeocode'] ?? [];
-        $locations = [
-            'uid' => $me_info['uid'],
-            'last_operate' => $me_info['last_operate'],
-            'latitude' => $me_info['latitude'],
-            'longitude' => $me_info['longitude'],
-            'address'   => $_local['formatted_address'] ?? '',
-            'extra' => json_encode($_local['addressComponent'], JSON_UNESCAPED_UNICODE),
-            'created_at' => time()
-        ];
-        DB::table('locations')->insertOrIgnore($locations);
+		$address = $_local['formatted_address'];
+		if (is_array($address)) {
+		    $address = '';
+		}
+		if (! empty($address)) {
+            $locations = [
+                'uid' => $me_info['uid'],
+                'last_operate' => $me_info['last_operate'],
+                'latitude' => $me_info['latitude'],
+                'longitude' => $me_info['longitude'],
+                'address'   => $address,
+                'extra' => json_encode($_local['addressComponent'], JSON_UNESCAPED_UNICODE),
+                'created_at' => time()
+            ];
+            DB::table('locations')->insertOrIgnore($locations);
+		}
         DB::table('chat_users')->where('uid', $me_info['uid'])->update([
             'description' => $me_info['description'],
             'last_operate' => $me_info['last_operate'],

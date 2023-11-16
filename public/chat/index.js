@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const removeBtn = document.getElementById('remove-btn');
     const searchUsers = document.querySelector('.search-users');
     const searchInput = document.getElementById('search-input');
+    const warning = document.getElementById('alertWarning');
+	searchInput.addEventListener('input', function(){
+		removeBtn.style.display = 'none';		
+	    searchBtn.style.display = 'block';
+	});
 	removeBtn.addEventListener('click', function(){
 		removeBtn.style.display = 'none';		
 	    searchBtn.style.display = 'block';
@@ -34,12 +39,20 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="search-user-info">
                 <div class="search-user-info-name">` + user.name + `</div>
                 <div class="search-user-info-basic">` + user.height + ' ' + user.weight + ' ' + user.role + `</div>
+                <div class="search-user-info-time">` + user.last_operate + `</div>
             </div>
         </div>
         </a>`
                     }
                     searchUsers.innerHTML += html;
-                }
+                } else {
+                    warning.style.display = 'block';
+                    warning.textContent   = '没有数据';
+                    setTimeout(function () {
+                        warning.style.display = 'none';
+                    }, 2000);
+				}
+
             });
         }
     });

@@ -208,20 +208,22 @@ class ApiChatController extends Controller
         $users = [];
         if (! empty($keyword)) {
             $keyword = str_replace(['.', '_', '^', '*', '%'], ['\.', '\_', '\^', '\*', '\%'], $keyword);
-            $raw_users  = DB::connection('domestic')
+            $users  = DB::connection('domestic')
                 ->table('users')
                 ->where('name', 'like', "{$keyword}%")
 				//->orderBy('last_operate', 'desc')
 				->limit(6)
                 ->get();
-            if (! empty($raw_users)) {
-                foreach ($raw_users as $user) {
-					if (empty($user->uid) 
-							|| empty($user->avatar) 
+            if (! empty($users)) {
+                $insert_data = [];
+                foreach ($users as $k => $user) {
+					if (empty($user->uid)
+							|| empty($user->avatar)
 							|| empty($user->name)) {
+                        unset($users[$k]);
 						continue;
 					}
-                    $users[] = [
+                    $insert_data[] = [
                         'uid'          => $user->uid,
                         'name'         => $user->name,
                         'avatar'       => $user->avatar,
@@ -232,10 +234,12 @@ class ApiChatController extends Controller
                         'weight'       => $user->weight,
                         'role'         => $user->role,
                     ];
+                    $user->last_operate = Carbon::parse($user->last_operate)->diffForHumans();
                 }
-                ChatUser::insertOrIgnore($users);
+                ChatUser::insertOrIgnore($insert_data);
             }
         }
         return response()->json(compact('users'));
+
     }
 }
