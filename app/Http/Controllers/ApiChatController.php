@@ -170,6 +170,8 @@ class ApiChatController extends Controller
             $me_info = $new_users[$uid] ?? [];
             if ($me_info) {
                 ChatUser::where('uid', $uid)->update([
+                    'avatar'       => $me_info['avatar'],
+                    'name'         => $me_info['name'],
                     'last_operate' => $me_info['last_operate'],
                     'description'  => $me_info['description'],
                     'birthday'     => $me_info['birthday'],
@@ -192,5 +194,41 @@ class ApiChatController extends Controller
             'users' => $users,
             'start' => Carbon::parse($start)->diffForHumans(),
         ]);
+    }
+
+    /**
+     * 搜索用户
+     *
+     * @param string $keyword
+     *
+     * @return JsonResponse
+     */
+    public function search(string $keyword): JsonResponse
+    {
+        $users = [];
+        if (! empty($keyword)) {
+            $users  = DB::connection('domestic')
+                ->table('users')
+                ->where('name', "{$keyword}")
+                ->get();
+            if (! empty($users)) {
+                $user_data = [];
+                foreach ($users as $user) {
+                    $user_data[] = [
+                        'uid'          => $user->uid,
+                        'name'         => $user->name,
+                        'avatar'       => $user->avatar,
+                        'last_operate' => $user->last_operate,
+                        'description'  => $user->description,
+                        'birthday'     => $user->birthday,
+                        'height'       => $user->height,
+                        'weight'       => $user->weight,
+                        'role'         => $user->role,
+                    ];
+                }
+                ChatUser::insertOrIgnore($user_data);
+            }
+        }
+        return response()->json(compact('users'));
     }
 }

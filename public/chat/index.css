@@ -32,7 +32,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0;
-    padding: 10px;
+    padding: 6px;
 }
 
 /* Chat bubble styles */
@@ -47,31 +47,29 @@ body {
     background-color: #111; /* Darker bubble background for dark mode */
     /*border-radius: 8px;*/
     padding: 5px 6px 10px;
-    /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
     text-align: center;
 }
 
 .info {
     position: relative;
-    margin-top: -60px;
+    margin-top: -50px;
     color: #ffffff;
     text-align: left;
-    padding: 0 10px;
-    background-color: rgba(0, 0, 0, 0.04);			 
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
     border-radius: 5%;
+    min-height: 100px;
 }
 
 /* Time and name styles */
 .name {
     font-size: 16px;
-    /*margin-top: 30px;*/
     font-weight: bold;
-    padding-top: 6px;
 }
 .user a {
     text-decoration: none;
@@ -109,7 +107,7 @@ body {
 }
 .private {
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 4px;
 }
 .loading-container {
   display: flex;
@@ -130,5 +128,56 @@ body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.search {
+    padding: 10px;
+    margin: 10px 10px 0;
+}
+.search-input input {
+    width: 100%;
+    height: 35px;
+    border-radius: 20px;
+    padding: 5px 20px;
+    background-color: #777;
+    color: #ffffff;
+    border: 1px solid #777;
+    font-size: 16px;
+}
+.search-btn {
+    position: absolute;
+    right: 35px;
+    top: 26px;
+}
+.search-btn img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.search-users a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.search-user {
+    margin: 20px 0;
+    max-height: 70px;
+}
+
+.search-user-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.search-user-info {
+    position: relative;
+    left: 70px;
+    top: -55px;
+    width: 80%;
+}
+.search-user-info-name {
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 

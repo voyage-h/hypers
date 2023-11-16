@@ -51,7 +51,7 @@
         {{$me->location ? ' · ' . $me->location->address : ''}}
     </div>
 	@if (! empty($start))
-	<div class="last-date">-- {{$start}} --</div>
+	<div class="last-date">-- 上次刷新{{$start}} --</div>
 	@endif
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)

@@ -7,7 +7,9 @@ use App\Http\Controllers\Traits\UserTrait;
 use App\Models\ChatUser;
 use App\Models\Chat;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -140,4 +142,49 @@ class ChatController extends Controller
         }
         return redirect('/');
     }
+
+    /**
+     * 搜索用户
+     *
+     * @param string $keyword
+     *
+     * @return JsonResponse
+     */
+    public function search(string $keyword): JsonResponse
+    {
+        $users = [];
+        if (! empty($keyword)) {
+            $users  = DB::connection('domestic')
+                ->table('users')
+                ->where('name', "{$keyword}")
+                ->get();
+//            if (! empty($users)) {
+//                $user_data = [];
+//                foreach ($users as $user) {
+//                    $user_data[] = [
+//                        'uid'          => $user->uid,
+//                        'name'         => $user->name,
+//                        'avatar'       => $user->avatar,
+//                        'last_operate' => $user->last_operate,
+//                        'description'  => $user->description,
+//                        'birthday'     => $user->birthday,
+//                        'height'       => $user->height,
+//                        'weight'       => $user->weight,
+//                        'role'         => $user->role,
+//                    ];
+//                }
+//                ChatUser::insertOrIgnore($user_data);
+//            }
+        }
+        $users = ChatUser::where('is_suspect', 1)
+            ->with('note', 'location')
+            ->orderByDesc('last_operate')
+            ->get()
+            ->map(function ($user) {
+                $user->age = $user->birthday ? Carbon::parse($user->birthday)->age : 0;
+                return $user;
+            });
+        return view('chat.index', compact('users'));
+    }
+
 }
