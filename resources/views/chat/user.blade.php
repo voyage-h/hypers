@@ -31,8 +31,8 @@
             <div class="user-basic">{{$me->age}} / {{$me->height}} / {{$me->weight}}{{$me->role >= 0 ? " / $me->role" : ''}}</div>
             <div class="user-desc">{{mb_substr($me->description, 0, 50)}}</div>
         </div>
+        @if (! empty($me->device->others[0]))
         <div class="user-others">
-            @if (! empty($me->device->others))
             @foreach($me->device->others as $others)
 	            @if ($others->user)
                 <div class="user-other">
@@ -44,8 +44,8 @@
                 </div>
 				@endif
             @endforeach
-            @endif
         </div>
+        @endif
         <div class="location">
             @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
             {{$me->location ? ' · ' . $me->location->address : ''}}

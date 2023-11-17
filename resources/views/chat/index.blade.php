@@ -30,7 +30,7 @@
             </div>
             <div class="online-status{{$user->is_online ? ' status-active': ''}}"></div>
             <div class="info">
-                <div class="name">{{mb_substr($user->name, 0, 6)}}</div>
+                <div class="name">{{mb_substr($user->name, 0, 6) . ($user->note ? '(' . $user->note . ')' : '')}}</div>
                 <div class="private">
                     {{$user->last_operate}}{{$user->location ? ' · ' . substr($user->location->address, 0, 6) : ''}}
                 </div>
