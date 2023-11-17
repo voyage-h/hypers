@@ -79,7 +79,7 @@ body {
 
 /* Avatar styles */
 .chat-left .avatar {
-    float: left;
+display: flex;
 }
 
 .chat-right .avatar {
@@ -128,7 +128,7 @@ body {
     width: 100%;
     position: relative;
     left: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
     height: 20px;
 }
 .time label {

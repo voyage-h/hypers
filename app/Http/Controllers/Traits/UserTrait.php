@@ -204,12 +204,16 @@ trait UserTrait
             'location' => "$lng,$lat",
         ]);
         $_local = $_local->json()['regeocode'] ?? [];
+		$formatted_address = $_local['formatted_address'] ?? '';
+		if (empty($formatted_address)) {
+		    return [];
+		}
         return [
             'uid'          => $user['uid'],
             'last_operate' => $user['last_operate'],
             'latitude'     => $lat,
             'longitude'    => $lng,
-            'address'      => $_local['formatted_address'] ?? '',
+            'address'      => $formatted_address,
             'extra'        => json_encode($_local['addressComponent'], JSON_UNESCAPED_UNICODE),
             'created_at'   => time()
         ];

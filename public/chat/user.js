@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="avatar">
                                     <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
                                     <a href="#"><img src="` + meAvatar + `"/></a>
+                                    <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次</div>
                                 </div>
-                                <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次</div>
                                 <div class="more"><a href="/chat/` + meUid + `/` + user.uid + `"><b>>>> more</b></a></div>
                             </div>
                          </div>

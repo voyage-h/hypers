@@ -96,7 +96,7 @@ class ChatController extends Controller
             })
             ->orderBy('created_at', 'asc')
             ->get();
-        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
+        $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role', 'birthday')
             ->with('note')
             ->whereIn('uid', [$uid, $target])
             ->get();
@@ -109,6 +109,7 @@ class ChatController extends Controller
         }
         $me = $users[$uid] ?? [];
         $target = $users[$target] ?? [];
+		$target->age = Carbon::parse($target->birthday)->age;
 
         return view('chat.detail', compact('chats', 'me', 'target'));
     }

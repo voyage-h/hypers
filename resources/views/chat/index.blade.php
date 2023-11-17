@@ -25,10 +25,10 @@
         <div class="user-container">
         <div class="user" data-id="{{$user->id}}">
             <a href="/chat/user/{{$user->uid}}">
+            <div class="online-status{{$user->is_online ? ' status-active': ''}}"></div>
             <div class="avatar">
                 <img src="{{$user->avatar}}" alt="">
             </div>
-            <div class="online-status{{$user->is_online ? ' status-active': ''}}"></div>
             <div class="info">
                 <div class="name">{{mb_substr($user->name, 0, 6) . ($user->note ? '(' . $user->note . ')' : '')}}</div>
                 <div class="private">

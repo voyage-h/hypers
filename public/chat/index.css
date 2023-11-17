@@ -53,6 +53,7 @@ body {
 .info {
     position: relative;
     /*margin-top: -60px;*/
+	margin-top: 8px;		  
     color: #ffffff;
     text-align: center;
     padding: 0 5px;
@@ -217,7 +218,7 @@ body {
 .online-status {
     position: relative;
     left: 6px;
-    bottom: 125px;
+    top: 20px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
