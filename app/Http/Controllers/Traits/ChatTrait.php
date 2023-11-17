@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use App\Models\Chat;
 use App\Models\ChatUser;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use JsonMachine\Items;
@@ -21,7 +22,7 @@ trait ChatTrait
     {
         // 使用redis分页
         $page  = (int) request()->input('page', 1);
-        $size  = 20;
+        $size  = 10;
         $users = Redis::zrevrange("chat:{$me}", ($page - 1) * $size, $page * $size - 1, 'WITHSCORES');
 
         if (empty($users)) {
@@ -37,11 +38,7 @@ trait ChatTrait
             ->get()
             ->map(function ($user) use ($me, $users) {
                 $time = $users[$user->uid];
-                if (date('Y-m-d') == date('Y-m-d', $time)) {
-                    $user->last_chat_time = date('H:i', $time);
-                } else {
-                    $user->last_chat_time = date('m-d H:i', $time);
-                }
+                $user->last_chat_time = Carbon::parse(intval($time))->diffForHumans();
                 $chat_count = Chat::where(function($query) use ($me, $user) {
                     $query->where('from_uid', $me)
                         ->where('target_uid', $user->uid);

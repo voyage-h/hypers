@@ -407,6 +407,7 @@ button[type="submit"]:hover {
     justify-content: center;
     margin: 25px 0 30px 0;
     color: #666;
+    font-size: 15px;
 }
 .page a {
     text-decoration: none;
@@ -416,15 +417,14 @@ button[type="submit"]:hover {
 
 .user {
     background-color: #111;
-    color: #999;
+    color: #E0E0E0;
     padding-bottom: 10px;
     font-size: 15px;
     margin-bottom: 10px;
 }
 .user-avatar img {
     width: 100%;
-    height: 100%;
-    /*border-radius: 10%;*/
+    height: auto;
 }
 .user-avatar {
 }
@@ -433,7 +433,7 @@ button[type="submit"]:hover {
     padding: 0 20px;
 }
 .user-name {
-    font-size: 20px;
+    font-size: 22px;
     color: aliceblue;
     padding: 10px 0;
     font-weight: bold;
@@ -456,6 +456,7 @@ button[type="submit"]:hover {
     padding: 10px 20px;
 }
 .follow {
+    font-size: 16px;
 }
 .follow a {
     text-decoration: none;
@@ -498,4 +499,5 @@ button[type="submit"]:hover {
     text-align: center;
     margin: 10px;
     color: #666;
+    font-size: 15px;
 }
