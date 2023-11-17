@@ -53,8 +53,7 @@
         @endif
         <div class="location">
 		    <img src="/chat/loc.png">
-            @include('chat.detail.time', ['time' => \Carbon\Carbon::createFromTimestamp($me->last_operate)])
-            {{$me->location ? ' · ' . $me->location->address : ''}}
+            {{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
     </div>
 	@if (! empty($start))
