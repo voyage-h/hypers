@@ -212,12 +212,13 @@ body {
 }
 .online-status {
     position: relative;
-    left: 10px;
-    bottom: 120px;
+    left: 6px;
+    bottom: 125px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
 .status-active {
     background-color: #00ff00;
+    border: 1px solid #f0f0f0;
 }

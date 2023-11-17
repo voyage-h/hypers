@@ -8,13 +8,17 @@
     <script src="{{url('/chat/user.js')}}"></script>
 </head>
 <body>
+<!-- 弹窗 -->
 <div class="alert alert-warning" id="alertWarning">未知错误</div>
 <div class="alert alert-success" id="alertSuccess">成功</div>
+
+<!-- 菜单 -->
+<div class="btn user-all"><a href="/chat/{{$me->uid}}/all"><img src="{{url('/chat/album.png')}}"></a></div>
+<div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/location.png')}}"></a></div>
+<div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/network.png')}}"></a></div>
+<div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
+
 <div class="chat-container">
-    <div class="btn user-all"><a href="/chat/{{$me->uid}}/all"><img src="{{url('/chat/album.png')}}"></a></div>
-    <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/location.png')}}"></a></div>
-    <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/network.png')}}"></a></div>
-    <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
     <div class="user" data-id="{{$me->id}}">
         <div class="user-avatar">
             <a href="https://app.blued.cn/user?id={{$me->hashid}}$&uid={{$me->hashid}}&action=profile&app=1&enc=1">
@@ -22,13 +26,13 @@
             </a>
         </div>
         <div class="user-info">
-            <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{mb_substr($me->name, 0, 15)}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
+            <div class="user-name"><b id="user-name-content" data-value="{{$me->name}}">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</b>
                 <img id="icon-pencil" src="/chat/pencil.png">
             </div>
             <div class="follow">
                 <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">{{$me->is_suspect ? '取消关注' : '关注'}}</a>
             </div>
-            <div class="user-basic">{{$me->age}} · {{$me->height}}cm · {{$me->weight}}kg{{$me->role >= 0 ? " · $me->role" : ''}}</div>
+            <div class="user-basic">{{$me->age}} · {{$me->height}}cm · {{$me->weight}}kg · {{$me->role == -1 ? '其他' : $me->role}}</div>
             <div class="user-desc">{{mb_substr($me->description, 0, 50)}}</div>
         </div>
         @if (! empty($me->device->others[0]))
@@ -42,7 +46,7 @@
                         </a>
                     </div>
                 </div>
-				@endif
+                @endif
             @endforeach
         </div>
         @endif

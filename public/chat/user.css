@@ -415,35 +415,27 @@ button[type="submit"]:hover {
 }
 
 .user {
-    /*display: flex;*/
-    background-color: #111; /* Darker bubble background for dark mode */
-    /*border-radius: 8px;*/
-    padding: 10px 0;
-    /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
-    text-align: center;
-    min-height: 220px;
+    background-color: #111;
+    color: #999;
+    padding-bottom: 10px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 .user-avatar img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10%;
+    width: 100%;
+    height: 100%;
+    /*border-radius: 10%;*/
 }
 .user-avatar {
-    text-align: left;
-    margin: 10px 0 5px 20px;
-    width: 150px;
 }
 .user-info {
-    position: absolute;
-    top: 0;
-    margin-left: 240px;
-    text-align: left;
+    position: relative;
+    padding: 0 20px;
 }
 .user-name {
     font-size: 20px;
-    color: currentcolor;
-    padding: 20px 0;
+    color: aliceblue;
+    padding: 10px 0;
     font-weight: bold;
 }
 .user-name a {
@@ -452,8 +444,7 @@ button[type="submit"]:hover {
 }
 .user-basic {
     font-size: 15px;
-    color: #999;
-    padding-top: 4px;
+    margin-top: 10px;
 }
 .user-desc {
     font-size: 15px;
@@ -465,10 +456,6 @@ button[type="submit"]:hover {
     padding: 10px 20px;
 }
 .follow {
-    /*position: absolute;*/
-    /*top: 20px;*/
-    /*right: 0;*/
-    margin-bottom: 5px;
 }
 .follow a {
     text-decoration: none;
@@ -493,7 +480,6 @@ button[type="submit"]:hover {
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 0;
     padding: 0 20px;
-	margin-top: 15px;
 }
 .other-avatar {
 
@@ -505,11 +491,8 @@ button[type="submit"]:hover {
 }
 
 .location {
-    /*margin: 10px 0;*/
+    font-size: 15px;
     padding: 10px 20px;
-    background-color: #111;
-    text-align: left;
-	font-size: 15px;
 }
 .last-date {
     text-align: center;
