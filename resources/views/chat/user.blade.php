@@ -34,6 +34,7 @@
             </div>
             <div class="user-basic">{{$me->age}} · {{$me->height}}cm · {{$me->weight}}kg · {{$me->role == -1 ? '其他' : $me->role}}</div>
             <div class="user-desc">{{mb_substr($me->description, 0, 50)}}</div>
+			<div class="seperate"></div>
         </div>
         @if (! empty($me->device->others[0]))
         <div class="user-others">

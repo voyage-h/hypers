@@ -41,17 +41,5 @@
     </div>
 </div>
 </body>
-<script type="module">
-    import Lightbox from '/photoswipe/photoswipe-lightbox.esm.min.js';
-    const lightbox = new Lightbox({
-        gallery: '.chat',
-        children: '.contents-img-a',
-        showHideAnimationType: 'zoom',
-        bgOpacity: 1,
-        loop: false,
-        pswpModule: () => import('/photoswipe/photoswipe.esm.min.js')
-    });
-    lightbox.init();
-    window.pswpLightbox = lightbox;
-</script>
+@include('components.photoswipe', ['gallery' => '.chat', 'children' => '.contents-img-a'])
 </html>

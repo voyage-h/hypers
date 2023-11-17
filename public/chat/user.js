@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 page += 1;
                 // 调用 getChatUsers 函数，并传递一个回调函数
                 http_request('POST', '/api/chat/user/' + meUid + '?page=' + page, function (res) {
+					console.log(page, res);	
                     isLoading = false;
                     if (res.users && res.users.length > 0) {
                         // 遍历数组

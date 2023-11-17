@@ -457,6 +457,7 @@ button[type="submit"]:hover {
 }
 .follow {
     font-size: 16px;
+	margin-bottom: 20px;
 }
 .follow a {
     text-decoration: none;
@@ -481,6 +482,7 @@ button[type="submit"]:hover {
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 0;
     padding: 0 20px;
+	margin: 20px 0 10px;		
 }
 .other-avatar {
 
@@ -497,7 +499,11 @@ button[type="submit"]:hover {
 }
 .last-date {
     text-align: center;
-    margin: 10px;
+    margin: 15px;
     color: #666;
     font-size: 15px;
+}
+.seperate {
+    border-top: 0.1px solid #333;
+    margin: 10px 0;
 }
