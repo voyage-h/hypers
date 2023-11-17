@@ -400,3 +400,13 @@ button[type="submit"]:hover {
         max-width: 100%;
     }
 }
+.page {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #999;
+}
+.page a {
+    text-decoration: none;
+    color: #ffffff;
+}

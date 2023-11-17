@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{$me->name}}</title>
+    <title>{{$me->name ?? ''}}</title>
     <link rel="stylesheet" href="{{url('/chat/user.css')}}">
     <script src="{{url('/chat/user.js')}}"></script>
 </head>
@@ -12,7 +12,7 @@
 <div class="alert alert-success" id="alertSuccess">成功</div>
 <div class="chat-container">
     <div class="btn user-all"><a href="/chat/{{$me->uid}}/all"><img src="{{url('/chat/album.png')}}"></a></div>
-    <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/user_refresh.png')}}"></a></div>
+    <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/location.png')}}"></a></div>
     <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/network.png')}}"></a></div>
     <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
     <div class="user" data-id="{{$me->id}}">

@@ -102,12 +102,12 @@ class ApiChatController extends Controller
             unset($user['latitude']);
             unset($user['longitude']);
             unset($user['dev_id']);
-            $user = ChatUser::where('uid', $user_id)->first();
-            if ($user) {
-                $user->last_operate = $user['last_operate'];
-                $user->description  = $user['description'];
-                $user->birthday     = $user['birthday'];
-                $user->save();
+            $userModel = ChatUser::where('uid', $user_id)->first();
+            if (! empty($userModel)) {
+                $userModel->last_operate = $user['last_operate'];
+                $userModel->description  = $user['description'];
+                $userModel->birthday     = $user['birthday'];
+                $userModel->save();
             } else {
                 ChatUser::insertOrIgnore($user);
             }

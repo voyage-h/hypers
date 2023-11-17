@@ -151,8 +151,8 @@ class ChatController extends Controller
                 $query->where('from_uid', $uid)
                     ->orWhere('target_uid', $uid);
             })
-            ->orderBy('created_at', 'asc')
-            ->simplePaginate(100);
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate(60);
 
         $uids = [];
         foreach ($chats as $chat) {
