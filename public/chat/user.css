@@ -496,6 +496,12 @@ button[type="submit"]:hover {
 .location {
     font-size: 15px;
     padding: 10px 20px;
+    display: flex;			 
+}
+.location img {
+    width: 20px;
+    height: 20px;	   
+    margin: 0 5px 0 0;		
 }
 .last-date {
     text-align: center;
