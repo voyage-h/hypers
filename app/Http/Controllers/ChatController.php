@@ -6,6 +6,7 @@ use App\Http\Controllers\Traits\ChatTrait;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Models\ChatUser;
 use App\Models\Chat;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -34,11 +35,30 @@ class ChatController extends Controller
     }
 
     /**
-     * 用户聊天列表
+     * 用户主页
      */
     public function user(int $uid)
     {
+        // 获取实时数据
+        Cache::remember("update:user:$uid", 600, function() use ($uid) {
+            $user = $this->retrieveUser($uid);
+            if (! empty($user)) {
+                // 更新用户
+                $location = $this->parasLocation($user);
+                if (! empty($location)) {
+                    Location::insertOrIgnore($location);
+                }
+                // 更新用户
+                unset($user['latitude'], $user['longitude'], $user['dev_id']);
+                ChatUser::where('uid', $uid)->update($user);
+            }
+            return 1;
+        });
+
+        // 获取聊天列表
         $users = $this->getUserList($uid);
+
+        // 查询用户
         $me = ChatUser::where('uid', $uid)
             ->with(['device' => function ($query) use ($uid) {
                 $query->with(['others' => function ($q) use ($uid) {

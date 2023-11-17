@@ -58,7 +58,7 @@
         </div>
     </div>
 	@if (! empty($start))
-	<div class="last-date">-- 上次刷新{{$start}} --</div>
+	<div class="last-date">-- 更新记录于{{$start}} --</div>
 	@endif
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
