@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use App\Models\Chat;
 use App\Models\ChatUser;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
 use JsonMachine\Items;
@@ -62,9 +63,11 @@ trait ChatTrait
      * @param int    $limit
      *
      * @return array|Items
+     * @throws \Exception
      */
     private function retrieveChats(int $me, string $start, string $end, int $limit = 10000): array|Items
     {
+        $error = '';
         try {
             $res = Http::withHeader('X-REQUEST-ID', md5(time() . rand(1000, 9999)))
                 ->timeout(5)
@@ -75,13 +78,21 @@ trait ChatTrait
                     'endDate'   => date('Y-m-d H:i:s'),
                     'limit'     => $limit,
                 ]);
+            $content = $res->body();
         } catch (\Exception $e) {
-            return [];
+            $error = $e->getMessage();
+            $content = '';
         }
-        try {
-            $data = Items::fromString($res->body(), ['pointer' => ['/data']]);
-        } catch (\JsonMachine\Exception\JsonMachineException $e) {
-            return [];
+        $data = [];
+        if (! empty($content)) {
+            try {
+                $data = Items::fromString($content, ['pointer' => ['/data']]);
+            } catch (\JsonMachine\Exception\JsonMachineException $e) {
+                $error = $e->getMessage();
+            }
+        }
+        if (! empty($error)) {
+            throw new \Exception($error);
         }
         return $data;
     }

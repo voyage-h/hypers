@@ -135,7 +135,16 @@ class ApiChatController extends Controller
         Cache::set("refresh:{$uid}", time());
         $start = date('Y-m-d H:i', $start) . ':00';
         $end   = date('Y-m-d', strtotime('+1 day'));
-        $raw_data = $this->retrieveChats($uid, $start, $end);
+        $error = '';
+        try {
+            $raw_data = $this->retrieveChats($uid, $start, $end);
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            $raw_data = [];
+        }
+        if (! empty($error)) {
+            Cache::set("refresh:{$uid}", time());
+        }
         if (! empty($raw_data)) {
             // 插入数据库
             $new_uids = [];
