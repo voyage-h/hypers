@@ -75,7 +75,7 @@
                         <a href=""><img src="{{$me->avatar}}"/></a>
                     </div>
                     <div class="time">{{$user->last_chat_time}} · 互动 <label class="{{$user->chat_count > 100 ? 'hot' : 'normal'}}">{{$user->chat_count}}</label> 次</div>
-                    <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}">>>> more</a></div>
+                    <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}"><b>>>> more</b></a></div>
                 </div>
              </div>
         </div>
