@@ -176,6 +176,11 @@ class ApiChatController extends Controller
                     'description'  => $me_info['description'],
                     'birthday'     => $me_info['birthday'],
                 ]);
+                // 地理位置
+                $location = $this->parasLocation($me_info);
+                if (! empty($location)) {
+                    Location::insertOrIgnore($location);
+                }
             }
         }
 

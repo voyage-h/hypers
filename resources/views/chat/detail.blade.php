@@ -15,7 +15,7 @@
     <div class="chat" id="chats">
         <div class="chat-title" data-name={{$target->name}}>
             <a href="#">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>
-            <div class="title-basic">{{$target->height}}/{{$target->weight}}/{{$target->role}}</div>
+            <div class="title-basic">{{$target->height}} · {{$target->weight}}{{$target->role >= 0 ? ' · ' . $target->role : ''}}</div>
             <div class="title-more" data-target={{$target->uid}}><a href="/chat/user/{{$me->uid}}/follow/{{$target->uid}}">•••</a></div>
         </div>
         @php $i = 0; @endphp
