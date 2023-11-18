@@ -41,10 +41,10 @@ body {
 }
 
 .title-basic {
-    font-size:12px;
+    font-size:13px;
     font-weight: lighter;
     margin-top: 2px;
-    color: #999;
+    color: #c0c0c0;
 }
 
 .title-more {
@@ -482,7 +482,7 @@ button[type="submit"]:hover {
     color: darkorange;
 }
 .normal {
-  /*  color: #f0f0f0;*/
+    color: #f0f0f0;
 }
 #icon-pencil {
     width: 16px;

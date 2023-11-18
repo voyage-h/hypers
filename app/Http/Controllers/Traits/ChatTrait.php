@@ -48,18 +48,17 @@ trait ChatTrait
                     ->orWhere(function($query) use ($me, $user) {
                         $query->where('from_uid', $user->uid)
                             ->where('target_uid', $me);
-                    })
-                    ->get();
+                    });
                 $user->has_image = false;
                 $user->is_dating = false;
                 $user->chat_count = $chats->count();
-				$content = $chats[0]->contents;
+				$content = $chats->orderBy('id', 'desc')->first()->contents;
 				if (str_starts_with($content, 'http')) {
 				    $content = '[图片]';
 				} elseif (str_starts_with($content, 'RU')) {
 				    $content = '[私图]';
 				}
-				$user->chat_content = mb_substr($content, 0, 18);
+				$user->chat_content = mb_substr($content, 0, 15);
 				if ($user->chat)
                 $user->name       = mb_substr($user->name, 0, 20) . ($user->note ? '(' . $user->note . ')' : '');
 //                $pattern = '/(到了|开门|到楼下了|有门禁吗|打车了|上车了)/';
