@@ -43,7 +43,8 @@ body {
 .title-basic {
     font-size:12px;
     font-weight: lighter;
-    margin-top: 6px;
+    margin-top: 2px;
+    color: #999;
 }
 
 .title-more {
@@ -132,9 +133,10 @@ body {
 .time {
     font-size: 12px;
     color: #999;
-    width: 100%;
+    width: 50px;
     position: relative;
     text-align: right;
+	margin-bottom: 20px;
 }
 .time-count {
     margin-top: 6px;
@@ -480,7 +482,7 @@ button[type="submit"]:hover {
     color: darkorange;
 }
 .normal {
-    color: #f0f0f0;
+  /*  color: #f0f0f0;*/
 }
 #icon-pencil {
     width: 16px;

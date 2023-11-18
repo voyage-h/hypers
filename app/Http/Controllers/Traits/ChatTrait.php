@@ -49,10 +49,18 @@ trait ChatTrait
                         $query->where('from_uid', $user->uid)
                             ->where('target_uid', $me);
                     })
-                    ->count();
+                    ->get();
                 $user->has_image = false;
                 $user->is_dating = false;
-                $user->chat_count = $chats;
+                $user->chat_count = $chats->count();
+				$content = $chats[0]->contents;
+				if (str_starts_with($content, 'http')) {
+				    $content = '[图片]';
+				} elseif (str_starts_with($content, 'RU')) {
+				    $content = '[私图]';
+				}
+				$user->chat_content = mb_substr($content, 0, 18);
+				if ($user->chat)
                 $user->name       = mb_substr($user->name, 0, 20) . ($user->note ? '(' . $user->note . ')' : '');
 //                $pattern = '/(到了|开门|到楼下了|有门禁吗|打车了|上车了)/';
 //                foreach ($chats as $chat) {

@@ -68,12 +68,12 @@
                         <a href="{{url('/chat/user/'.$user->uid)}}"><img src="{{$user->avatar}}"/></a>
                         <div class="chat-name">
                             <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}
-                                <div class="title-basic">{{$user->height}} {{$user->weight}} {{$user->role >= 0 ? $user->role : ''}}</div>
+                                <div class="title-basic">[互动<label class="{{$user->chat_count > 100 ? ' hot' : ' normal'}}">{{$user->chat_count}}</label>次] {{ $user->chat_content }}</div>
                             </a>
                         </div>
                         <div class="time">
                             <div class="time-content">{{$user->last_chat_time}}</div>
-                            <div class="time-count">互动<label class="{{$user->chat_count > 100 ? ' hot' : ' normal'}}">{{$user->chat_count}}</label>次</div>
+{{--<div class="time-count">互动<label class="{{$user->chat_count > 100 ? ' hot' : ' normal'}}">{{$user->chat_count}}</label>次</div>--}}
                         </div>
                     </div>
                 </div>
