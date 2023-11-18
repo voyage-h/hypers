@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     isLoading = false;
 			        loading.style.display = 'none';
                     if (res.users && res.users.length > 0) {
-					    if (res.users.length < 20) {
+					    if (res.users.length < 30) {
 						    hasData = false;
                             document.querySelector('.page').style.display = 'flex';
 						}

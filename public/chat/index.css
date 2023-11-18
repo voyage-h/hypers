@@ -50,6 +50,9 @@ body {
     text-align: center;
 }
 
+.user:active {
+    background-color: #000;
+}
 .info {
     position: relative;
     /*margin-top: -60px;*/

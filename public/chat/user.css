@@ -61,15 +61,17 @@ body {
     text-decoration: none;
     color: #f5f5f5;
 }
-.chat-list {
+.chat-content {
     background-color: #111;
-    padding: 10px;
+}
+.chat-content:active {
+    background-color: #000;
 }
 /* Chat bubble contents styles */
 .chat-left, .chat-right {
     /*display: flex;*/
     flex-direction: column;
-    padding: 5px 10px;
+    padding: 8px 20px;
     position: relative; /* Required for positioning the pseudo-element */
     /*min-height: 5em;*/
     overflow: auto;
@@ -529,7 +531,7 @@ button[type="submit"]:hover {
     margin: 20px 0 10px;
 }
 .loading-container {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;	
     margin: 20px;
