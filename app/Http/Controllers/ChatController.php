@@ -56,7 +56,8 @@ class ChatController extends Controller
         });
 
         // 获取聊天列表
-        $users = $this->getUserList($uid);
+        //$users = $this->getUserList($uid);
+		$users = [];
 
         // 查询用户
         $me = ChatUser::where('uid', $uid)

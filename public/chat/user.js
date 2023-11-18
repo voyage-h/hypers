@@ -1,6 +1,6 @@
 // 记录上一次滚动位置
 var lastScrollTop = 0;
-var page = 1;
+var page = 0;
 var meUid;
 var meAvatar;
 var hasData = true;
@@ -8,6 +8,10 @@ var isLoading = false;
 const accessToken = `eyJpdiI6InJUdmhibVF2RXRFaE1jZXQ2OFYrYlE9PSIsInZhbHVlIjoiVmtzb05UaTAxN3Nnbncybk9WNjc4S0Y5NDdvcnd0blAvQ2VDL0NJOStyN0xYQnExMFR1amRQYzJtbnpxSGhwUWFPbmRjOW9wdnRPeGNudGNPUUJJU0hnbHdINHd1QnhGZ2R5VS95dU9hRWpBMzdYd3QzTEp0KzFxQlc1QTdZdGsiLCJtYWMiOiJhOTdiMDFlMWM2YjA5MzAxNWFiYjgzY2FjYTBlNDBiZjU4YjVkZWZkMWQxZWFhZTg2NjVhMWY2MzFmMzVhZjIyIiwidGFnIjoiIn0%3D`;
 
 document.addEventListener('DOMContentLoaded', function() {
+	const loading = document.getElementById('loading');	
+    const chatList = document.querySelector('.chat-list');
+    meUid = chatList.getAttribute('data-uid');
+    meAvatar = chatList.getAttribute('data-avatar');
     /**
      * 上滑翻页
      */
@@ -25,16 +29,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // 如果页面滚动到底部
             if (!isLoading && hasData && distanceToBottom < threshold) {
-                const chatList = document.querySelector('.chat-list');
-                meUid = chatList.getAttribute('data-uid');
-                meAvatar = chatList.getAttribute('data-avatar');
+			    loading.style.display = 'flex';
                 isLoading = true;
                 page += 1;
                 // 调用 getChatUsers 函数，并传递一个回调函数
                 http_request('POST', '/api/chat/user/' + meUid + '?page=' + page, function (res) {
 					console.log(page, res);
                     isLoading = false;
+			        loading.style.display = 'none';
                     if (res.users && res.users.length > 0) {
+					    if (res.users.length < 20) {
+						    hasData = false;
+                            document.querySelector('.page').style.display = 'flex';
+						}
                         // 遍历数组
                         var html = '';
                         for (let k in res.users) {

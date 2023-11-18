@@ -81,6 +81,9 @@
     @endforeach
     </div>
 </div>
+<div class="loading-container" id="loading">
+<div class="loading"></div>
+</div>
 <div class="page"> -- 没有更多 -- </div>
 @include('chat.detail.modal', ['uid' => $me->uid])
 </body>
