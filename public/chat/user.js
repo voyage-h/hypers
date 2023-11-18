@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 page += 1;
                 // 调用 getChatUsers 函数，并传递一个回调函数
                 http_request('POST', '/api/chat/user/' + meUid + '?page=' + page, function (res) {
-					console.log(page, res);	
+					console.log(page, res);
                     isLoading = false;
                     if (res.users && res.users.length > 0) {
                         // 遍历数组
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             let user = res.users[k];
                             let labelClass = user.chat_count >= 100 ? 'hot' : 'normal';
                             let role = user.role >= 0 ? user.role : '';
+                            let hasImage = user.has_image ? '· 图' : '';
+                            let isDating = user.is_dating ? '· 约' : '';
                             html += `
                         <div class="chat">
                         <div class="chat-title">
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="avatar">
                                     <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
                                     <a href="#"><img src="` + meAvatar + `"/></a>
-                                    <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次</div>
+                                    <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次` + hasImage + isDating + `</div>
                                 </div>
                                 <div class="more"><a href="/chat/` + meUid + `/` + user.uid + `"><b>>>> more</b></a></div>
                             </div>
