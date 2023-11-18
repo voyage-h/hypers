@@ -73,7 +73,6 @@
                         </div>
                         <div class="time">
                             <div class="time-content">{{$user->last_chat_time}}</div>
-{{--<div class="time-count">互动<label class="{{$user->chat_count > 100 ? ' hot' : ' normal'}}">{{$user->chat_count}}</label>次</div>--}}
                         </div>
                     </div>
                 </div>

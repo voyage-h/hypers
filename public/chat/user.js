@@ -44,20 +44,23 @@ document.addEventListener('DOMContentLoaded', function() {
                             let hasImage = user.has_image ? '· 图' : '';
                             let isDating = user.is_dating ? '· 约' : '';
                             html += `
-                        <div class="chat">
-                        <div class="chat-content">
-                            <div class="chat-left">
-                                <div class="avatar">
-                                    <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
-                                    <div class="chat-name">
-                                        <a href='/chat/` + meUid + `/` + user.uid + `'>` + user.name + `</a>
-                                        <div class="title-basic">` + user.height + ' ' + user.weight + ' ' + role + `</div>
+                            <div class="chat">
+                                <div class="chat-content">
+                                    <div class="chat-left">
+                                        <div class="avatar">
+                                            <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
+                                            <div class="chat-name">
+                                                <a href='/chat/` + meUid + '/' + user.uid + `'>` + user.name + `
+                                                    <div class="title-basic">[互动<label class="` + labelClass + `">` + user.chat_count + `</label>次] ` + user.chat_content +`</div>
+                                                </a>
+                                            </div>
+                                            <div class="time">
+                                                <div class="time-content">` + user.last_chat_time + `</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="time">` + user.last_chat_time + ` · <a href="#"><img src="` + meAvatar + `"/></a> 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次` + hasImage + isDating + `</div>
-                                </div>
-                            </div>
-                         </div>
-                         </div>`
+                                 </div>
+                            </div>`
                         }
                         if (html) {
                             document.querySelector('.chat-list').innerHTML += html;
