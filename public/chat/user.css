@@ -36,7 +36,7 @@ body {
     color: #f5f5f5;
     /*margin-bottom: 10px;*/
     text-align: center;
-    padding: 15px 0 12px 0;
+    padding: 15px 0 0 0;
     /*border-bottom: 2px solid #222;*/
     position: sticky;
     top: 0;
@@ -444,11 +444,10 @@ button[type="submit"]:hover {
 }
 .user-basic {
     font-size: 15px;
-    margin-top: 10px;
+    margin: 10px 0 20px 0;
 }
 .user-desc {
     font-size: 15px;
-    padding: 10px 10px 10px 0;
 }
 .user-private {
     font-size: 14px;
@@ -511,5 +510,5 @@ button[type="submit"]:hover {
 }
 .seperate {
     border-top: 0.1px solid #333;
-    margin: 10px 0;
+    margin: 20px 0 10px;
 }
