@@ -56,9 +56,7 @@
             {{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
     </div>
-	@if (! empty($start))
-	<div class="last-date">-- 更新记录于{{$start}} --</div>
-	@endif
+	<div class="last-date" id="last-date">{{empty($start) ? '无更新记录' : "-- 更新记录于$start --"}}</div>
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
         <div class="chat">
@@ -84,7 +82,7 @@
 <div class="loading-container" id="loading">
 <div class="loading"></div>
 </div>
-<div class="page"> -- 没有更多 -- </div>
+<div class="page" id="page">{{empty($start) ? '' : ' -- 没有更多 -- '}}</div>
 @include('chat.detail.modal', ['uid' => $me->uid])
 </body>
 </html>

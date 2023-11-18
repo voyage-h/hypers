@@ -8,10 +8,12 @@ var isLoading = false;
 const accessToken = `eyJpdiI6InJUdmhibVF2RXRFaE1jZXQ2OFYrYlE9PSIsInZhbHVlIjoiVmtzb05UaTAxN3Nnbncybk9WNjc4S0Y5NDdvcnd0blAvQ2VDL0NJOStyN0xYQnExMFR1amRQYzJtbnpxSGhwUWFPbmRjOW9wdnRPeGNudGNPUUJJU0hnbHdINHd1QnhGZ2R5VS95dU9hRWpBMzdYd3QzTEp0KzFxQlc1QTdZdGsiLCJtYWMiOiJhOTdiMDFlMWM2YjA5MzAxNWFiYjgzY2FjYTBlNDBiZjU4YjVkZWZkMWQxZWFhZTg2NjVhMWY2MzFmMzVhZjIyIiwidGFnIjoiIn0%3D`;
 
 document.addEventListener('DOMContentLoaded', function() {
-	const loading = document.getElementById('loading');	
+	const loading = document.getElementById('loading');
     const chatList = document.querySelector('.chat-list');
+    const noMore = document.getElementById('page');
     meUid = chatList.getAttribute('data-uid');
     meAvatar = chatList.getAttribute('data-avatar');
+    const lastDate = document.getElementById('last-date');
     /**
      * 上滑翻页
      */
@@ -34,48 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 page += 1;
                 // 调用 getChatUsers 函数，并传递一个回调函数
                 http_request('POST', '/api/chat/user/' + meUid + '?page=' + page, function (res) {
-					console.log(page, res);
+					console.log('翻页', page, res);
                     isLoading = false;
 			        loading.style.display = 'none';
                     if (res.users && res.users.length > 0) {
 					    if (res.users.length < 30) {
-						    hasData = false;
-                            document.querySelector('.page').style.display = 'flex';
+						    // hasData = false;
+                            // document.querySelector('.page').style.display = 'flex';
 						}
                         // 遍历数组
-                        var html = '';
-                        for (let k in res.users) {
-                            let user = res.users[k];
-                            let labelClass = user.chat_count >= 100 ? 'hot' : 'normal';
-                            let role = user.role >= 0 ? user.role : '';
-                            let hasImage = user.has_image ? '· 图' : '';
-                            let isDating = user.is_dating ? '· 约' : '';
-                            html += `
-                            <div class="chat">
-                                <div class="chat-content">
-                                    <div class="chat-left">
-                                        <div class="avatar">
-                                            <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
-                                            <div class="chat-name">
-                                                <a href='/chat/` + meUid + '/' + user.uid + `'>` + user.name + `
-                                                    <div class="title-basic">[互动<label class="` + labelClass + `"> ` + user.chat_count + `</label> 次] ` + user.chat_content +`</div>
-                                                </a>
-                                            </div>
-                                            <div class="time">
-                                                <div class="time-content">` + user.last_chat_time + `</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                 </div>
-                            </div>`
-                        }
+                        let html = user_list_html(res.users);
                         if (html) {
-                            document.querySelector('.chat-list').innerHTML += html;
+                            chatList.innerHTML += html;
                         }
                     } else {
                         hasData = false;
                         console.log('没有更多数据了');
-                        document.querySelector('.page').style.display = 'flex';
+                        noMore.style.display = 'flex';
                     }
                 });
             }
@@ -95,18 +72,32 @@ document.addEventListener('DOMContentLoaded', function() {
      * 刷新记录
      * @type {HTMLElement}
      */
-    document.getElementById('btn-refresh').addEventListener('click', function () {
-        this.style.display = 'none';
+    const btnRefresh = document.getElementById('btn-refresh');
+    btnRefresh.addEventListener('click', function () {
+        const time = new Date().getSeconds();
+        lastDate.style.display = 'none';
+        page = 1;
+        hasData = false;
+        btnRefresh.style.display = 'none';
         const refresh_uid = this.getAttribute('data-target');
+        noMore.style.display = 'none';
+        chatList.innerHTML = '';
+        loading.style.display = 'flex';
         http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_chat', function (res) {
+            console.log('刷新', page, res);
+            const current_time = new Date().getSeconds();
+            const cost_time = current_time - time > 0 ? current_time - time : 1;
+            loading.style.display = 'none';
+            lastDate.innerText = '-- 更新记录于' + cost_time + '秒前 --';
+            lastDate.style.display = 'block';
+            btnRefresh.style.display = 'block';
             if (res.users && res.users.length > 0) {
-                //alertSuccess.style.display = 'block';
-                //alertSuccess.textContent   = res.start;
-                //setTimeout(function () {
-                    // 刷新
-                //    alertSuccess.style.display = 'none';
-                    location.reload();
-                //}, 4000);
+                hasData = true;
+                // location.reload();
+                let html = user_list_html(res.users);
+                if (html) {
+                    chatList.innerHTML += html;
+                }
             } else {
                 warning.style.display = 'block';
                 warning.textContent   = '没有数据';
@@ -228,4 +219,34 @@ function http_request(method, url, callback) {
     };
     // 发送请求
     xhr.send();
+}
+
+function user_list_html(users) {
+    let html = '';
+    for (let k in users) {
+        let user = users[k];
+        let labelClass = user.chat_count >= 100 ? 'hot' : 'normal';
+        let role = user.role >= 0 ? user.role : '';
+        let hasImage = user.has_image ? '· 图' : '';
+        let isDating = user.is_dating ? '· 约' : '';
+        html += `
+        <div class="chat">
+            <div class="chat-content">
+                <div class="chat-left">
+                    <div class="avatar">
+                        <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
+                        <div class="chat-name">
+                            <a href='/chat/` + meUid + '/' + user.uid + `'>` + user.name + `
+                                <div class="title-basic">[互动<label class="` + labelClass + `"> ` + user.chat_count + `</label> 次] ` + user.chat_content +`</div>
+                            </a>
+                        </div>
+                        <div class="time">
+                            <div class="time-content">` + user.last_chat_time + `</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>`
+    }
+    return html;
 }

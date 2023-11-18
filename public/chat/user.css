@@ -69,11 +69,9 @@ body {
 }
 /* Chat bubble contents styles */
 .chat-left, .chat-right {
-    /*display: flex;*/
     flex-direction: column;
-    padding: 8px 20px;
+    padding: 8px 12px;
     position: relative; /* Required for positioning the pseudo-element */
-    /*min-height: 5em;*/
     overflow: auto;
 }
 
@@ -533,7 +531,7 @@ button[type="submit"]:hover {
 .loading-container {
     display: none;
     justify-content: center;
-    align-items: center;	
+    align-items: center;
     margin: 20px;
 }
 /* Loading动画样式 */
