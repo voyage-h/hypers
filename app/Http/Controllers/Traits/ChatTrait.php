@@ -49,25 +49,27 @@ trait ChatTrait
                         $query->where('from_uid', $user->uid)
                             ->where('target_uid', $me);
                     })
-                    ->get();
+                    ->count();
                 $user->has_image = false;
                 $user->is_dating = false;
-                foreach ($chats as $chat) {
-                    if (! $user->has_image && str_starts_with($chat->contents, 'http')) {
-                        $user->has_image = true;
-                    }
-                    if (! $user->is_dating) {
-                        if (str_contains($chat->contents, '到了')
-                            || str_contains($chat->contents, '地址')
-                            || str_contains($chat->contents, '定位')) {
-                            $user->is_dating = true;
-                        }
-                    }
-                    if ($user->has_image && $user->is_dating) {
-                        break;
-                    }
-                }
-                $user->chat_count = $chats->count();
+                $user->chat_count = $chats;
+                $user->name       = mb_substr($user->name, 0, 20) . ($user->note ? '(' . $user->note . ')' : '');
+//                $pattern = '/(到了|开门|到楼下了|有门禁吗|打车了|上车了)/';
+//                foreach ($chats as $chat) {
+//                    if (! $user->has_image && str_starts_with($chat->contents, 'http')) {
+//                        $user->has_image = true;
+//                    }
+//                    if (! $user->is_dating) {
+//                        if (preg_match($pattern, $chat->contents)) {
+//                            dd($chat->contents);
+//                            $user->is_dating = true;
+//                        }
+//                    }
+//                    if ($user->has_image && $user->is_dating) {
+//                        break;
+//                    }
+//                }
+//                $user->chat_count = $chats->count();
                 return $user;
             });
     }

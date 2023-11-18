@@ -62,19 +62,19 @@
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
     @foreach($users as $user)
         <div class="chat">
-            <div class="chat-title" data-name={{$user->name}}>
-                <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}{{$user->note ? '(' . $user->note . ')' : ''}}
-                <div class="title-basic">{{$user->height}} {{$user->weight}} {{$user->role >= 0 ? $user->role : ''}}</div>
-                </a>
-            </div>
             <div class="chat-content">
                 <div class="chat-left">
                     <div class="avatar">
                         <a href="{{url('/chat/user/'.$user->uid)}}"><img src="{{$user->avatar}}"/></a>
-                        <a href=""><img src="{{$me->avatar}}"/></a>
+                        <div class="chat-name">
+                            <a href='{{url('/chat/'.$me->uid.'/'.$user->uid)}}'>{{$user->name}}
+                                <div class="title-basic">{{$user->height}} {{$user->weight}} {{$user->role >= 0 ? $user->role : ''}}</div>
+                            </a>
+                        </div>
                         <div class="time">
                             {{$user->last_chat_time}}
-                            · 互动 <label class="{{$user->chat_count > 100 ? 'hot' : 'normal'}}">{{$user->chat_count}}</label> 次
+                            · <img src="{{$me->avatar}}"/>
+                            互动 <label class="{{$user->chat_count > 100 ? 'hot' : 'normal'}}">{{$user->chat_count}}</label> 次
                             @if($user->has_image)
                                 · 图
                             @elseif($user->is_dating)
@@ -82,7 +82,6 @@
                             @endif
                         </div>
                     </div>
-                    <div class="more"><a href="{{url('/chat/'.$me->uid.'/'.$user->uid)}}"><b>>>> more</b></a></div>
                 </div>
              </div>
         </div>

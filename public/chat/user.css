@@ -21,13 +21,9 @@ body {
 
 /* Chat bubble styles */
 .chat {
-    /*display: flex;*/
     flex-direction: column; /* Stack chat bubbles vertically */
-    margin-bottom: 10px;
     background-color: #111; /* Darker bubble background for dark mode */
-    /*border-radius: 8px;*/
-    padding: 0 0 4px 0;
-    /*min-height: 100vh; !* Minimum height to make the chat scrollable *!*/
+    padding: 5px 10px 0 10px;
 }
 
 .chat-title {
@@ -47,7 +43,7 @@ body {
 .title-basic {
     font-size:12px;
     font-weight: lighter;
-    margin-top: 2px;
+    margin-top: 8px;
 }
 
 .title-more {
@@ -79,7 +75,17 @@ body {
 
 /* Avatar styles */
 .chat-left .avatar {
-display: flex;
+    display: flex;
+    align-items: center;
+}
+.chat-name {
+    width: 100%;
+    margin-left: 10px;
+    font-size: 15px;
+}
+.chat-name a {
+    text-decoration: none;
+    color: #E0E0E0;
 }
 
 .chat-right .avatar {
@@ -127,10 +133,13 @@ display: flex;
     color: #999;
     width: 100%;
     position: relative;
-    left: 10px;
-    margin-top: 15px;
+    text-align: right;
+}
+.time img {
+    width: 20px;
     height: 20px;
 }
+
 .time label {
     font-size: 18px;
 }
@@ -481,7 +490,7 @@ button[type="submit"]:hover {
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 0;
     padding: 0 20px;
-	margin: 20px 0 10px;		
+	margin: 20px 0 10px;
 }
 .other-avatar {
 
@@ -495,12 +504,12 @@ button[type="submit"]:hover {
 .location {
     font-size: 15px;
     padding: 10px 20px;
-    display: flex;			 
+    display: flex;
 }
 .location img {
     width: 20px;
-    height: 20px;	   
-    margin: 0 5px 0 0;		
+    height: 20px;
+    margin: 0 5px 0 0;
 }
 .last-date {
     text-align: center;

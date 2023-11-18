@@ -45,18 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             let isDating = user.is_dating ? '· 约' : '';
                             html += `
                         <div class="chat">
-                        <div class="chat-title">
-                            <a href='/chat/` + meUid + `/` + user.uid + `'>` + user.name + `</a>
-                            <div class="title-basic">` + user.height + ' ' + user.weight + ' ' + role + `</div>
-                        </div>
                         <div class="chat-content">
                             <div class="chat-left">
                                 <div class="avatar">
                                     <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
-                                    <a href="#"><img src="` + meAvatar + `"/></a>
-                                    <div class="time">` + user.last_chat_time + ` · 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次` + hasImage + isDating + `</div>
+                                    <div class="chat-name">
+                                        <a href='/chat/` + meUid + `/` + user.uid + `'>` + user.name + `</a>
+                                        <div class="title-basic">` + user.height + ' ' + user.weight + ' ' + role + `</div>
+                                    </div>
+                                    <div class="time">` + user.last_chat_time + ` · <a href="#"><img src="` + meAvatar + `"/></a> 互动 <label class="` + labelClass + `">` + user.chat_count + `</label> 次` + hasImage + isDating + `</div>
                                 </div>
-                                <div class="more"><a href="/chat/` + meUid + `/` + user.uid + `"><b>>>> more</b></a></div>
                             </div>
                          </div>
                          </div>`
