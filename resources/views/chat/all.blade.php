@@ -11,20 +11,21 @@
 <body>
 <div class="chat-container">
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
-    @foreach($chats as $key => $chat)
-    @php $target = $users[$chat->from_uid == $me->uid ? $chat->target_uid : $chat->from_uid]; @endphp
+    @foreach($chats as $uid => $chat_arr)
+    @php $target = $users[$uid]; @endphp
     <div class="chat">
         <div class="chat-title">
             <a href="/chat/{{$me->uid}}/{{$target->uid}}">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>
             <div class="title-basic">{{$target->height}}/{{$target->weight}}/{{$target->role}}</div>
         </div>
+        @foreach($chat_arr as $key => $chat)
         <div class="chat-content">
             <div class="chat-{{$chat->from_uid != $me->uid ? 'left': 'right'}}">
                 @if($key == 0)
                     <div class="time">
                     @include('chat.detail.time', ['time' => $chat->created_at])
                     </div>
-                @elseif($chat->created_at->diffInMinutes($chats[$key - 1]->created_at) > 5)
+                @elseif($chat->created_at->diffInMinutes($chat_arr[$key - 1]->created_at) > 5)
                     <div class="time">
                     @include('chat.detail.time', ['time' => $chat->created_at])
                     </div>
@@ -32,13 +33,19 @@
                 <div class="avatar">
                     <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
                 </div>
-                @include('chat.detail.content', ['contents' => $chat->contents])
+{{--                @include('chat.detail.content', ['contents' => $chat->contents])--}}
+                    <div class="contents-video" data-src="{{$chat->contents}}">
+                        <a class="contents-img-a" href="{{$chat->contents}}" data-pswp-src="{{$chat->contents}}">
+                            <img src="{{$chat->contents}}">
+                        </a>
+                    </div>
             </div>
         </div>
+        @endforeach
     </div>
     @endforeach
 </div>
-<div class="page">{{$chats->links()}}</div>
+{{--<div class="page">{{$chats->links()}}</div>--}}
 </body>
 @include('components.photoswipe', ['gallery' => '.chat-container', 'children' => '.contents-img-a'])
 </html>

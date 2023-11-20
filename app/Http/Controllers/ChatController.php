@@ -169,9 +169,14 @@ class ChatController extends Controller
         return redirect('/');
     }
 
+    /**
+     * 获取图片
+     *
+     * @param int $uid
+     */
     public function all(int $uid)
     {
-        $chats = Chat::where('contents', 'like', 'http%')
+        $raw_chats = Chat::where('contents', 'like', 'http%')
             ->where(function($query) use ($uid) {
                 $query->where('from_uid', $uid)
                     ->orWhere('target_uid', $uid);
@@ -180,8 +185,8 @@ class ChatController extends Controller
             ->simplePaginate(60);
 
         $uids = [];
-        foreach ($chats as $chat) {
-            $uids[$chat->from_uid] = $chat->from_uid;
+        foreach ($raw_chats as $chat) {
+            $uids[$chat->from_uid]   = $chat->from_uid;
             $uids[$chat->target_uid] = $chat->target_uid;
         }
         $users = ChatUser::select('uid', 'name', 'avatar', 'last_operate', 'height', 'weight', 'role')
@@ -190,11 +195,13 @@ class ChatController extends Controller
             ->get();
 
         $users = $users->keyBy('uid');
-        foreach ($chats as $chat) {
+        $chats = [];
+        foreach ($raw_chats as $chat) {
             $user = $users[$chat->from_uid] ?? [];
             $chat->name   = $user->name ?? '';
             $chat->avatar = $user->avatar ?? '';
             $chat->last_operate = $user->last_operate ?? 0;
+            $chats[$chat->from_uid][] = $chat;
         }
         $me = $users[$uid] ?? [];
         return view('chat.all', compact('chats', 'users', 'me'));
