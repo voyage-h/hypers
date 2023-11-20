@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{$me->name ?? ''}}</title>
+    <title>{{$me->name ?? env('APP_NAME')}}}</title>
     <link rel="stylesheet" href="{{url('/chat/user.css')}}">
     <script src="{{url('/chat/user.js')}}"></script>
 </head>
@@ -33,7 +33,7 @@
                 <a href="javascript:void(0)" id="btn-follow" data-uid="{{$me->uid}}" data-value="{{$me->is_suspect}}">{{$me->is_suspect ? '取消关注' : '关注'}}</a>
             </div>
             <div class="user-basic">{{$me->age}} · {{$me->height}}cm · {{$me->weight}}kg · {{$me->role == -1 ? '其他' : $me->role}}</div>
-            <div class="user-desc">{{$me->description}}</div>
+            <div class="user-desc">{!!$me->description!!}</div>
 			<div class="seperate"></div>
         </div>
         @if (! empty($me->device->others[0]))
@@ -79,9 +79,7 @@
     @endforeach
     </div>
 </div>
-<div class="loading-container" id="loading">
-<div class="loading"></div>
-</div>
+<div class="loading-container" id="loading"><div class="loading"></div></div>
 <div class="page" id="page">{{empty($start) ? '' : ' -- 没有更多 -- '}}</div>
 @include('chat.detail.modal', ['uid' => $me->uid])
 </body>

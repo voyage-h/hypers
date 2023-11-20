@@ -75,22 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     const btnRefresh = document.getElementById('btn-refresh');
     btnRefresh.addEventListener('click', function () {
-        const time = new Date().getSeconds();
-        lastDate.style.display = 'none';
+        lastDate.innerText = '更新中...';
         page = 1;
         hasData = false;
         btnRefresh.style.display = 'none';
         const refresh_uid = this.getAttribute('data-target');
         noMore.style.display = 'none';
-        chatList.innerHTML = '';
-        loading.style.display = 'flex';
         http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_chat', function (res) {
             console.log('刷新', page, res);
-            const current_time = new Date().getSeconds();
-            const cost_time = current_time - time > 0 ? current_time - time : 1;
-            loading.style.display = 'none';
-            lastDate.innerText = '-- 更新记录于' + cost_time + '秒前 --';
-            lastDate.style.display = 'block';
+            lastDate.innerText = '-- 刚刚更新 --';
             btnRefresh.style.display = 'block';
             if (res.users && res.users.length > 0) {
                 hasData = true;

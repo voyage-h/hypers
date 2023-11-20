@@ -73,6 +73,7 @@ class ChatController extends Controller
         $me->hashid = $this->encodeUid($uid);
         $me->age    = Carbon::parse($me->birthday)->age;
 		$me->last_operate = Carbon::parse($me->last_operate)->diffForHumans();
+        $me->description = str_replace("\n", '<br/>', $me->description);
 		if (Cache::has("refresh:{$uid}")) {
             $start = Cache::get("refresh:{$uid}");
 		    $start = Carbon::parse(intval($start))->diffForHumans();

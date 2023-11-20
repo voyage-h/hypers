@@ -12,12 +12,16 @@
         <div class="contents">
 		    [语音]
         </div>
-    <!-- 如果是其他文件 -->
-    @else
+    <!-- 如果图片 -->
+    @elseif (preg_match('/\.(jpg|jpeg|png|gif|bmp)$/', $contents))
         <div class="contents-img">
             <a class="contents-img-a" href="{{$chat->contents}}!o.png" data-pswp-src="{{$chat->contents}}!o.png">
                 <img src="{{$chat->contents}}" />
             </a>
+        </div>
+    @else
+        <div class="contents">
+            <a href="{{$contents}}">{{$contents}}</a>
         </div>
     @endif
 @else
