@@ -93,7 +93,7 @@ color: #999;
 }
 .chat-name a {
     text-decoration: none;
-    color: #fff;
+    color: aliceblue;
 }
 
 .chat-right .avatar {
@@ -492,7 +492,7 @@ button[type="submit"]:hover {
     color: darkorange;
 }
 .normal {
-    color: #f0f0f0;
+    color: #E0E0E0;
 }
 #icon-pencil {
     width: 16px;
