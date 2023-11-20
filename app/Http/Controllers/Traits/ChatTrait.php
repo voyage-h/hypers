@@ -130,7 +130,7 @@ trait ChatTrait
      *
      * @return array
      */
-    public function getChatsByType(int $uid, int $type = 0): array
+    public function getChatsByType(int $uid, int $type = 0, int $size = 60): array
     {
         if ($type == 1) {
             $raw_chats = Chat::where('contents', 'like', 'http%');
@@ -143,7 +143,7 @@ trait ChatTrait
                     ->orWhere('target_uid', $uid);
             })
             ->orderBy('created_at', 'desc')
-            ->simplePaginate(60);
+            ->simplePaginate($size);
 
         $uids = [];
         foreach ($raw_chats as $chat) {
