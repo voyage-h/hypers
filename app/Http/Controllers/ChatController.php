@@ -201,9 +201,10 @@ class ChatController extends Controller
             $chat->name   = $user->name ?? '';
             $chat->avatar = $user->avatar ?? '';
             $chat->last_operate = $user->last_operate ?? 0;
-            $chats[$chat->from_uid][] = $chat;
+            $chats[$chat->from_uid == $uid ? $chat->target_uid : $chat->from_uid][] = $chat;
         }
         $me = $users[$uid] ?? [];
-        return view('chat.all', compact('chats', 'users', 'me'));
+        $page = $raw_chats->links();
+        return view('chat.all', compact('chats', 'users', 'me', 'page'));
     }
 }

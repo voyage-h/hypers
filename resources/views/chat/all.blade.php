@@ -12,7 +12,7 @@
 <div class="chat-container">
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     @foreach($chats as $uid => $chat_arr)
-    @php $target = $users[$uid]; @endphp
+    @php $target = $users[$uid == $me->uid ? $chat_arr[0]->target_uid : $uid]; @endphp
     <div class="chat">
         <div class="chat-title">
             <a href="/chat/{{$me->uid}}/{{$target->uid}}">{{$target->name}}{{$target->note ? '(' . $target->note->note . ')' : ''}}</a>
@@ -45,7 +45,7 @@
     </div>
     @endforeach
 </div>
-{{--<div class="page">{{$chats->links()}}</div>--}}
+<div class="page">{!!$page!!}</div>
 </body>
 @include('components.photoswipe', ['gallery' => '.chat-container', 'children' => '.contents-img-a'])
 </html>
