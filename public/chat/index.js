@@ -4,12 +4,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchUsers = document.querySelector('.search-users');
     const searchInput = document.getElementById('search-input');
     const warning = document.getElementById('alertWarning');
+    const delayTime = 500;
+    let delayTimer = null;
 	searchInput.addEventListener('input', function(){
-		removeBtn.style.display = 'none';		
-	    searchBtn.style.display = 'block';
-	});
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function() {
+            console.log(searchInput.value.trim());
+            const searchValue = searchInput.value.trim();
+            // 去掉空格
+            if (searchValue === '') {
+                searchInput.innerText = '请输入搜索内容';
+            } else {
+                // searchUsers.innerHTML = '';
+                searchBtn.style.display = 'none';
+                removeBtn.style.display = 'block';
+                http_request('POST', '/api/chat/user/search/' + searchValue, function (res) {
+                    if (res.users && res.users.length > 0) {
+                        // 遍历数组
+                        let html = '';
+                        for (let k in res.users) {
+                            let user = res.users[k];
+                            html += `
+    <a href="/chat/user/ ` + user.uid + `">
+    <div class="search-user">
+        <div class="search-user-avatar">
+            <img src="` + user.avatar + `">
+        </div>
+        <div class="search-user-info">
+            <div class="search-user-info-name">` + user.name + `</div>
+            <div class="search-user-info-basic">` + user.height + ' ' + user.weight + ' ' + user.role + `</div>
+            <div class="search-user-info-time">` + user.last_operate + `</div>
+        </div>
+    </div>
+    </a>`
+                        }
+                        searchUsers.innerHTML = html;
+                    } else {
+                        warning.style.display = 'block';
+                        warning.textContent   = '没有数据';
+                        setTimeout(function () {
+                            warning.style.display = 'none';
+                        }, 2000);
+                    }
+                });
+            }
+        }, delayTime);
+    });
 	removeBtn.addEventListener('click', function(){
-		removeBtn.style.display = 'none';		
+		removeBtn.style.display = 'none';
 	    searchBtn.style.display = 'block';
 		searchUsers.innerHTML = '';
 		searchInput.value = '';

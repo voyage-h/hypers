@@ -33,12 +33,7 @@
                 <div class="avatar">
                     <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
                 </div>
-{{--                @include('chat.detail.content', ['contents' => $chat->contents])--}}
-                    <div class="contents-img" data-src="{{$chat->contents}}">
-                        <a class="contents-img-a" href="{{$chat->contents}}" data-pswp-src="{{$chat->contents}}">
-                            <img src="{{$chat->contents}}">
-                        </a>
-                    </div>
+                @include('chat.detail.content', ['contents' => $chat->contents])
             </div>
         </div>
         @endforeach
