@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchUsers = document.querySelector('.search-users');
     const searchInput = document.getElementById('search-input');
     const warning = document.getElementById('alertWarning');
+    let domesticSearch;
     const delayTime = 500;
     let delayTimer = null;
 	searchInput.addEventListener('input', function(){
@@ -46,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             warning.style.display = 'none';
                         }, 2000);
                     }
+                    searchUsers.innerHTML += `<div id="domestic-container" class="domestic-container"><div class="domestic-title">实时搜索</div><div class="domestic-icon"><img src="/chat/right.png"></div></div>`;
+                    domesticSearch = document.getElementById('domestic-container');
+                    domesticSearch.addEventListener('click', function(){
+                        searchBtn.click();
+                    });
                 });
             }
         }, delayTime);
@@ -58,21 +64,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		searchInput.setAttribute('placeholder', '搜索');
 	});
     searchBtn.addEventListener('click', function() {
+        console.log('search domestic')
         searchUsers.innerHTML = '';
         const searchValue = searchInput.value.trim();
-        // 去掉空格
-        if (searchValue === '') {
-            searchInput.innerText = '请输入搜索内容';
-        } else {
-		    searchBtn.style.display = 'none';
-		    removeBtn.style.display = 'block';
-            http_request('POST', '/api/chat/user/search/' + searchValue, function (res) {
-                if (res.users && res.users.length > 0) {
-                    // 遍历数组
-                    let html = '';
-                    for (let k in res.users) {
-                        let user = res.users[k];
-                        html += `
+        searchBtn.style.display = 'none';
+        removeBtn.style.display = 'block';
+        http_request('POST', '/api/chat/user/search/' + searchValue + '/1', function (res) {
+            if (res.users && res.users.length > 0) {
+                // 遍历数组
+                let html = '';
+                for (let k in res.users) {
+                    let user = res.users[k];
+                    html += `
         <a href="/chat/user/ ` + user.uid + `">
         <div class="search-user">
             <div class="search-user-avatar">
@@ -85,18 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
         </a>`
-                    }
-                    searchUsers.innerHTML += html;
-                } else {
-                    warning.style.display = 'block';
-                    warning.textContent   = '没有数据';
-                    setTimeout(function () {
-                        warning.style.display = 'none';
-                    }, 2000);
-				}
+                }
+                searchUsers.innerHTML += html;
+            } else {
+                warning.style.display = 'block';
+                warning.textContent   = '没有数据';
+                setTimeout(function () {
+                    warning.style.display = 'none';
+                }, 2000);
+            }
 
-            });
-        }
+        });
     });
 });
 

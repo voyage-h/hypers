@@ -136,7 +136,7 @@ body {
 .search {
     padding: 10px;
     margin: 10px 10px 0 10px;
-    min-height:	60px;	
+    min-height:	60px;
 }
 .search-input input {
     width: 100%;
@@ -147,7 +147,7 @@ body {
     color: #e0e0e0;
     border: 1px solid #444;
     outline: none;
-	font-size: 15px;	
+	font-size: 15px;
 }
 .search-input input:placeholder-shown {
     font-size: 15px;
@@ -201,6 +201,22 @@ body {
     top: -50px;
 	font-size: 14px;
     color: #999;
+}
+.domestic-container {
+    display: flex;
+    padding: 20px;
+    border-top: 0.1px solid #222;
+    cursor: pointer;
+}
+.domestic-container:active {
+    background-color: #000;
+}
+.domestic-title {
+    width: 100%;
+}
+.domestic-icon img {
+    width: 20px;
+    height: 20px;
 }
 .alert {
     display:none;
