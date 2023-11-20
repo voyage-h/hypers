@@ -39,10 +39,14 @@ body {
 }
 
 .title-basic {
-    font-size:13px;
-    font-weight: lighter;
+    font-size:14px;
+    font-weight: 400;
     margin-top: 2px;
-    color: #c0c0c0;
+    /*color: #c3c3c3;*/
+color: #999;
+}
+.title-basic label {
+    width: 10px;
 }
 
 .title-more {
@@ -70,9 +74,10 @@ body {
 /* Chat bubble contents styles */
 .chat-left, .chat-right {
     flex-direction: column;
-    padding: 8px 12px;
+    padding: 10px 12px;
     position: relative; /* Required for positioning the pseudo-element */
     overflow: auto;
+    border-bottom: 0.1px solid #222;
 }
 
 /* Avatar styles */
@@ -83,12 +88,12 @@ body {
 .chat-name {
     width: 100%;
     margin-left: 10px;
-    font-size: 15px;
+    /*font-size: 15px;*/
     font-weight: bold;
 }
 .chat-name a {
     text-decoration: none;
-    color: #E0E0E0;
+    color: #fff;
 }
 
 .chat-right .avatar {
@@ -525,7 +530,7 @@ button[type="submit"]:hover {
     font-size: 15px;
 }
 .seperate {
-    border-top: 0.1px solid #333;
+    border-top: 0.1px solid #222;
     margin: 20px 0 10px;
 }
 .loading-container {

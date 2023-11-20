@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     meUid = chatList.getAttribute('data-uid');
     meAvatar = chatList.getAttribute('data-avatar');
     const lastDate = document.getElementById('last-date');
+
     /**
      * 上滑翻页
      */
@@ -229,6 +230,7 @@ function user_list_html(users) {
         let role = user.role >= 0 ? user.role : '';
         let hasImage = user.has_image ? '· 图' : '';
         let isDating = user.is_dating ? '· 约' : '';
+		let chatCount = user.chat_count > 0 ? '[' + user.chat_count + ']' : '';
         html += `
         <div class="chat">
             <div class="chat-content">
@@ -237,7 +239,7 @@ function user_list_html(users) {
                         <a href="/chat/user/` + user.uid + `"><img src="` + user.avatar + `"/></a>
                         <div class="chat-name">
                             <a href='/chat/` + meUid + '/' + user.uid + `'>` + user.name + `
-                                <div class="title-basic">[互动<label class="` + labelClass + `"> ` + user.chat_count + `</label> 次] ` + user.chat_content +`</div>
+                                <div class="title-basic"><label class="` + labelClass + `">` + chatCount + `</label> ` + user.chat_content +`</div>
                             </a>
                         </div>
                         <div class="time">

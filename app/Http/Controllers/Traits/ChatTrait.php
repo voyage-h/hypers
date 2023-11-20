@@ -23,7 +23,7 @@ trait ChatTrait
     {
         // 使用redis分页
         $page  = (int) request()->input('page', 1);
-        $size  = 30;
+        $size  = 40;
         $users = Redis::zrevrange("chat:{$me}", ($page - 1) * $size, $page * $size - 1, 'WITHSCORES');
 
         if (empty($users)) {

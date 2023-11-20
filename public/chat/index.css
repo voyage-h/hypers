@@ -32,7 +32,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0;
-    padding: 6px;
+    padding: 1px;
 }
 
 /* Chat bubble styles */
@@ -46,19 +46,18 @@ body {
     /*display: flex;*/
     background-color: #111; /* Darker bubble background for dark mode */
     /*border-radius: 8px;*/
-    padding: 5px 6px 10px;
+    padding: 1px 3px;
     text-align: center;
 }
 
-.user:active {
+.user:active, .user-container:active {
     background-color: #000;
 }
 .info {
-    position: relative;
-    /*margin-top: -60px;*/
-	margin-top: 8px;		  
+    position: absolute;
+    margin-top: -50px;
     color: #ffffff;
-    text-align: center;
+    text-align: left;
     padding: 0 5px;
     background-color: rgba(0, 0, 0, 0.05);
 }
@@ -72,7 +71,7 @@ body {
 
 /* Time and name styles */
 .name {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
 }
 .user a {
@@ -110,8 +109,8 @@ body {
     padding-top: 4px;
 }
 .private {
-    font-size: 13px;
-    margin-top: 4px;
+    font-size: 12px;
+    margin-top:2px;
 }
 .loading-container {
   display: flex;
@@ -219,11 +218,10 @@ body {
     z-index: 1000;
 }
 .online-status {
-    position: relative;
-    left: 6px;
-    top: 20px;
-    width: 10px;
-    height: 10px;
+    position: absolute;
+    margin: 6px 0 0 6px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
 }
 .status-active {

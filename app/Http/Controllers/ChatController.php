@@ -29,6 +29,7 @@ class ChatController extends Controller
                 $user->age = $user->birthday ? Carbon::parse($user->birthday)->age : 0;
                 $user->is_online    = (time() - $user->last_operate) <= 600;
                 $user->last_operate = $last_operate->diffForHumans();
+				$user->name = mb_substr($user->name, 0, 5);
                 return $user;
             });
         return view('chat.index', compact('users'));
