@@ -540,10 +540,20 @@ button[type="submit"]:hover {
 .chat-albums:active {
     background-color: #000;
 }
+.chat-albums-icon img {
+    width: 20px;
+    height: 20px;
+    margin: 1px 3px 0 0;
+}
 .chat-albums-title {
     width: 100%;
 }
-.chat-albums-icon img {
+.chat-albums-title img {
+    width: 20px;
+    height: 20px;
+}
+
+.chat-albums-right img {
     width: 15px;
     height: 15px;
     margin-top: 3px;

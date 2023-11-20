@@ -13,7 +13,6 @@
 <div class="alert alert-success" id="alertSuccess">成功</div>
 
 <!-- 菜单 -->
-<div class="btn user-all"><a href="/chat/{{$me->uid}}/all"><img src="{{url('/chat/album.png')}}"></a></div>
 <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/location.png')}}"></a></div>
 <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/network.png')}}"></a></div>
 <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
@@ -57,8 +56,9 @@
         </div>
         <a class="chat-albums-a" href="/chat/{{$me->uid}}/all">
         <div class="chat-albums">
+            <div class="chat-albums-icon"><img src="/chat/album-icon.png"></div>
             <div class="chat-albums-title">相册</div>
-            <div class="chat-albums-icon"><img src="/chat/right.png"></div>
+            <div class="chat-albums-right"><img src="/chat/right.png"></div>
         </div>
         </a>
     </div>
