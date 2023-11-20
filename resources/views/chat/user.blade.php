@@ -55,6 +55,12 @@
 		    <img src="/chat/loc.png">
             {{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
+        <a class="chat-albums-a" href="/chat/{{$me->uid}}/all">
+        <div class="chat-albums">
+            <div class="chat-albums-title">相册</div>
+            <div class="chat-albums-icon"><img src="/chat/right.png"></div>
+        </div>
+        </a>
     </div>
 	<div class="last-date" id="last-date">{{empty($start) ? '无更新记录' : "-- 更新记录于$start --"}}</div>
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">

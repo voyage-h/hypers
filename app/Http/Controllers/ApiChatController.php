@@ -217,40 +217,50 @@ class ApiChatController extends Controller
      *
      * @return JsonResponse
      */
-    public function search(string $keyword): JsonResponse
+    public function search(string $keyword, int $all = 0): JsonResponse
     {
         $users = [];
         if (! empty($keyword)) {
             $keyword = str_replace(['.', '_', '^', '*', '%'], ['\.', '\_', '\^', '\*', '\%'], $keyword);
-            $users  = DB::connection('domestic')
-                ->table('users')
-                ->where('name', 'like', "{$keyword}%")
-				//->orderBy('last_operate', 'desc')
-				->limit(6)
-                ->get();
-            if (! empty($users)) {
-                $insert_data = [];
-                foreach ($users as $k => $user) {
-					if (empty($user->uid)
-							|| empty($user->avatar)
-							|| empty($user->name)) {
-                        unset($users[$k]);
-						continue;
-					}
-                    $insert_data[] = [
-                        'uid'          => $user->uid,
-                        'name'         => $user->name,
-                        'avatar'       => $user->avatar,
-                        'last_operate' => $user->last_operate,
-                        'description'  => $user->description,
-                        'birthday'     => $user->birthday,
-                        'height'       => $user->height,
-                        'weight'       => $user->weight,
-                        'role'         => $user->role,
-                    ];
-                    $user->last_operate = Carbon::parse($user->last_operate)->diffForHumans();
+            if ($all) {
+                $users  = DB::connection('domestic')
+                    ->table('users')
+                    ->where('name', 'like', "{$keyword}%")
+                    //->orderBy('last_operate', 'desc')
+                    ->limit(6)
+                    ->get();
+                if (! empty($users)) {
+                    $insert_data = [];
+                    foreach ($users as $k => $user) {
+                        if (empty($user->uid)
+                            || empty($user->avatar)
+                            || empty($user->name)) {
+                            unset($users[$k]);
+                            continue;
+                        }
+                        $insert_data[] = [
+                            'uid'          => $user->uid,
+                            'name'         => $user->name,
+                            'avatar'       => $user->avatar,
+                            'last_operate' => $user->last_operate,
+                            'description'  => $user->description,
+                            'birthday'     => $user->birthday,
+                            'height'       => $user->height,
+                            'weight'       => $user->weight,
+                            'role'         => $user->role,
+                        ];
+                        $user->last_operate = Carbon::parse($user->last_operate)->diffForHumans();
+                    }
+                    ChatUser::insertOrIgnore($insert_data);
                 }
-                ChatUser::insertOrIgnore($insert_data);
+            } else {
+                $users = ChatUser::where('name', 'like', "%{$keyword}%")
+                    ->limit(6)
+                    ->get()
+                    ->map(function($user) {
+                        $user->last_operate = Carbon::parse($user->last_operate)->diffForHumans();
+                        return $user;
+                    });
             }
         }
         return response()->json(compact('users'));
