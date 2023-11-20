@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let domesticSearch;
     const delayTime = 500;
     let delayTimer = null;
-	searchInput.addEventListener('input', function(){
+	searchInput.addEventListener('change', function(){
         clearTimeout(delayTimer);
         delayTimer = setTimeout(function() {
             console.log(searchInput.value.trim());
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             warning.style.display = 'none';
                         }, 2000);
                     }
-                    searchUsers.innerHTML += `<div id="domestic-container" class="domestic-container"><div class="domestic-title">实时搜索</div><div class="domestic-icon"><img src="/chat/right.png"></div></div>`;
+                    searchUsers.innerHTML += `<div id="domestic-container" class="domestic-container"><div class="domestic-title">实时搜索</div><div class="domestic-icon"><img src="/chat/search-right.png"></div></div>`;
                     domesticSearch = document.getElementById('domestic-container');
                     domesticSearch.addEventListener('click', function(){
                         searchBtn.click();
@@ -59,13 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	removeBtn.addEventListener('click', function(){
 		removeBtn.style.display = 'none';
 	    searchBtn.style.display = 'block';
-		searchUsers.innerHTML = '';
 		searchInput.value = '';
 		searchInput.setAttribute('placeholder', '搜索');
 	});
     searchBtn.addEventListener('click', function() {
         console.log('search domestic')
-        searchUsers.innerHTML = '';
         const searchValue = searchInput.value.trim();
         searchBtn.style.display = 'none';
         removeBtn.style.display = 'block';
@@ -89,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         </a>`
                 }
-                searchUsers.innerHTML += html;
+                searchUsers.innerHTML = html;
             } else {
                 warning.style.display = 'block';
                 warning.textContent   = '没有数据';
