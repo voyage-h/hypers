@@ -54,12 +54,19 @@
 		    <img src="/chat/loc.png">
             {{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
-        <a class="chat-albums-a" href="/chat/{{$me->uid}}/all">
-        <div class="chat-albums">
-            <div class="chat-albums-icon"><img src="/chat/album-icon.png"></div>
-            <div class="chat-albums-title">相册</div>
-            <div class="chat-albums-right"><img src="/chat/right.png"></div>
+        <a class="menu-a" href="/chat/{{$me->uid}}/all">
+        <div class="menu chat-albums">
+            <div class="menu-icon chat-albums-icon"><img src="/chat/chat.png"></div>
+            <div class="menu-title chat-albums-title">全览</div>
+            <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
         </div>
+        </a>
+        <a class="menu-a" href="/chat/{{$me->uid}}/album">
+            <div class="menu chat-albums">
+                <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
+                <div class="menu-title chat-albums-title">相册</div>
+                <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
+            </div>
         </a>
     </div>
 	<div class="last-date" id="last-date">{{empty($start) ? '无更新记录' : "-- 更新记录于$start --"}}</div>

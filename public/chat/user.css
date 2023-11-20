@@ -520,40 +520,39 @@ button[type="submit"]:hover {
     font-size: 15px;
     padding: 10px 20px;
     display: flex;
+    margin-bottom: 20px;
 }
 .location img {
     width: 20px;
     height: 20px;
     margin: 0 5px 0 0;
 }
-.chat-albums-a {
+.menu-a {
     text-decoration: none;
     color: #e0e0e0;
 }
-.chat-albums {
+.menu {
     display: flex;
     padding: 20px;
     font-size: 15px;
     border-top: 0.1px solid #222;
-    margin-top:20px;
 }
-.chat-albums:active {
+.menu:active {
     background-color: #000;
 }
-.chat-albums-icon img {
+.menu-icon img {
     width: 20px;
     height: 20px;
     margin: 1px 3px 0 0;
 }
-.chat-albums-title {
+.menu-title {
     width: 100%;
 }
-.chat-albums-title img {
+.menu img {
     width: 20px;
     height: 20px;
 }
-
-.chat-albums-right img {
+.menu-right img {
     width: 15px;
     height: 15px;
     margin-top: 3px;
