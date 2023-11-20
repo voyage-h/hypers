@@ -179,6 +179,10 @@ color: #999;
     overflow: auto;
     height: 40px;
 }
+.contents a {
+    color: #fff;
+    word-wrap: break-word;
+}
 
 .contents-img {
     padding: 0 10px;

@@ -146,6 +146,10 @@ body {
     overflow: auto;
     height: 40px;
 }
+.contents a {
+    color: #fff;
+    word-wrap: break-word;
+}
 
 .contents-img, contents-video, contents-audio {
     padding: 0 10px;
@@ -155,11 +159,11 @@ body {
 
 .contents-img img {
     max-width: 180px;
-    border-radius: 10px;	
+    border-radius: 10px;
 }
 .contents-video img {
     max-width: 180px;
-    border-radius: 10px;	
+    border-radius: 10px;
 }
 .play-button {
     position: absolute;
