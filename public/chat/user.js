@@ -181,15 +181,14 @@ document.addEventListener('DOMContentLoaded', function() {
      * @type {HTMLElement}
      */
     document.getElementById('user-refresh').addEventListener('click', function () {
-        this.style.display = 'none';
         const refresh_uid = this.getAttribute('data-target');
-        http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_user', function (res) {
+        //http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_user', function (res) {
             location.reload();
             // let me     = res.me;
             // let others = res.others;
             // // 修改我的信息
             // document.getElementById('user-name-content').textContent = me.name;
-        });
+        //});
     });
 });
 

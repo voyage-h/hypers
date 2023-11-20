@@ -32,7 +32,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0;
-    padding: 1px;
+    padding: 60px 1px 1px 1px;
 }
 
 /* Chat bubble styles */
@@ -134,9 +134,12 @@ body {
 }
 
 .search {
-    padding: 10px;
-    margin: 10px 10px 0 10px;
-    min-height:	60px;
+    padding: 15px;
+    /* margin: 10px 10px 0 10px; */
+    position: fixed;
+    width: 100%;
+    background: #111;
+    z-index: 1000;
 }
 .search-input input {
     width: 100%;
@@ -154,8 +157,8 @@ body {
 }
 .search-btn {
     position: absolute;
-    right: 35px;
-    top: 27px;
+    right: 30px;
+    top: 21px;
 }
 .search-btn img {
     width: 22px;

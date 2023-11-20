@@ -13,7 +13,9 @@
 <div class="alert alert-success" id="alertSuccess">成功</div>
 
 <!-- 菜单 -->
+{{--
 <div class="btn user-refresh"><a href="javascript:void(0)" id="user-refresh" data-target={{$me->uid}}><img src="{{url('/chat/location.png')}}"></a></div>
+ --}}
 <div class="btn chat-refresh"><a href="javascript:void(0)" id="btn-refresh" data-target={{$me->uid}}><img src="{{url('/chat/network.png')}}"></a></div>
 <div class="btn chat-home"><a href="/"><img src="{{url('/chat/home.png')}}"></a></div>
 
@@ -33,8 +35,8 @@
             </div>
             <div class="user-basic">{{$me->age}} · {{$me->height}}cm · {{$me->weight}}kg · {{$me->role == -1 ? '其他' : $me->role}}</div>
             <div class="user-desc">{!!$me->description!!}</div>
-			<div class="seperate"></div>
         </div>
+		<div class="seperate"></div>
         @if (! empty($me->device->others[0]))
         <div class="user-others">
             @foreach($me->device->others as $others)
@@ -50,19 +52,27 @@
             @endforeach
         </div>
         @endif
-        <div class="location">
+{{--        <div class="location">
 		    <img src="/chat/loc.png">
             {{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}
         </div>
+ --}}
+        <div class="menu">
+            <div class="menu-icon"><img src="/chat/loc.png"></div>
+            <div class="menu-title">{{$me->last_operate}}{{$me->location ? ' · ' . $me->location->address : ''}}</div>
+            <div class="menu-right menu-right-refresh" id="user-refresh" data-target={{$me->uid}}><img src="/chat/icon-refresh.png"></div>
+        </div>
+		<div class="seperate"></div>
         <a class="menu-a" href="/chat/{{$me->uid}}/all">
-        <div class="menu chat-albums">
+        <div class="menu menu-active">
             <div class="menu-icon chat-albums-icon"><img src="/chat/chat.png"></div>
             <div class="menu-title chat-albums-title">全览</div>
             <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
         </div>
         </a>
+		<div class="seperate"></div>
         <a class="menu-a" href="/chat/{{$me->uid}}/album">
-            <div class="menu chat-albums">
+            <div class="menu menu-active">
                 <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
                 <div class="menu-title chat-albums-title">相册</div>
                 <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let domesticSearch;
     const delayTime = 500;
     let delayTimer = null;
-	searchInput.addEventListener('change', function(){
+	searchInput.addEventListener('input', function(){
         clearTimeout(delayTimer);
         delayTimer = setTimeout(function() {
             console.log(searchInput.value.trim());
@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		removeBtn.style.display = 'none';
 	    searchBtn.style.display = 'block';
 		searchInput.value = '';
+		searchUsers.innerHTML = '';
 		searchInput.setAttribute('placeholder', '搜索');
 	});
     searchBtn.addEventListener('click', function() {
