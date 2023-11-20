@@ -17,7 +17,7 @@ class ChatUser extends Model
 
     public function location()
     {
-        return $this->hasOne(Location::class, 'uid', 'uid');
+        return $this->hasOne(Location::class, 'uid', 'uid')->latestOfMany();
     }
 
     public function device()

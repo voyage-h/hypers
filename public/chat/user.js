@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // location.reload();
                 let html = user_list_html(res.users);
                 if (html) {
-                    chatList.innerHTML += html;
+                    chatList.innerHTML = html;
                 }
             } else {
                 warning.style.display = 'block';

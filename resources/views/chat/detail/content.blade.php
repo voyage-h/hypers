@@ -13,7 +13,7 @@
 		    [语音]
         </div>
     <!-- 如果图片 -->
-    @elseif (preg_match('/\.(jpg|jpeg|png|gif|bmp)$/', $contents))
+    @elseif (preg_match('/\.(jpg|jpeg|png|gif|bmp)$/', $contents) || str_contains($contents, 'http://dl4')))
         <div class="contents-img">
             <a class="contents-img-a" href="{{$chat->contents}}!o.png" data-pswp-src="{{$chat->contents}}!o.png">
                 <img src="{{$chat->contents}}" />
