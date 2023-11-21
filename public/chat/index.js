@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchUsers = document.querySelector('.search-users');
     const searchInput = document.getElementById('search-input');
     const warning = document.getElementById('alertWarning');
-    let domesticSearch;
+    const domesticContainer = document.getElementById('domestic-container');
     const delayTime = 500;
     let delayTimer = null;
 	searchInput.addEventListener('input', function(){
@@ -47,11 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             warning.style.display = 'none';
                         }, 2000);
                     }
-                    searchUsers.innerHTML += `<div id="domestic-container" class="domestic-container"><div class="domestic-title">实时搜索</div><div class="domestic-icon"><img src="/chat/search-right.png"></div></div>`;
-                    domesticSearch = document.getElementById('domestic-container');
-                    domesticSearch.addEventListener('click', function(){
-                        searchBtn.click();
-                    });
+					domesticContainer.style.display = 'flex';
                 });
             }
         }, delayTime);
@@ -63,11 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		searchUsers.innerHTML = '';
 		searchInput.setAttribute('placeholder', '搜索');
 	});
-    searchBtn.addEventListener('click', function() {
+    domesticContainer.addEventListener('click', function() {
         console.log('search domestic')
         const searchValue = searchInput.value.trim();
         searchBtn.style.display = 'none';
         removeBtn.style.display = 'block';
+		domesticContainer.style.display = 'none';
         http_request('POST', '/api/chat/user/search/' + searchValue + '/1', function (res) {
             if (res.users && res.users.length > 0) {
                 // 遍历数组

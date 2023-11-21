@@ -130,7 +130,7 @@ trait ChatTrait
      *
      * @return array
      */
-    public function getChatsByType(int $uid, int $type = 0, int $size = 20): array
+    public function getChatsByType(int $uid, int $type = 0, int $size = 50): array
     {
         $raw_chats = Chat::where(function($query) use ($uid) {
             $query->where('from_uid', $uid)

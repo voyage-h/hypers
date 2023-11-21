@@ -19,6 +19,7 @@
         <img id="remove-btn" src="/chat/remove.png">
     </div>
     <div class="search-users"></div>
+	<div id="domestic-container" class="domestic-container"><div class="domestic-title">实时搜索</div><div class="domestic-icon"><img src="/chat/search-right.png"></div></div>
 </div>
 <div class="container">
     @foreach($users as $user)

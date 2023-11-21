@@ -206,7 +206,7 @@ body {
     color: #999;
 }
 .domestic-container {
-    display: flex;
+    display: none;
     padding: 20px;
     border-top: 0.1px solid #222;
     cursor: pointer;

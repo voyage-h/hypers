@@ -1,6 +1,6 @@
 // 记录上一次滚动位置
 var lastScrollTop = 0;
-var page = 0;
+var page = 1;
 var meUid;
 var meAvatar;
 var hasData = true;
