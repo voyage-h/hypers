@@ -176,7 +176,7 @@ class ChatController extends Controller
      */
     public function all(int $uid)
     {
-        $data = $this->getChatsByType($uid, 0, 100);
+        $data = $this->getChatsByType($uid, 0);
         return view('chat.all', $data);
     }
 
@@ -187,7 +187,7 @@ class ChatController extends Controller
      */
     public function album(int $uid)
     {
-        $data = $this->getChatsByType($uid, 1, 60);
+        $data = $this->getChatsByType($uid, 1);
         return view('chat.all', $data);
     }
 }

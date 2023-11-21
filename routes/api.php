@@ -26,5 +26,7 @@ Route::middleware('auth.simple')->group(function() {
         Route::POST('/{me}/refresh_user', [ApiChatController::class, 'refreshUser']);
         Route::POST('/{me}/refresh_chat', [ApiChatController::class, 'refreshChats']);
         Route::POST('/search/{keyword}/{all?}', [ApiChatController::class, 'search']);
+        Route::POST('/{me}/all', [ApiChatController::class, 'all']);
+        Route::POST('/{me}/album', [ApiChatController::class, 'album']);
     });
 });

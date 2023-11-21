@@ -264,6 +264,27 @@ class ApiChatController extends Controller
             }
         }
         return response()->json(compact('users'));
+    }
 
+    /**
+     * 获取所有
+     *
+     * @param int $uid
+     */
+    public function all(int $uid)
+    {
+        $data = $this->getChatsByType($uid, 0);
+        return response()->json($data);
+    }
+
+    /**
+     * 获取图片
+     *
+     * @param int $uid
+     */
+    public function album(int $uid)
+    {
+        $data = $this->getChatsByType($uid, 1);
+        return response()->json($data);
     }
 }

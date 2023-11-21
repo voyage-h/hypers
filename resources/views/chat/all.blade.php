@@ -9,8 +9,8 @@
     <script src="/chat/detail.js"></script>
 </head>
 <body>
-<div class="chat-container">
-    <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
+<div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
+<div class="chat-container" data-uid="{{$me->uid}}" data-action="{{str_contains(url()->current(), 'all') ? 'all' : 'album'}}">
     @foreach($chats as $uid => $chat_arr)
     @php $target = $users[$uid == $me->uid ? $chat_arr[0]->target_uid : $uid]; @endphp
     <div class="chat">
@@ -40,7 +40,11 @@
     </div>
     @endforeach
 </div>
-<div class="page">{!!$page!!}</div>
+{{--<div class="page">{!!$page!!}</div>--}}
+<div class="loading-container" id="loading">
+    <div class="loading"></div>
+</div>
+<div class="page" id="page">{{empty($start) ? '' : ' -- 没有更多 -- '}}</div>
 </body>
 @include('components.photoswipe', ['gallery' => '.chat-container', 'children' => '.contents-img-a'])
 </html>

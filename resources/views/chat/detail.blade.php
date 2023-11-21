@@ -6,7 +6,6 @@
     <title>{{$me->name}}</title>
     <link rel="stylesheet" href="/chat/detail.css">
     <link rel="stylesheet" href="/photoswipe/photoswipe.css">
-    <script src="/chat/detail.js"></script>
 </head>
 <body>
 <div class="chat-container">
