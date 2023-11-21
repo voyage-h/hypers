@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     loading.style.display = 'none';
                     if (Object.keys(res.chats).length > 0) {
                         // 遍历数组
-                        container.innerHTML += detail_html(res);
+                        //container.innerHTML += detail_html(res);
+						container.insertAdjacentHTML('beforeend', detail_html(res));
                         // 需要获取所有图片的尺寸
                         const contentImgs = document.querySelectorAll(".contents-img-a");
                         contentImgs.forEach(function (contentImg) {

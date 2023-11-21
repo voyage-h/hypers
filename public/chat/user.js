@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 遍历数组
                         let html = user_list_html(res.users);
                         if (html) {
-                            chatList.innerHTML += html;
+						    chatList.insertAdjacentHTML('beforeend', html);
+                            //chatList.innerHTML += html;
                         }
                     } else {
                         hasData = false;
