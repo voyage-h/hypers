@@ -449,6 +449,7 @@ button[type="submit"]:hover {
 .user-avatar img {
     width: 100%;
     height: auto;
+display: block;		
 }
 #user-avatar-low {
 

@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     img.onload = function() {
         // 替换模糊图片的src属性为高清图片的路径
         highAvatar.src = img.src;
+	    highAvatar.width = lowAvatar.width;
+	    highAvatar.height = lowAvatar.height;
         lowAvatar.style.display = 'none';
         highAvatar.style.display = 'block';
     };
