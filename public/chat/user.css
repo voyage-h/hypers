@@ -450,7 +450,11 @@ button[type="submit"]:hover {
     width: 100%;
     height: auto;
 }
-.user-avatar {
+#user-avatar-low {
+
+}
+#user-avatar-high {
+    display: none;
 }
 .user-info {
     position: relative;
@@ -562,7 +566,7 @@ cursor: pointer;
 .menu-right-refresh img {
     width: 20px;
     height: 20px;
-    margin-left: 4px;		
+    margin-left: 4px;
 }
 .last-date {
     text-align: center;

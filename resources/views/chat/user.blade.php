@@ -23,7 +23,8 @@
     <div class="user" data-id="{{$me->id}}">
         <div class="user-avatar">
             <a href="https://app.blued.cn/user?id={{$me->hashid}}$&uid={{$me->hashid}}&action=profile&app=1&enc=1">
-            <img src="{{$me->avatar}}!o.png" alt="">
+                <img id="user-avatar-low" src="{{$me->avatar}}" alt="">
+                <img id="user-avatar-high" src="" alt="">
             </a>
         </div>
         <div class="user-info">

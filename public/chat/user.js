@@ -14,7 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
     meUid = chatList.getAttribute('data-uid');
     meAvatar = chatList.getAttribute('data-avatar');
     const lastDate = document.getElementById('last-date');
-
+    /**
+     * 图片加载
+     */
+    const highAvatar = document.getElementById('user-avatar-high');
+    const lowAvatar = document.getElementById('user-avatar-low');
+    // 创建一个新的Image对象
+    const img = new Image();
+    // 设置高清图片的路径
+    img.src = lowAvatar.src + '!o.png';
+    // 监听高清图片加载完成事件
+    img.onload = function() {
+        // 替换模糊图片的src属性为高清图片的路径
+        highAvatar.src = img.src;
+        lowAvatar.style.display = 'none';
+        highAvatar.style.display = 'block';
+    };
     /**
      * 上滑翻页
      */
