@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{$me->name ?? 'Null'}}</title>
+    <title>{{$me->name ?? env('APP_NAME')}}</title>
     <link rel="stylesheet" href="/chat/detail.css">
     <link rel="stylesheet" href="/photoswipe/photoswipe.css">
     <script src="/chat/detail.js"></script>

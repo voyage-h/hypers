@@ -132,16 +132,14 @@ trait ChatTrait
      */
     public function getChatsByType(int $uid, int $type = 0, int $size = 60): array
     {
+        $raw_chats = Chat::where(function($query) use ($uid) {
+            $query->where('from_uid', $uid)
+                ->orWhere('target_uid', $uid);
+        });
         if ($type == 1) {
-            $raw_chats = Chat::where('contents', 'like', 'http%');
-        } else {
-            $raw_chats = Chat::where('id', '>', 0);
+            $raw_chats = $raw_chats->where('contents', 'like', 'http%');
         }
         $raw_chats = $raw_chats
-            ->where(function($query) use ($uid) {
-                $query->where('from_uid', $uid)
-                    ->orWhere('target_uid', $uid);
-            })
             ->orderBy('created_at', 'desc')
             ->simplePaginate($size);
 
@@ -158,11 +156,11 @@ trait ChatTrait
         $users = $users->keyBy('uid');
         $chats = [];
         foreach ($raw_chats as $chat) {
-            $user = $users[$chat->from_uid] ?? [];
-            $chat->name   = $user->name ?? '';
-            $chat->avatar = $user->avatar ?? '';
-            $chat->last_operate = $user->last_operate ?? 0;
-            $chats[$chat->from_uid == $uid ? $chat->target_uid : $chat->from_uid][] = $chat;
+            $_uid = $chat->from_uid == $uid ? $chat->target_uid : $chat->from_uid;
+            if (! isset($chats[$_uid])) {
+                $chats[$_uid] = [];
+            }
+            array_unshift($chats[$_uid], $chat);
         }
         $me = $users[$uid] ?? [];
         $page = $raw_chats->links();
