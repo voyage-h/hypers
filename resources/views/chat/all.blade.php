@@ -31,7 +31,7 @@
                     </div>
                 @endif
                 <div class="avatar">
-                    <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->avatar}}"/></a>
+                    <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->from_uid != $me->uid ? $target->avatar : $me->avatar}}"/></a>
                 </div>
                 @include('chat.detail.content', ['contents' => $chat->contents])
             </div>
