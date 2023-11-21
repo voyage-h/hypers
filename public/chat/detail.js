@@ -41,6 +41,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (Object.keys(res.chats).length > 0) {
                         // 遍历数组
                         container.innerHTML += detail_html(res);
+                        // 需要获取所有图片的尺寸
+                        const contentImgs = document.querySelectorAll(".contents-img-a");
+                        contentImgs.forEach(function (contentImg) {
+                            const image = new Image();
+                            image.src = contentImg.getAttribute('data-pswp-src');
+                            image.onload = function () {
+                                contentImg.setAttribute('data-pswp-width', this.width);
+                                contentImg.setAttribute('data-pswp-height', this.height);
+                            };
+                        });
                     } else {
                         hasData = false;
                         console.log('没有更多数据了');
