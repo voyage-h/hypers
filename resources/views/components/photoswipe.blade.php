@@ -3,8 +3,9 @@
         const contentImgs = document.querySelectorAll(".contents-img-a");
         contentImgs.forEach(function (contentImg) {
             const image = new Image();
-            image.src = contentImg.getAttribute('data-pswp-src');
-            image.onload = function () {
+            const highSrc = contentImg.getAttribute('data-pswp-src');
+            image.src = highSrc.replace(/!o\.png$/, '');
+			image.onload = function () {
                 contentImg.setAttribute('data-pswp-width', this.width);
                 contentImg.setAttribute('data-pswp-height', this.height);
             };
