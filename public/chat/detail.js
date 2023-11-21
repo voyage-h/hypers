@@ -125,7 +125,13 @@ function format_time(time) {
         return '昨天 ' + time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     } else if (isCurrentYear(time)) {
         // 如果是今年，展示月日和小时
-        return time.toLocaleDateString() + ' ' + time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        //return time.toLocaleDateString() + ' ' + time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        // 如果是今年，展示月日和小时和分钟
+        var month = (time.getMonth() + 1).toString().padStart(2, '0');
+        var day = time.getDate().toString().padStart(2, '0');
+        var hours = time.getHours().toString().padStart(2, '0');
+        var minutes = time.getMinutes().toString().padStart(2, '0');
+        return month + '-' + day + ' ' + hours + ':' + minutes;
     } else {
         // 如果是去年，展示年月日
         return time.toLocaleDateString();
