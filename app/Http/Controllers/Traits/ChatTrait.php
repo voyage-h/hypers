@@ -163,7 +163,6 @@ trait ChatTrait
             array_unshift($chats[$_uid], $chat);
         }
         $me = $users[$uid] ?? [];
-        $page = $raw_chats->links();
-        return compact('chats', 'users', 'me', 'page');
+        return compact('chats', 'users', 'me');
     }
 }
