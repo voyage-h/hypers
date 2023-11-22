@@ -409,6 +409,7 @@ button[type="submit"]:hover {
     padding: 10px;
     margin-bottom: 20px;
     color: #999;
+display: none;	   
 }
 .page a {
     text-decoration: none;

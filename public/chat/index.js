@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	removeBtn.addEventListener('click', function(){
 		removeBtn.style.display = 'none';
 	    searchBtn.style.display = 'block';
+        domesticContainer.style.display = 'none';
 		searchInput.value = '';
 		searchUsers.innerHTML = '';
 		searchInput.setAttribute('placeholder', '搜索');

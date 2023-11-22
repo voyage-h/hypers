@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var distanceToBottom = document.body.offsetHeight - (currentScrollTop + window.innerHeight);
 
             // 设置一个阈值，比如 20 像素
-            var threshold = 20;
+            var threshold = 100;
 
             // 如果页面滚动到底部
             if (!isLoading && hasData && distanceToBottom < threshold) {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         hasData = false;
                         console.log('没有更多数据了');
-                        noMore.style.display = 'flex';
+                        noMore.style.display = 'block';
                     }
                 });
             }
