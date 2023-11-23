@@ -582,6 +582,9 @@ cursor: pointer;
     height: 100px;
     object-fit: cover;
 }
+.menu-item a:active {
+    backgroud_color: none;
+}
 .last-date {
     text-align: center;
     margin: 15px;
