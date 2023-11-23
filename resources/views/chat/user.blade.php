@@ -70,6 +70,13 @@
                 <div class="menu-title chat-albums-title">我的</div>
                 <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
             </div>
+            @if(! empty($me->albums))
+            <div class="menu-items">
+                @foreach($me->albums as $album)
+                    <div class="menu-item"><img src="{{$album->contents}}"></div>
+                @endforeach
+            </div>
+            @endif
         </a>
 		<div class="seperate"></div>
         <a class="menu-a" href="/chat/{{$me->uid}}/all">
