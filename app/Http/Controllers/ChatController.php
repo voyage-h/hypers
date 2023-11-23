@@ -177,6 +177,7 @@ class ChatController extends Controller
     public function all(int $uid)
     {
         $data = $this->getChatsByType($uid, 0);
+		$data['action'] = 'all';
         return view('chat.all', $data);
     }
 
@@ -188,6 +189,19 @@ class ChatController extends Controller
     public function album(int $uid)
     {
         $data = $this->getChatsByType($uid, 1);
+		$data['action'] = 'album';
+        return view('chat.all', $data);
+    }
+
+    /**
+     * 我的相册
+     *
+     * @param int $uid
+     */
+    public function myAlbum(int $uid)
+    {
+        $data = $this->getChatsByType($uid, 2);
+		$data['action'] = 'my_album';
         return view('chat.all', $data);
     }
 }

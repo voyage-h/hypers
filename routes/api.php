@@ -28,5 +28,6 @@ Route::middleware('auth.simple')->group(function() {
         Route::POST('/search/{keyword}/{all?}', [ApiChatController::class, 'search']);
         Route::POST('/{me}/all', [ApiChatController::class, 'all']);
         Route::POST('/{me}/album', [ApiChatController::class, 'album']);
+        Route::POST('/{me}/my_album', [ApiChatController::class, 'myAlbum']);
     });
 });

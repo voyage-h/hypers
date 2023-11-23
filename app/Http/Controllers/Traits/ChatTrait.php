@@ -132,13 +132,22 @@ trait ChatTrait
      */
     public function getChatsByType(int $uid, int $type = 0, int $size = 50): array
     {
-        $raw_chats = Chat::where(function($query) use ($uid) {
-            $query->where('from_uid', $uid)
-                ->orWhere('target_uid', $uid);
-        });
-        if ($type == 1) {
+		switch($type) {
+		    case 0:
+			case 1:
+                $raw_chats = Chat::where(function($query) use ($uid) {
+                    $query->where('from_uid', $uid)
+                        ->orWhere('target_uid', $uid);
+                });
+				break;
+			case 2:	
+                $raw_chats = Chat::where('from_uid', $uid);
+				break;
+		}
+        if ($type > 0) {
             $raw_chats = $raw_chats->where('contents', 'like', 'http%');
-        }
+		}
+		
         $raw_chats = $raw_chats
             ->orderBy('created_at', 'desc')
             ->simplePaginate($size);

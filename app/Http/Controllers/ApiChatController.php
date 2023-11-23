@@ -287,4 +287,15 @@ class ApiChatController extends Controller
         $data = $this->getChatsByType($uid, 1);
         return response()->json($data);
     }
+
+    /**
+     * 我的相册
+     *
+     * @param int $uid
+     */
+    public function myAlbum(int $uid)
+    {
+        $data = $this->getChatsByType($uid, 2);
+        return response()->json($data);
+    }
 }

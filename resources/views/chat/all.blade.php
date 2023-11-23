@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
-<div class="chat-container" data-uid="{{$me->uid}}" data-action="{{str_contains(url()->current(), 'all') ? 'all' : 'album'}}">
+<div class="chat-container" data-uid="{{$me->uid}}" data-action="{{$action}}">
     @foreach($chats as $uid => $chat_arr)
     @php $target = $users[$uid == $me->uid ? $chat_arr[0]->target_uid : $uid]; @endphp
     <div class="chat">

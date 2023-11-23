@@ -79,6 +79,14 @@
                 <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
             </div>
         </a>
+		<div class="seperate"></div>
+        <a class="menu-a" href="/chat/{{$me->uid}}/my_album">
+            <div class="menu menu-active">
+                <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
+                <div class="menu-title chat-albums-title">我的</div>
+                <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
+            </div>
+        </a>
     </div>
 	<div class="last-date" id="last-date">{{empty($start) ? '无更新记录' : "-- 更新记录于$start --"}}</div>
     <div class="chat-list" data-uid="{{$me->uid}}" data-avatar="{{$me->avatar}}">
