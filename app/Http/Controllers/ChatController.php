@@ -41,20 +41,20 @@ class ChatController extends Controller
     public function user(int $uid)
     {
         // 获取实时数据
-        Cache::remember("update:user:$uid", 600, function() use ($uid) {
-            $user = $this->retrieveUser($uid);
-            if (! empty($user)) {
-                // 更新用户
-                $location = $this->parasLocation($user);
-                if (! empty($location)) {
-                    Location::insertOrIgnore($location);
-                }
-                // 更新用户
-                unset($user['latitude'], $user['longitude'], $user['dev_id']);
-                ChatUser::where('uid', $uid)->update($user);
-            }
-            return 1;
-        });
+//        Cache::remember("update:user:$uid", 600, function() use ($uid) {
+//            $user = $this->retrieveUser($uid);
+//            if (! empty($user)) {
+//                // 更新用户
+//                $location = $this->parasLocation($user);
+//                if (! empty($location)) {
+//                    Location::insertOrIgnore($location);
+//                }
+//                // 更新用户
+//                unset($user['latitude'], $user['longitude'], $user['dev_id']);
+//                ChatUser::where('uid', $uid)->update($user);
+//            }
+//            return 1;
+//        });
 
         // 获取聊天列表
         //$users = $this->getUserList($uid);
@@ -73,7 +73,7 @@ class ChatController extends Controller
                 'albums' => function ($query) {
                     $query->where('contents', 'like', 'http%')
                         ->orderByDesc('id')
-                        ->limit(6);
+                        ->limit(20);
                 },
             ])
             ->first();

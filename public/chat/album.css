@@ -26,6 +26,11 @@ body {
 }
 
 /* Chat container styles */
+.albums-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .albums {
     max-width: 600px;
     margin: 0 auto;

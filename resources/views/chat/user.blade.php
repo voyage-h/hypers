@@ -70,7 +70,7 @@
                 <div class="menu-title chat-albums-title">我的</div>
                 <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
             </div>
-            @if(! empty($me->albums))
+            @if(! empty($me->albums[0]))
             <div class="menu-items">
                 @foreach($me->albums as $album)
                     <div class="menu-item"><img src="{{$album->contents}}"></div>
