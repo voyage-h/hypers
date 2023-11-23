@@ -72,6 +72,7 @@ class ChatController extends Controller
                     },
                 'albums' => function ($query) {
                     $query->where('contents', 'like', 'http%')
+					    ->where('contents', 'REGEXP', '.*\\.(jpg|jpeg|png|gif|bmp)$')
                         ->orderByDesc('id')
                         ->limit(20);
                 },
@@ -210,7 +211,7 @@ class ChatController extends Controller
         $me = ChatUser::where('uid', $uid)
             ->with('albums', 'note')
             ->first();
-        $me->age = $me->birthday ? Carbon::parse($me->birthday)->age : 0;
+        $me->age = $me->birthday ? Carbon::parse($me->birthday)->age : '';
         return view('chat.album', compact('me'));
     }
 }
