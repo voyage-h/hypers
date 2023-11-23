@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     use HasFactory;
+
+    public function user() {
+        return $this->hasOne(ChatUser::class, 'uid', 'from_uid');
+    }
 }

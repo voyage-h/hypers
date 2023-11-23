@@ -200,8 +200,9 @@ class ChatController extends Controller
      */
     public function myAlbum(int $uid)
     {
-        $data = $this->getChatsByType($uid, 2);
-		$data['action'] = 'my_album';
-        return view('chat.all', $data);
+        $me = ChatUser::where('uid', $uid)
+            ->with('albums')
+            ->first();
+        return view('chat.album', compact('me'));
     }
 }

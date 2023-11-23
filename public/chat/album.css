@@ -1,0 +1,54 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .chat-container {
+        max-width: 100%;
+    }
+
+    .chat {
+        flex-direction: column;
+    }
+
+    .chat-left, .chat-right {
+        max-width: 100%;
+    }
+}
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #202020; /* Dark background color for dark mode */
+    color: #ffffff; /* Font color for dark mode */
+}
+
+/* Chat container styles */
+.albums {
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0;
+    padding: 2px;
+    background-color: #111;
+}
+
+/* Chat bubble styles */
+.album {
+    display: flex;
+    flex-direction: column; /* Stack chat bubbles vertically */
+    break-inside: avoid;
+}
+.album img {
+    width: 200px;
+    height: auto;
+}
+.chat-home {
+    position: fixed;
+    z-index: 100;
+    top: 300px;
+    right: 0;
+}

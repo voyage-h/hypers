@@ -24,4 +24,13 @@ class ChatUser extends Model
     {
         return $this->hasOne(UserDevice::class, 'uid', 'uid');
     }
+
+    public function albums()
+    {
+        return $this->hasMany(Chat::class, 'from_uid', 'uid')
+            ->distinct()
+            ->where('contents', 'like', 'http%')
+            ->orderByDesc('id');
+    }
+
 }
