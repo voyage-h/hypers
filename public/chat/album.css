@@ -32,8 +32,9 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0;
-    padding: 2px;
     background-color: #111;
+    width: 100%;
+    padding: 0 2px;		   
 }
 
 /* Chat bubble styles */
@@ -41,9 +42,10 @@ body {
     display: flex;
     flex-direction: column; /* Stack chat bubbles vertically */
     break-inside: avoid;
+margin: 0 2px;
 }
 .album img {
-    width: 200px;
+    width: 100%;
     height: auto;
 }
 .chat-home {
@@ -52,3 +54,43 @@ body {
     top: 300px;
     right: 0;
 }
+.chat-home img {
+    width: 50px;
+    height: 50px;		   
+}
+.chat-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f5f5f5;
+    text-align: center;
+    padding: 15px 0 12px 0;
+    /*border-bottom: 2px solid #222;*/
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #111;
+}
+
+.title-basic {
+    font-size:12px;
+    font-weight: lighter;
+    margin-top: 2px;
+}
+
+.title-more {
+    float: right;
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    font-weight: 700;
+    top: 20px;
+    font-family: system-ui;
+    padding: 0 10px 10px 10px;
+    cursor: pointer;
+}
+
+.chat-title a {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+

@@ -64,6 +64,14 @@
             <div class="menu-right menu-right-refresh" id="user-refresh" data-target={{$me->uid}}><img src="/chat/icon-refresh.png"></div>
         </div>
 		<div class="seperate"></div>
+        <a class="menu-a" href="/chat/{{$me->uid}}/my_album">
+            <div class="menu menu-active">
+                <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
+                <div class="menu-title chat-albums-title">我的</div>
+                <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
+            </div>
+        </a>
+		<div class="seperate"></div>
         <a class="menu-a" href="/chat/{{$me->uid}}/all">
         <div class="menu menu-active">
             <div class="menu-icon chat-albums-icon"><img src="/chat/chat.png"></div>
@@ -76,14 +84,6 @@
             <div class="menu menu-active">
                 <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
                 <div class="menu-title chat-albums-title">相册</div>
-                <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
-            </div>
-        </a>
-		<div class="seperate"></div>
-        <a class="menu-a" href="/chat/{{$me->uid}}/my_album">
-            <div class="menu menu-active">
-                <div class="menu-icon chat-albums-icon"><img src="/chat/album-icon.png"></div>
-                <div class="menu-title chat-albums-title">我的</div>
                 <div class="menu-right chat-albums-right"><img src="/chat/right.png"></div>
             </div>
         </a>

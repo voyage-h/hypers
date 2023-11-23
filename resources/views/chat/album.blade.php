@@ -9,6 +9,11 @@
 </head>
 <body>
 <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
+<div class="albums-container">
+<div class="chat-title">
+    <a href="#">{{$me->name}}{{$me->note ? '(' . $me->note . ')' : ''}}</a>
+    <div class="title-basic">{{$me->age}} {{$me->height}} {{$me->weight}} {{$me->role}}</div>
+</div>
 <div class="albums">
     @foreach($me->albums as $album)
         <div class="album">
@@ -18,5 +23,6 @@
         </div>
     @endforeach
 </body>
+</div>
 @include('components.photoswipe', ['gallery' => '.albums', 'children' => '.contents-img-a'])
 </html>

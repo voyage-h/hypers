@@ -201,8 +201,9 @@ class ChatController extends Controller
     public function myAlbum(int $uid)
     {
         $me = ChatUser::where('uid', $uid)
-            ->with('albums')
+            ->with('albums', 'note')
             ->first();
+        $me->age = $me->birthday ? Carbon::parse($me->birthday)->age : 0;
         return view('chat.album', compact('me'));
     }
 }
