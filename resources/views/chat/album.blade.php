@@ -16,11 +16,13 @@
 </div>
 <div class="albums">
     @foreach($me->albums as $album)
+        @if(preg_match('/.jpg|.png|.jpeg|.gif|.mp4/', $album->contents))
         <div class="album">
             <a href="{{$album->contents}}" class="contents-img-a" data-pswp-src="{{$album->contents}}">
                 <img src="{{$album->contents}}">
             </a>
         </div>
+	    @endif
     @endforeach
 </body>
 </div>
