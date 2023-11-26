@@ -64,6 +64,31 @@ document.addEventListener('DOMContentLoaded', function() {
         // 更新上一次滚动位置
         lastScrollTop = currentScrollTop;
     });
+
+    // 左屏双击滚动到下一个，右屏双击向上滚动太当前开始
+    const chats = document.querySelectorAll(".chat");
+    chats.forEach(chat => {
+        chat.addEventListener("dblclick", event => {
+            const screenWidth = window.innerWidth;
+            const clickX = event.clientX;
+            if (clickX < screenWidth / 2) {
+                const nextChat = chat.nextElementSibling;
+                if (nextChat) {
+                    nextChat.scrollIntoView({ behavior: "smooth", block: "end" });
+                } else {
+                    if (alertBox) {
+                        alertBox.style.display = "block";
+                        alertBox.textContent = "没有更多";
+                        setTimeout(function() {
+                            alertBox.style.display = "none";
+                        }, 1000);
+                    }
+                }
+            } else {
+                chat.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+    });
 });
 function http_request(method, url, callback) {
     // 创建一个请求对象

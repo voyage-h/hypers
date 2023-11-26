@@ -9,7 +9,7 @@
     <script src="/chat/detail.js"></script>
 </head>
 <body>
-<div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
+{{--<div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>--}}
 <div class="chat-container" data-uid="{{$me->uid ?? 0}}" data-action="{{$action}}">
     @foreach($chats as $uid => $chat_arr)
     @php $target = $users[$uid == $me->uid ? $chat_arr[0]->target_uid : $uid]; @endphp
