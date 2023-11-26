@@ -134,24 +134,37 @@ trait ChatTrait
     {
 		switch($type) {
 		    case 0:
+                // 使用redis分页
+                $page  = (int) request()->input('page', 1);
+                $size  = 40;
+                $uids_arr = Redis::zrevrange("chat:{$uid}", ($page - 1) * $size, $page * $size - 1, 'WITHSCORES');
+                $uids = array_keys($uids_arr);
+                $raw_chats = Chat::where(function($query) use ($uid, $uids) {
+                            $query->whereIn('from_uid', $uids)
+                                ->where('target_uid', $uid);
+                        })->orWhere(function($query) use ($uid, $uids) {
+                            $query->whereIn('target_uid', $uids)
+                                ->where('from_uid', $uid);
+                        })
+				        ->orderBy('id', 'desc')
+				        ->get();			
+				break;
 			case 1:
                 $raw_chats = Chat::where(function($query) use ($uid) {
                     $query->where('from_uid', $uid)
                         ->orWhere('target_uid', $uid);
-                });
+                })
+                    ->where('contents', 'like', 'http%')
+                    ->orderBy('created_at', 'desc')
+                    ->simplePaginate($size);
 				break;
 			case 2:	
-                $raw_chats = Chat::where('from_uid', $uid);
+                $raw_chats = Chat::where('from_uid', $uid)
+                    ->where('contents', 'like', 'http%')
+                    ->orderBy('created_at', 'desc')
+                    ->simplePaginate($size);
 				break;
 		}
-        if ($type > 0) {
-            $raw_chats = $raw_chats->where('contents', 'like', 'http%');
-		}
-		
-        $raw_chats = $raw_chats
-            ->orderBy('created_at', 'desc')
-            ->simplePaginate($size);
-
         $uids = [];
         foreach ($raw_chats as $chat) {
             $uids[$chat->from_uid]   = $chat->from_uid;
@@ -171,6 +184,18 @@ trait ChatTrait
             }
             array_unshift($chats[$_uid], $chat);
         }
+		$sort_chats = [];
+		if ($type == 0) {
+			$last_time = 0;
+		    foreach(array_keys($uids_arr) as $_uid) {
+				$chat = $chats[$_uid];
+			    usort($chat, function($a, $b) {
+				    return strtotime($a->created_at) - strtotime($b->created_at);
+				});
+				$sort_chats[$_uid] = $chat;
+			}
+		    $chats = $sort_chats;
+		}
         $me = $users[$uid] ?? [];
         return compact('chats', 'users', 'me');
     }
