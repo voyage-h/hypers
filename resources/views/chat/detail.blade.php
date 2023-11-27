@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="chat-container">
-    <div class="chat-refresh"><a href="/chat/detail/{{$me->uid}}/refresh" id="refreshButton" data-target="{{$target->uid}}}"><img src="/chat/refresh.png"></a></div>
     <div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
     <div class="chat" id="chats">
         <div class="chat-title" data-name={{$target->name}}>

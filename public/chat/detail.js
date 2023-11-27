@@ -142,7 +142,7 @@ function detail_html(res) {
             <div class="chat-` + (chat.from_uid == me.uid ? 'right' : 'left') + `">
                 ` + time_html + `
                 <div class="avatar">
-                    <a href="/chat/user/` + chat.from_uid + `"><img src="` + (chat.from_uid == me.uid ? me.avatar : target.avatar) + `"/></a>
+                    <a href="/chat/user/` + chat.from_uid + `" target="_blank"><img src="` + (chat.from_uid == me.uid ? me.avatar : target.avatar) + `"/></a>
                 </div>
                 ` + contents_html + `
             </div>

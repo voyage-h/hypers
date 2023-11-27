@@ -100,24 +100,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const refresh_uid = this.getAttribute('data-target');
         noMore.style.display = 'none';
         http_request('POST', '/api/chat/user/' + refresh_uid + '/refresh_chat', function (res) {
-				window.location.reload();
-//            console.log('刷新', page, res);
-//            lastDate.innerText = '-- 刚刚更新 --';
-//            btnRefresh.style.display = 'block';
-//            if (res.users && res.users.length > 0) {
-//                hasData = true;
-//                // location.reload();
-//                let html = user_list_html(res.users);
-//                if (html) {
-//                    chatList.innerHTML = html;
-//                }
-//            } else {
-//                warning.style.display = 'block';
-//                warning.textContent   = '没有数据';
-//                setTimeout(function () {
-//                    warning.style.display = 'none';
-//                }, 2000);
-//            }
+			// window.location.reload();
+            console.log('刷新', page, res);
+            lastDate.innerText = '-- 刚刚更新 --';
+            btnRefresh.style.display = 'block';
+            if (res.users && res.users.length > 0) {
+                hasData = true;
+                // location.reload();
+                let html = user_list_html(res.users);
+                if (html) {
+                    chatList.innerHTML = html;
+                }
+            } else {
+                warning.style.display = 'block';
+                warning.textContent   = '没有数据';
+                setTimeout(function () {
+                    warning.style.display = 'none';
+                }, 2000);
+            }
         });
     });
 

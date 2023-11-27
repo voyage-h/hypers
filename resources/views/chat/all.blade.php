@@ -9,7 +9,7 @@
     <script src="/chat/detail.js"></script>
 </head>
 <body>
-{{--<div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>--}}
+<div class="chat-home"><a href="/"><img src="/chat/home.png"></a></div>
 <div class="chat-container" data-uid="{{$me->uid ?? 0}}" data-action="{{$action}}">
     @foreach($chats as $uid => $chat_arr)
     @php $target = $users[$uid == $me->uid ? $chat_arr[0]->target_uid : $uid]; @endphp
@@ -31,7 +31,7 @@
                     </div>
                 @endif
                 <div class="avatar">
-                    <a href="/chat/user/{{$chat->from_uid}}"><img src="{{$chat->from_uid != $me->uid ? $target->avatar : $me->avatar}}"/></a>
+                    <a href="/chat/user/{{$chat->from_uid}}" target="_blank"><img src="{{$chat->from_uid != $me->uid ? $target->avatar : $me->avatar}}"/></a>
                 </div>
                 @include('chat.detail.content', ['contents' => $chat->contents])
             </div>
